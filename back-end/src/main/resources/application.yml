@@ -1,0 +1,16 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:mysql://rm-bp1h58rkwxay14k4q9o.mysql.rds.aliyuncs.com/sportscar
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: Xxq@24680
+    username: chiguodong
+mybatis:
+#  config-location:classpath:mybatis/mybatis-config.xml
+#  mapper-locations:classpath:mybatis/mapper/*.xml
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    lazy-loading-enabled: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
