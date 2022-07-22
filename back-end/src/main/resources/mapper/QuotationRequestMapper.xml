@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sportscar.sportscar.mapper.QuotationRequestMapper">
+    <insert id="addQuotationRequest" parameterType="com.sportscar.sportscar.bean.Quotation_request">
+        insert into quotation_request values (#{userID},#{rfqID},#{supplierID},#{supplierName},#{materialID},#{amount},#{price},#{date},#{limitedDate},#{state})
+--         insert into quotation_request values (null, #{name}, #{sex}, #{age}, #{entryDate})
+    </insert>
+    <insert id="addQuotationRequestAll">
+        INSERT INTO quotation_request VALUES
+        <foreach collection="list" separator="," item="item">
+            (#{item.userID},#{item.rfqID},#{item.supplierID},#{item.supplierName},#{item.materialID},#{item.amount},#{item.price},#{item.date},#{limitedDate},#{item.state})
+        </foreach>
+    </insert>
+    <delete id="deleteQuotationRequestByRfqId" parameterType="string">
+        delete from quotation_request where rfqID = #{rfqID}
+    </delete>
+    <delete id="deleteQuotationRequestByRfqIdSeries" parameterType="java.lang.String">
+        DELETE FROM quotation_request WHERE rfqID in
+        <foreach collection="array" item="rfqID" open="(" separator="," close=")">
+            #{rfqID}
+        </foreach>
+
+        <!--        <foreach collection="list" item="item" separator=";" open="begin" close=";end;">-->
+<!--            delete from tablea-->
+<!--            where CODE = #{item.code,jdbcType=VARCHAR}-->
+<!--            and MODE = #{item.Mode,jdbcType=VARCHAR}-->
+<!--        </foreach>-->
+    </delete>
+    <select id="showAllQuatationRequest" resultType="com.sportscar.sportscar.bean.Quotation_request">
+        select * from quotation_request where userID=1
+    </select>
+<!--    <insert id="insertBatch">-->
+<!--        INSERT INTO tb_student (name, age, phone, address, class_id) VALUES-->
+<!--        <foreach collection="list" separator="," item="item">-->
+<!--            (#{item.name},#{item.age},#{item.phone},#{item.address},#{item.classId})-->
+<!--        </foreach>-->
+<!--    </insert>-->
+<!--    <select id="addQuotationRequest" resultType="com.sportscar.sportscar.bean.Comparison">-->
+<!--        SELECT * FROM comparison where userID=#{userID};-->
+<!--    </select>-->
+</mapper>

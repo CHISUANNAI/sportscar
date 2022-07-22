@@ -1,15 +1,12 @@
 package com.sportscar.sportscar.controller;
 
-import com.sportscar.sportscar.bean.comparison;
-import com.sportscar.sportscar.bean.procurement_order;
+import com.sportscar.sportscar.bean.Comparison;
+import com.sportscar.sportscar.bean.Procurement_order;
 import com.sportscar.sportscar.service.ComparisonService;
 import com.sportscar.sportscar.service.ProcurementOrderMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Objects;
 
 @Controller
 public class demoController {
@@ -39,7 +36,7 @@ public class demoController {
     ComparisonService comparisonService;
     @ResponseBody
     @GetMapping("/comparison")
-    public comparison getById(){
+    public Comparison getById(){
         return comparisonService.getComparisonById(1);
     }
     //注解版mybatis数据交互
@@ -47,7 +44,7 @@ public class demoController {
     ProcurementOrderMapperService procurementOrderMapperService;
     @ResponseBody
     @GetMapping("/procurement_order")
-    public procurement_order getProcurementOrderById(){
+    public Procurement_order getProcurementOrderById(){
         return procurementOrderMapperService.getByOrderId(1235);
     }
 }
