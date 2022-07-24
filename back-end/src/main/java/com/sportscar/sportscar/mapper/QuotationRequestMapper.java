@@ -10,7 +10,8 @@ public interface QuotationRequestMapper {
     int addQuotationRequest(Quotation_request quotation_request);
     int addQuotationRequestAll(List<Quotation_request> quotation_requestList);
     int deleteQuotationRequestByRfqId(String rfqID);
-    int deleteQuotationRequestByRfqIdSeries(String[] rfqID);
-    //加入session后将改变
-    List<Quotation_request> showAllQuatationRequest();
+    int deleteQuotationRequestByRfqIdSeries(List<Quotation_request> quotation_requestList);
+    List<Quotation_request> showAllQuatationRequest(Integer userID);
+    List<Quotation_request> selectQuatationRequestByID(List<Quotation_request> quotation_requestList);
+    List<Quotation_request> SelectQuatationRequestByField(Quotation_request quotation_request);
 }

@@ -10,26 +10,42 @@
     <insert id="addQuotationRequestAll">
         INSERT INTO quotation_request VALUES
         <foreach collection="list" separator="," item="item">
-            (#{item.userID},#{item.rfqID},#{item.supplierID},#{item.supplierName},#{item.materialID},#{item.amount},#{item.price},#{item.date},#{limitedDate},#{item.state})
+            (#{item.userID},#{item.rfqID},#{item.supplierID},#{item.supplierName},#{item.materialID},#{item.amount},#{item.price},#{item.date},#{item.limitedDate},#{item.state})
         </foreach>
     </insert>
     <delete id="deleteQuotationRequestByRfqId" parameterType="string">
         delete from quotation_request where rfqID = #{rfqID}
     </delete>
-    <delete id="deleteQuotationRequestByRfqIdSeries" parameterType="java.lang.String">
-        DELETE FROM quotation_request WHERE rfqID in
-        <foreach collection="array" item="rfqID" open="(" separator="," close=")">
-            #{rfqID}
+    <delete id="deleteQuotationRequestByRfqIdSeries" parameterType="java.util.List">
+        delete from quotation_request
+        where (userID, rfqID) in
+        <foreach item="item" index="index" collection="list" separator="," open="(" close=")">
+            (#{item.userID},#{item.rfqID})
         </foreach>
-
-        <!--        <foreach collection="list" item="item" separator=";" open="begin" close=";end;">-->
-<!--            delete from tablea-->
-<!--            where CODE = #{item.code,jdbcType=VARCHAR}-->
-<!--            and MODE = #{item.Mode,jdbcType=VARCHAR}-->
-<!--        </foreach>-->
     </delete>
     <select id="showAllQuatationRequest" resultType="com.sportscar.sportscar.bean.Quotation_request">
-        select * from quotation_request where userID=1
+        select * from quotation_request where userID=#{userID}
+    </select>
+    <select id="selectQuatationRequestByID" parameterType="java.util.List" resultType="com.sportscar.sportscar.bean.Quotation_request">
+        select * from quotation_request where (userID, rfqID) in
+        <foreach item="item" index="index" collection="list" separator="," open="(" close=")">
+            (#{item.userID},#{item.rfqID})
+        </foreach>
+    </select>
+    <select id="SelectQuatationRequestByField" parameterType="com.sportscar.sportscar.bean.Quotation_request" resultType="com.sportscar.sportscar.bean.Quotation_request">
+        select * from quotation_request where userID=#{userID}
+        <if test="supplierID!=-1">
+            and supplierID=#{supplierID}
+        </if>
+        <if test="materialID!=-1">
+            and materialID=#{materialID}
+        </if>
+        <if test="date!=null">
+            and date=#{date}
+        </if>
+        <if test="limitedDate!=null">
+            and limitedDate=#{limitedDate}
+        </if>
     </select>
 <!--    <insert id="insertBatch">-->
 <!--        INSERT INTO tb_student (name, age, phone, address, class_id) VALUES-->
