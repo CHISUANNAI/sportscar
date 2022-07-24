@@ -17,11 +17,36 @@
 </form>
 <h1>DeleteQuatationRequest</h1>
 <form action="http://localhost:8080/DeleteQuatationRequest" method="get">
-    supplierID1:<br>
+    rfqID1:<br>
     <input type="text" name="rfqID">
     <br>
-    supplierID2:<br>
+    rfqID2:<br>
     <input type="text" name="rfqID">
+    <br>
+    <br>
+    <input type="submit" value="Submit">
+</form>
+<h1>SelectQuatationRequestByID</h1>
+<form action="http://localhost:8080/SelectQuatationRequestByID" method="get">
+    QuatationRequestID:<br>
+    <input type="text" name="rfqID">
+    <br>
+    <br>
+    <input type="submit" value="Submit">
+</form>
+<h1>SelectQuatationRequestByField</h1>
+<form action="http://localhost:8080/SelectQuatationRequestByField" method="get">
+    supplierID:<br>
+    <input type="text" name="supplierID">
+    <br>
+    materialID:<br>
+    <input type="text" name="materialID">
+    <br>
+    date:<br>
+    <input type="date" name="date">
+    <br>
+    limitedDate:<br>
+    <input type="date" name="limitedDate">
     <br>
     <br>
     <input type="submit" value="Submit">

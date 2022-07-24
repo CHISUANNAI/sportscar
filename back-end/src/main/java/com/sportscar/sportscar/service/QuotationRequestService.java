@@ -20,10 +20,16 @@ public class QuotationRequestService {
     public int deleteQuotationRequestByRfqId(String rfqID){
         return quotationRequestMapper.deleteQuotationRequestByRfqId(rfqID);
     }
-    public int deleteQuotationRequestByRfqIdSeries(String[] rfqID){
-        return quotationRequestMapper.deleteQuotationRequestByRfqIdSeries(rfqID);
+    public int deleteQuotationRequestByRfqIdSeries(List<Quotation_request> quotation_requestList){
+        return quotationRequestMapper.deleteQuotationRequestByRfqIdSeries(quotation_requestList);
     };
-    public List<Quotation_request> showAllQuatationRequest(){
-        return quotationRequestMapper.showAllQuatationRequest();
+    public List<Quotation_request> showAllQuatationRequest(Integer userID){
+        return quotationRequestMapper.showAllQuatationRequest(userID);
+    };
+    public List<Quotation_request> selectQuatationRequestByID(List<Quotation_request> quotation_requestList){
+        return quotationRequestMapper.selectQuatationRequestByID(quotation_requestList);
+    };
+    public List<Quotation_request> SelectQuatationRequestByField(Quotation_request quotation_request){
+        return quotationRequestMapper.SelectQuatationRequestByField(quotation_request);
     };
 }
