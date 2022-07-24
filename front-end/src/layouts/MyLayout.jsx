@@ -14,6 +14,7 @@ import ReceiveGoods from "../pages/ReceiveGoods";
 import RequisitionManagement from "../pages/RequisitionManagement";
 import SupplierManagement from "../pages/SupplierManagement";
 import PersonalManagement from "../pages/PersonalManagement";
+import documentflowmanagement from "../pages/documentflowmanagement";
 import Home from "../pages/Home";
 import logo from "../graphs/logo.png";
 
@@ -108,6 +109,7 @@ class MyLayout extends Component {
                                 getItem('报价请求管理', '/Home/requisitionManagement'),
                                 getItem('比价单管理', '/Home/quotationsManagement'),
                                 getItem('采购订单管理', '/Home/orderManagement'),
+                                getItem('单据流管理', '/Home/documentflowmanagement'),
                             ]),
                             getItem('收货管理', '/Home/receiveGoods', <CarryOutOutlined />),
                             getItem('财务管理', '/Home/financialManagement', <DollarOutlined />),
