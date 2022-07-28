@@ -3,8 +3,8 @@ package com.sportscar.sportscar.mapper;
 import com.sportscar.sportscar.bean.User;
 import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
 /** 员工（用户）模块的持久层接口 */
+@Mapper
 public interface UserMapper {
     /**
      * 插入用户的数据
