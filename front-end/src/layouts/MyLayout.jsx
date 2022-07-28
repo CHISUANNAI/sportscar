@@ -119,7 +119,7 @@ class MyLayout extends Component {
                         float: 'right'
                     }}>
                         <Popover placement="bottom" content={content} trigger="click">
-                            <Button danger shape="round" size="small" style={{ marginRight:"25px" }}
+                            <Button danger shape="round" size="small" style={{ marginRight:"50px" }}
                             >
                                 <CalendarOutlined />
                                 Today&nbsp; : &nbsp;{moment().format("YYYY-MM-DD")}
@@ -151,7 +151,7 @@ class MyLayout extends Component {
                 >
                     <Breadcrumb
                         style={{
-                            margin: '16px 0',
+                            margin: '10px 0',
                         }}
                     >
                     </Breadcrumb>
@@ -159,7 +159,7 @@ class MyLayout extends Component {
                         className="site-layout-background"
                         style={{
                             padding: 24,
-                            minHeight: 500,
+                            minHeight: 525,
                         }}
                     >
                         <Switch>
