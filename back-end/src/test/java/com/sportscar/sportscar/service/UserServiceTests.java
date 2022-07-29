@@ -18,11 +18,22 @@ public class UserServiceTests {
     public void reg(){
         try {
             User user = new User();
-            user.setUserName("小牛2");
-            user.setPassword("123456");
+            user.setUserName("张三");
+            user.setPassword("333333");
             userService.reg(user);
             System.out.println("OK");
         } catch (ServiceException e) {
+            System.out.println(e.getClass().getSimpleName());
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void login(){
+        try{
+            User user = userService.login("张三","333333");
+            System.out.println(user);
+        }catch (ServiceException e){
             System.out.println(e.getClass().getSimpleName());
             System.out.println(e.getMessage());
         }

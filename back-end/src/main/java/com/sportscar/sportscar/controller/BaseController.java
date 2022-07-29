@@ -17,6 +17,12 @@ public class BaseController {
         if(e instanceof UsernameDuplicatedException) {
             result.setState(4000);
             result.setMessage("用户名被占用异常");
+        }else if(e instanceof UserNotFoundException){
+            result.setState(4001);
+            result.setMessage("用户数据不存在异常");
+        }else if(e instanceof PasswordNotMatchException){
+            result.setState(4002);
+            result.setMessage("用户密码错误异常");
         }else if(e instanceof InsertException){
             result.setState(5000);
             result.setMessage("注册时产生未知异常");

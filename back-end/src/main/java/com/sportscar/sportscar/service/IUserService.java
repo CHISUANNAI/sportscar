@@ -9,4 +9,11 @@ public interface IUserService {
      * @param user 用户的数据对象
      */
     void reg(User user);
+
+    /**
+     * 用户登录方法
+     * @param userName 用户名
+     * @param password 用户密码
+     */
+    User login(String userName, String password);
 }
