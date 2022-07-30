@@ -25,7 +25,16 @@ public class BaseController {
             result.setMessage("用户密码错误异常");
         }else if(e instanceof InsertException){
             result.setState(5000);
-            result.setMessage("注册时产生未知异常");
+            result.setMessage("创建时产生未知异常");
+        }else if(e instanceof SuppliernameDuplicatedException){
+            result.setState(6000);
+            result.setMessage("供应商名称被占用异常");
+        }else if(e instanceof ClerkNotFoundException){
+            result.setState(6001);
+            result.setMessage("对应员工编号不存在异常");
+        }else if(e instanceof MaterialnameDuplicatedException) {
+            result.setState(7000);
+            result.setMessage("物料名称被占用异常");
         }
         return result;
     }

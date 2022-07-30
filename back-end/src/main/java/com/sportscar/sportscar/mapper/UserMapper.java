@@ -19,4 +19,7 @@ public interface UserMapper {
      * @return 找到则返回用户数据，否则返回null值
      */
     User findByName(String userName);
+
+    User findByID(Integer userID);
+
 }

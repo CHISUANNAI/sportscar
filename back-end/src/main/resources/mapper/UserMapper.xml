@@ -16,4 +16,8 @@
         SELECT * FROM user WHERE userName = #{userName}
     </select>
 
+    <select id="findByID" resultType="com.sportscar.sportscar.bean.User">
+        SELECT * FROM user WHERE userID = #{userID}
+    </select>
+
 </mapper>
