@@ -2,55 +2,52 @@ import React, { Component } from 'react';
 import { Table, Input, Button, Space, Divider, Popconfirm, message, Badge } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined, DeleteOutlined } from '@ant-design/icons';
-//import { Employeelist, Employeedelete, Employeeedit } from '../../../services/auth';
+//import { Materiallist, Materialdelete, Materialedit } from '../../../services/auth';
 //import { getToken } from '../../../utils/auth';
-import EditEmployee from '../Edit';
+import EditMaterial from '../Edit';
+import MaterialInventory from '../Inventory';
 
-//静态测试员工列表
+//静态测试供应商列表
 const dataSource = [
-    {userID: '11351',
-    userName: 'abc',
-    gender:'女',
-    telephone:'18018055555',
-    mail:'test@group.com',
-    status:'正常'
-    },
-    {userID: '11352',
-    userName: 'dfe',
-    gender:'男',
-    telephone:'18018055555',
-    mail:'test111@group.com',
-    status:'注销'
-    },
-    {userID: '11353',
-    userName: 'fgh',
-    gender:'女',
-    telephone:'18018055555',
-    mail:'test222@group.com',
-    status:'注销'
-    }
+	{
+		materialID: '10001',
+		materialName: '保时捷红色喷漆',
+		description: '保时捷品质喷漆',
+		weight: 3.7,
+		factory: '一号工厂'
+	},
+	{
+		materialID: '10002',
+		materialName: '极光色运动喷漆',
+		description: '灵感来源于极光',
+		weight: 2.1,
+		factory: '安徽工厂'
+	},
+	{
+		materialID: '10003',
+		materialName: '镭射喷漆',
+		description: '镭射五彩',
+		weight: 20.5,
+		factory: '上海工厂'
+	},
+	{
+		materialID: '10004',
+		materialName: '灰绿色喷漆',
+		description: '高级灰绿色',
+		weight: 19,
+		factory: '北京工厂'
+	}
 ];
 
-export default class EmployeeList extends Component {
+export default class MaterialList extends Component {
 	state = {
 		searchText: '',
 		searchedColumn: '',
 		dataSource: []
 	};
-	// 用于判断状态的函数，帮助生成badge
-	judgeStatus = (status) => {
-		switch (status) {
-			case '正常':
-				return 'success';
-			case '注销':
-				return 'error';
-			default:
-				return 'default';
-		}
-	};
 
 	// componentDidMount() {
-	// 	Employeelist().then(
+	// 	Materiallist().then(
 	// 		(response) => {
 	// 			//拿到我们想要渲染的数据(res)
 	// 			this.setState({
@@ -72,7 +69,7 @@ export default class EmployeeList extends Component {
 					}}
 					placeholder={`Search ${dataIndex}`}
 					value={selectedKeys[0]}
-					onChange={(e) => setSelectedKeys(e.target.value ? [ e.target.value ] : [])}
+					onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
 					onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
 					style={{ marginBottom: 8, display: 'block' }}
 				/>
@@ -117,7 +114,7 @@ export default class EmployeeList extends Component {
 			this.state.searchedColumn === dataIndex ? (
 				<Highlighter
 					highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-					searchWords={[ this.state.searchText ]}
+					searchWords={[this.state.searchText]}
 					autoEscape
 					textToHighlight={text ? text.toString() : ''}
 				/>
@@ -142,11 +139,11 @@ export default class EmployeeList extends Component {
 	// 传给抽屉用于编辑的函数
 	// handleEditClick = (value) => {
 	// 	// 先传值
-	// 	Employeeedit(value).then(
+	// 	Materialedit(value).then(
 	// 		(response) => {
 	// 			if (response.data === 'success') {
 	// 				message.success('修改成功');
-	// 				Employeelist().then(
+	// 				Materiallist().then(
 	// 					(response) => {
 	// 						this.setState({
 	// 							dataSource: response.data
@@ -165,16 +162,16 @@ export default class EmployeeList extends Component {
 	// 		}
 	// 	);
 	// };
-	// 用于删除员工的函数
-	// handleDelete = (userID) => {
-	// 	Employeedelete(userID).then(
+	// 用于删除供应商的函数
+	// handleDelete = (id) => {
+	// 	Materialdelete(id).then(
 	// 		(response) => {
 	// 			if (response.data === 'success') {
 	// 				message.success('删除成功');
 	// 				// 删除成功后改变页面内容
 	// 				const dataSource = [ ...this.state.dataSource ];
 	// 				this.setState({
-	// 					dataSource: dataSource.filter((item) => item.userID !== userID)
+	// 					dataSource: dataSource.filter((item) => item.id !== id)
 	// 				});
 	// 			} else message.info('删除失败，请重试');
 	// 		},
@@ -188,46 +185,35 @@ export default class EmployeeList extends Component {
 		// const user = JSON.parse(getToken());
 		const columns = [
 			{
-				title: '账号',
-				dataIndex: 'userID',
+				title: '物料编号',
+				dataIndex: 'materialID',
 				align: 'center',
-				...this.getColumnSearchProps('userID')
+				...this.getColumnSearchProps('materialID')
 			},
 			{
-				title: '姓名',
-				dataIndex: 'userName',
+				title: '物料名称',
+				dataIndex: 'materialName',
 				align: 'center',
-				...this.getColumnSearchProps('userName')
-			},
-            {
-				title: '性别',
-				dataIndex: 'gender',
-				align: 'center',
-                filters: [ { text: '女', value: '女' }, { text: '男', value: '男' } ],
-                onFilter: (value, record) => record.gender.startsWith(value),
+				...this.getColumnSearchProps('materialName')
 			},
 			{
-				title: '电话',
-				dataIndex: 'telephone',
+				title: '简单描述',
+				dataIndex: 'description',
 				align: 'center',
-				...this.getColumnSearchProps('telephone')
+				...this.getColumnSearchProps('description')
 			},
 			{
-				title: '邮箱',
-				dataIndex: 'mail',
+				title: '毛重',
+				dataIndex: 'weight',
 				align: 'center',
-				...this.getColumnSearchProps('mail')
+				...this.getColumnSearchProps('weight')
 			}
-            ,
+			,
 			{
-				title: '状态',
-				dataIndex: 'status',
+				title: '工厂',
+				dataIndex: 'factory',
 				align: 'center',
-				filters: [ { text: '正常', value: '正常' }, { text: '注销', value: '注销' } ],
-				render: (status) => {
-					return <Badge status={this.judgeStatus(status)} text={status} />;
-				},
-				onFilter: (value, record) => record.status.indexOf(value) === 0
+				...this.getColumnSearchProps('factory')
 			},
 			{
 				title: '',
@@ -235,7 +221,9 @@ export default class EmployeeList extends Component {
 				align: 'center',
 				render: (record) => (
 					<Space>
-						<EditEmployee employee={record} handleEditClick={this.handleEditClick} />
+						<MaterialInventory material={record} handleEditClick={this.handleEditClick} />
+						<Divider type="vertical" />
+						<EditMaterial material={record} handleEditClick={this.handleEditClick} />
 						<Divider type="vertical" />
 						<Popconfirm title="确定要删除吗？" onConfirm={() => this.handleDelete(record.id)}>
 							<Button danger type="text" size="small" icon={<DeleteOutlined />}>
@@ -252,7 +240,7 @@ export default class EmployeeList extends Component {
 					className="table"
 					columns={columns}
 					// dataSource={this.state.dataSource}
-                    dataSource={dataSource}
+					dataSource={dataSource}
 					rowKey={(record) => record.id}
 					pagination={{ pageSize: 7 }}
 					size="small"

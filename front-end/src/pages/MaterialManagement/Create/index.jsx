@@ -1,9 +1,9 @@
 import { Form, Button, Col, Row, Input, Select, message } from 'antd';
 import React, { Component } from 'react';
-//import { Employeeadd } from '../../../services/auth';
+//import { Supplieradd } from '../../../services/auth';
 const { Option } = Select;
 
-export default class CreateEmployee extends Component {
+export default class CreateMaterial extends Component {
     constructor(props) {
         super(props);
         const { handleCreateClick } = this.props;
@@ -11,7 +11,7 @@ export default class CreateEmployee extends Component {
     }
     formRef = React.createRef();
     onFinish = (values) => {
-        // Employeeadd(values).then(
+        // Supplieradd(values).then(
         // 	(response) => {
         // 		if (response.data.result === 'success') {
         // 			message.success('账号' + response.data.employee_id + '已创建成功');
@@ -33,27 +33,24 @@ export default class CreateEmployee extends Component {
             <Form layout="vertical" hideRequiredMark onFinish={this.onFinish} ref={this.formRef}>
                 <Row gutter={24}>
                     <Col span={12}>
-                        <Form.Item name="userID" label="姓名" rules={[{ required: true, message: '请输入姓名' }]}>
+                        <Form.Item name="materialName" label="物料名称" rules={[{ required: true, message: '请输入物料名称' }]}>
                             <Input placeholder="必填项" />
                         </Form.Item>
                     </Col>
                     <Col span={12}>
-						<Form.Item name="gender" label="性别" rules={[ { required: true, message: '请选择性别' } ]}>
-							<Select placeholder="必选项">
-								<Option value="女">女</Option>
-								<Option value="男">男</Option>
-							</Select>
-						</Form.Item>
-					</Col>
+                        <Form.Item name="description" label="简单描述">
+                            <Input placeholder="可选项" />
+                        </Form.Item>
+                    </Col>
                 </Row>
                 <Row gutter={24}>
                     <Col span={12}>
-                        <Form.Item name="telephone" label="手机号" rules={[{ pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的手机号' }]}>
+                        <Form.Item name="weight" label="毛重（kg）" >
                             <Input placeholder="可选项" />
                         </Form.Item>
                     </Col>
                     <Col span={12}>
-                        <Form.Item name="mail" label="邮箱" rules={[{ type: 'email', message: '请输入正确的邮箱' }]}>
+                        <Form.Item name="factory" label="工厂" >
                             <Input placeholder="可选项" />
                         </Form.Item>
                     </Col>
