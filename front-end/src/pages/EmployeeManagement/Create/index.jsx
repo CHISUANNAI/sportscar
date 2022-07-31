@@ -38,10 +38,10 @@ export default class CreateEmployee extends Component {
                         </Form.Item>
                     </Col>
                     <Col span={12}>
-						<Form.Item name="gender" label="性别" rules={[ { required: true, message: '请选择性别' } ]}>
-							<Select placeholder="必选项">
-								<Option value="女">女</Option>
-								<Option value="男">男</Option>
+						<Form.Item name="gender" label="性别">
+							<Select placeholder="可选项">
+								<Option value="1">女</Option>
+								<Option value="0">男</Option>
 							</Select>
 						</Form.Item>
 					</Col>
@@ -58,7 +58,15 @@ export default class CreateEmployee extends Component {
                         </Form.Item>
                     </Col>
                 </Row>
+
+                <Row gutter={24}>
+                    <text style={{color:'#f56a00'}}>&nbsp;&nbsp; 初始登录密码：000000</text>
+                </Row>
                 <Row gutter={24} />
+
+
+
+
 
                 <Form.Item>
                     <div

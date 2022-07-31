@@ -45,14 +45,11 @@ export default class EditEmployee extends Component {
                 >
                     <Form layout="vertical" hideRequiredMark onFinish={this.onFinish}>
                         <Row gutter={24}>
-                            <Col span={24}>
+                            <Col span={12}>
                                 <Form.Item name="userID" label="账号" initialValue={employee.userID}>
                                     <Input disabled />
                                 </Form.Item>
                             </Col>
-
-                        </Row>
-                        <Row gutter={24}>
                             <Col span={12}>
                                 <Form.Item
                                     name="userName"
@@ -63,12 +60,22 @@ export default class EditEmployee extends Component {
                                     <Input />
                                 </Form.Item>
                             </Col>
+                        </Row>
+                        <Row gutter={24}>
 
                             <Col span={12}>
-                                <Form.Item name="status" label="状态" initialValue={employee.status}>
+                                <Form.Item name="gender" label="性别" initialValue={employee.gender}>
+                                    <Select placeholder="可选项">
+                                        <Option value="1">女</Option>
+                                        <Option value="0">男</Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item name="status" label="身份" initialValue={employee.status}>
                                     <Select>
-                                        <Option value="正常">正常</Option>
-                                        <Option value="封禁">封禁</Option>
+                                        <Option value="1">管理员</Option>
+                                        <Option value="0">员工</Option>
                                     </Select>
                                 </Form.Item>
                             </Col>
