@@ -39,4 +39,13 @@ public class UserServiceTests {
         }
     }
 
+    @Test
+    public void load(){
+        try{
+            System.out.println(userService.load());
+        }catch (ServiceException e){
+            System.out.println(e.getClass().getSimpleName());
+            System.out.println(e.getMessage());
+        }
+    }
 }

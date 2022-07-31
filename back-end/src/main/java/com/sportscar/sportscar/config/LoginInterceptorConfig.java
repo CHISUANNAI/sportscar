@@ -24,6 +24,7 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         patterns.add("/templates/rfqTest.html");
         patterns.add("/users/reg");
         patterns.add("/users/login");
+        patterns.add("/users/load");
         patterns.add("/suppliers/cre");
         patterns.add("/materials/cre");
 

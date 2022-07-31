@@ -3,6 +3,8 @@ package com.sportscar.sportscar.mapper;
 import com.sportscar.sportscar.bean.User;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /** 员工（用户）模块的持久层接口 */
 @Mapper
 public interface UserMapper {
@@ -22,4 +24,5 @@ public interface UserMapper {
 
     User findByID(Integer userID);
 
+    List<User> findAll();
 }

@@ -2,6 +2,7 @@ package com.sportscar.sportscar.service.impl;
 
 import com.sportscar.sportscar.bean.Material;
 import com.sportscar.sportscar.mapper.MaterialMapper;
+import com.sportscar.sportscar.service.IMaterialService;
 import com.sportscar.sportscar.service.ex.InsertException;
 import com.sportscar.sportscar.service.ex.MaterialnameDuplicatedException;
 import org.springframework.beans.factory.annotation.Autowired;

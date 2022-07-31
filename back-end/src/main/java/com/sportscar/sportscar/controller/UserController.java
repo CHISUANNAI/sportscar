@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequestMapping("users")
@@ -27,5 +28,11 @@ public class UserController extends BaseController {
         session.setAttribute("userID",result.getUserID());
         session.setAttribute("userName",result.getUserName());
         return new JsonResult<>(OK,result);
+    }
+
+    @RequestMapping("load")
+    public JsonResult<List<User>> load(){
+        List<User> data = userService.load();
+        return new JsonResult<>(OK,data);
     }
 }

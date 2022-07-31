@@ -1,7 +1,7 @@
 package com.sportscar.sportscar.controller;
 
 import com.sportscar.sportscar.bean.Material;
-import com.sportscar.sportscar.service.impl.IMaterialService;
+import com.sportscar.sportscar.service.IMaterialService;
 import com.sportscar.sportscar.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

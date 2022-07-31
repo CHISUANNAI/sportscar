@@ -20,4 +20,7 @@
         SELECT * FROM user WHERE userID = #{userID}
     </select>
 
+    <select id="findAll" resultType="com.sportscar.sportscar.bean.User">
+        SELECT * FROM user
+    </select>
 </mapper>

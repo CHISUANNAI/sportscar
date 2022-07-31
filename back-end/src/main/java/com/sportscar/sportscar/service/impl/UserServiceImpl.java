@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.util.List;
 import java.util.UUID;
 
 /** 用户模块业务层的实现类 */
@@ -55,6 +56,15 @@ public class UserServiceImpl implements IUserService {
         //判断账户是否注销
         if(result.getStatus() == 0){
             throw new UserNotFoundException("用户数据不存在");
+        }
+        return result;
+    }
+
+    @Override
+    public List<User> load(){
+        List<User> result = userMapper.findAll();
+        if(result == null){
+            throw new UserNotFoundException("用户账号不存在");
         }
         return result;
     }
