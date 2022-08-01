@@ -3,10 +3,7 @@ package com.sportscar.sportscar.service.impl;
 import com.sportscar.sportscar.bean.User;
 import com.sportscar.sportscar.mapper.UserMapper;
 import com.sportscar.sportscar.service.IUserService;
-import com.sportscar.sportscar.service.ex.InsertException;
-import com.sportscar.sportscar.service.ex.PasswordNotMatchException;
-import com.sportscar.sportscar.service.ex.UserNotFoundException;
-import com.sportscar.sportscar.service.ex.UsernameDuplicatedException;
+import com.sportscar.sportscar.service.ex.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -53,10 +50,6 @@ public class UserServiceImpl implements IUserService {
         if(!newMd5Password.equals(result.getPassword())){
             throw new PasswordNotMatchException("用户密码错误");
         }
-        //判断账户是否注销
-        if(result.getStatus() == 0){
-            throw new UserNotFoundException("用户数据不存在");
-        }
         return result;
     }
 
@@ -66,6 +59,64 @@ public class UserServiceImpl implements IUserService {
         if(result == null){
             throw new UserNotFoundException("用户账号不存在");
         }
+        return result;
+    }
+
+    @Override
+    public List<User> delete(Integer userID){
+        User user = userMapper.findByID(userID);
+        if(user == null){
+            throw new UserNotFoundException("用户账号不存在");
+        }
+        Integer rows = userMapper.delete(userID);
+        if(rows != 1){
+            throw new DeleteException("删除时产生未知异常");
+        }
+        List<User> result = userMapper.findAll();
+        return result;
+    }
+
+    @Override
+    public List<User> updateUsers(User user){
+        String username =user.getUserName();
+        User test = userMapper.findByName(username);
+        if(test == null){
+            throw new UserNotFoundException("用户账号不存在");
+        }
+        Integer rows = userMapper.updateUser(user);
+        if(rows != 1){
+            throw new UpdateException("修改时产生未知异常");
+        }
+        List<User> result = userMapper.findAll();
+        return result;
+    }
+
+    @Override
+    public void changePassword(String userName, String password){
+        User user = userMapper.findByName(userName);
+        if(user == null){
+            throw new UserNotFoundException("用户账号不存在");
+        }
+        String salt = user.getSalt();
+        String newMd5Password = getMD5Password(password, salt);
+        Integer rows = userMapper.updatePassword(userName,newMd5Password);
+        if(rows != 1){
+            throw new UpdateException("修改时产生未知异常");
+        }
+    }
+
+    @Override
+    public User changeUser(User user){
+        Integer userID = user.getUserID();
+        User test = userMapper.findByID(userID);
+        if(test == null){
+            throw new UserNotFoundException("用户账号不存在");
+        }
+        Integer rows = userMapper.updateUser(user);
+        if(rows != 1){
+            throw new UpdateException("修改时产生未知异常");
+        }
+        User result = userMapper.findByID(userID);
         return result;
     }
 

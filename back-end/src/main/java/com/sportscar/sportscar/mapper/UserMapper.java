@@ -15,6 +15,12 @@ public interface UserMapper {
      */
     Integer insert(User user);
 
+    Integer delete(Integer userID);
+
+    Integer updatePassword(String userName,String password);
+
+    Integer updateUser(User user);
+
     /**
      * 根据用户名来查询用户数据
      * @param userName 用户名
@@ -25,4 +31,5 @@ public interface UserMapper {
     User findByID(Integer userID);
 
     List<User> findAll();
+
 }
