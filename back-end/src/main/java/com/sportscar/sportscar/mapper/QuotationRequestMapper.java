@@ -14,4 +14,5 @@ public interface QuotationRequestMapper {
     List<Quotation_request> showAllQuatationRequest(Integer userID);
     List<Quotation_request> selectQuatationRequestByID(List<Quotation_request> quotation_requestList);
     List<Quotation_request> SelectQuatationRequestByField(Quotation_request quotation_request);
+    List<Quotation_request> SelectQuatationRequestByState(Integer userID);
 }

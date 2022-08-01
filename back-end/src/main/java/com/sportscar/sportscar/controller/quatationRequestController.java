@@ -145,4 +145,27 @@ public class quatationRequestController {
         result.put("data",quotation_requestResult);
         return result;
     }
+    @ResponseBody
+    @GetMapping("/SelectQuatationRequestByState")
+    public JSONObject SelectQuatationRequestByState(){
+        //session
+        JSONObject result=new JSONObject();
+        List<Quotation_request> quotationRequestList=new LinkedList<>();
+        //session
+        Integer userID=1;
+        try{
+            quotationRequestList=QuotationRequestService.SelectQuatationRequestByState(userID);
+        }catch (Exception e){
+            result.put("status",500);
+            result.put("desc","查询失败");
+            System.out.println(e);
+            return result;
+        }
+        result.put("status",200);
+        result.put("desc","查询成功");
+        result.put("data",quotationRequestList);
+        return result;
+    }
+
+
 }

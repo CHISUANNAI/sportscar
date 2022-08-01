@@ -6,4 +6,15 @@
     <select id="getComparison" resultType="com.sportscar.sportscar.bean.Comparison">
         SELECT * FROM comparison where userID=#{userID};
     </select>
+
+    <insert id="addComparison" parameterType="com.sportscar.sportscar.bean.Comparison">
+        insert into comparison values (#{comparisonID},#{rfqID},#{userID})
+    </insert>
+    <insert id="addComparisonAll" >
+        insert into comparison values
+        <foreach collection="list" separator="," item="item">
+            (#{item.comparisonID},#{item.rfqID},#{item.userID})
+        </foreach>
+    </insert>
+
 </mapper>

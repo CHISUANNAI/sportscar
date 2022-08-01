@@ -22,4 +22,6 @@ public interface IQuotationRequestService {
                                                                  String date,
                                                                  String limitedDate,
                                                                  HttpServletRequest request) throws ParseException;
+    public List<Quotation_request> SelectQuatationRequestByState(Integer userID);
+
 }

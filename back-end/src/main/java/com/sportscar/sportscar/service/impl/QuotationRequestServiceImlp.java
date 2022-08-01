@@ -144,7 +144,15 @@ public class QuotationRequestServiceImlp implements IQuotationRequestService {
             quotation_request.setLimitedDate(simpleDateFormat.parse(limitedDate));
         }
         return quotationRequestMapper.SelectQuatationRequestByField(quotation_request);
+    }
+
+    @Override
+    public List<Quotation_request> SelectQuatationRequestByState(Integer userID) {
+        return quotationRequestMapper.SelectQuatationRequestByState(userID);
     };
+
+
+
     @Override
     public List<Quotation_request> showAllQuatationRequest(HttpServletRequest request) {
         Object sessionuserID=request.getSession().getAttribute("userID");
@@ -153,5 +161,7 @@ public class QuotationRequestServiceImlp implements IQuotationRequestService {
         }
         Integer userID=Integer.parseInt(sessionuserID.toString());
         return quotationRequestMapper.showAllQuatationRequest(userID);
-    }
+    };
+
+
 }

@@ -47,6 +47,9 @@
             and limitedDate=#{limitedDate}
         </if>
     </select>
+    <select id="SelectQuatationRequestByState" resultType="com.sportscar.sportscar.bean.Quotation_request">
+        select * from quotation_request where userID=#{userID} and state=0
+    </select>
 <!--    <insert id="insertBatch">-->
 <!--        INSERT INTO tb_student (name, age, phone, address, class_id) VALUES-->
 <!--        <foreach collection="list" separator="," item="item">-->

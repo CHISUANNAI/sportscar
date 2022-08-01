@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sportscar.sportscar.mapper.ProcurementOrderMapper">
+    <select id="SelectPOBysubpo" resultType="com.sportscar.sportscar.bean.Procurement_order">
+        select * from procurement_order where sub_orderID=#{sub_orderID}
+    </select>
+
+    <select id="SelectPO" resultType="java.lang.Integer">
+        select sub_orderID from procurement_order where orderID=#{orderID}
+    </select>
+
+    <select id="SelectMaterialBysub" resultType="com.sportscar.sportscar.bean.Material">
+        SELECT * FROM material WHERE materialID=#{materialID}
+    </select>
+
+    <select id="SelectInvoiceDetailBysub" resultType="com.sportscar.sportscar.bean.Invoice_detail">
+        SELECT * FROM invoice_detail WHERE sub_orderID=#{sub_orderID}
+    </select>
+
+</mapper>
