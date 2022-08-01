@@ -36,18 +36,17 @@ public class QuotationRequestServiceImlp implements IQuotationRequestService {
                                       HttpServletRequest request) throws ParseException {
         List<Quotation_request> quotation_requestLi=new ArrayList<>();
         String rfqID;
+        Random r = new Random();
+        Object SessionUserID = request.getSession().getAttribute("userID");
+        Integer userID;
         //日期
         Date dNow = new Date( );
         SimpleDateFormat ft = new SimpleDateFormat ("yyyyMMddhhmmss");
         SimpleDateFormat ym = new SimpleDateFormat ("yyyy-MM-dd");
-        rfqID="rfq"+ft.format(dNow);
         //字符串转data
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         //String dateStr = "2019-01-03 10:59:27";
         //Date date = simpleDateFormat.parse(dateStr);
-        Random r = new Random();
-        Object SessionUserID = request.getSession().getAttribute("userID");
-        Integer userID;
         if(SessionUserID == null){
             return -1;
         }
@@ -58,6 +57,7 @@ public class QuotationRequestServiceImlp implements IQuotationRequestService {
             System.out.println(e);
             return -1;
         }
+        rfqID="rfq"+ft.format(dNow)+userID;
         for(int i = 0; i<supplierID.length; i++){
             Quotation_request quotation_request=new Quotation_request();
             quotation_request.setUserID(userID);
@@ -75,11 +75,11 @@ public class QuotationRequestServiceImlp implements IQuotationRequestService {
             }
             quotation_request.setMaterialID(materialID[i]);
             quotation_request.setAmount(amount[i]);
-            quotation_request.setPrice(500+r.nextInt(500));
+            quotation_request.setPrice(500+r.nextFloat()*500);
             quotation_request.setDate(dNow);
             quotation_request.setLimitedDate(simpleDateFormat.parse(date_limit[0]));
 //            quotation_request.setDate_limit(dNow);
-            quotation_request.setState(1);
+            quotation_request.setState(0);
             quotation_requestLi.add(quotation_request);
         }
         return quotationRequestMapper.addQuotationRequestAll(quotation_requestLi);

@@ -1,6 +1,6 @@
 package com.sportscar.sportscar.service.ex;
 
-/** 员工编号不存在的异常 */
+/** 未登录的异常 */
 public class NotLoggedInException extends ServiceException {
     public NotLoggedInException() {
         super();

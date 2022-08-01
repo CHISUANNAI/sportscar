@@ -1,6 +1,6 @@
 package com.sportscar.sportscar.service.ex;
 
-/** 数据删除过程中产生的异常 */
+/** 数据更新过程中产生的异常 */
 public class UpdateException extends ServiceException{
     public UpdateException() {
         super();

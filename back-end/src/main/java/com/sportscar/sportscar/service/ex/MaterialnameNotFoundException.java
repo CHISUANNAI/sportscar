@@ -1,6 +1,6 @@
 package com.sportscar.sportscar.service.ex;
 
-/** 物料名称被占用的异常 */
+/** 物料名称不存在的异常 */
 public class MaterialnameNotFoundException extends ServiceException{
     public MaterialnameNotFoundException() {
         super();

@@ -50,6 +50,19 @@
     <select id="SelectQuatationRequestByState" resultType="com.sportscar.sportscar.bean.Quotation_request">
         select * from quotation_request where userID=#{userID} and state=0
     </select>
+    <select id="SelectQuatationRequestByPrimaryKey" resultType="com.sportscar.sportscar.bean.Quotation_request">
+        select * from quotation_request where userID=#{userID} and rfqID=#{rfqID} and supplierID=#{supplierID} and materialID=#{materialID}
+    </select>
+    <update id="updateQuatationRequestStateByPrimaryKey">
+        update quotation_request
+        set state = #{state}
+        where userID = #{userID} and rfqID=#{rfqID} and supplierID=#{supplierID} and materialID=#{materialID}
+    </update>
+    <select id="isFinished" resultType="java.lang.Integer">
+        SELECT 1 FROM quotation_request WHERE userID = #{userID} and rfqID=#{rfqID} and supplierID=#{supplierID} and materialID=#{materialID}
+        and state=1
+    </select>
+
 <!--    <insert id="insertBatch">-->
 <!--        INSERT INTO tb_student (name, age, phone, address, class_id) VALUES-->
 <!--        <foreach collection="list" separator="," item="item">-->

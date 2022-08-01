@@ -1,6 +1,6 @@
 package com.sportscar.sportscar.service.ex;
 
-/** 数据插入过程中产生的异常 */
+/** 未知错误的异常 */
 public class ErrorException extends ServiceException{
     public ErrorException() {
         super();

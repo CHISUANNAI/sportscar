@@ -1,6 +1,6 @@
 package com.sportscar.sportscar.service.ex;
 
-/** 供应商名称被占用的异常 */
+/** 供应商名称不存在的异常 */
 public class SuppliernameNotFoundException extends ServiceException{
     public SuppliernameNotFoundException() {
         super();

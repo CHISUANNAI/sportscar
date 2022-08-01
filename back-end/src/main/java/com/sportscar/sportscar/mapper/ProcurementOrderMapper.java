@@ -9,10 +9,19 @@ import java.util.List;
 
 @Mapper
 public interface ProcurementOrderMapper {
-    @Select("SELECT * FROM sportscar.procurement_order where(orderID=#{orderID});")
-    public Procurement_order getProcurement(int orderID);
+//    @Select("SELECT * FROM sportscar.procurement_order where(orderID=#{orderID});")
+//    public Procurement_order getProcurement(int orderID);
+    /**yss*/
     Procurement_order SelectPOBysubpo(Integer sub_orderID);
     List<Integer> SelectPO(Integer orderID);
     Material SelectMaterialBysub(Integer materialID);
     Invoice_detail SelectInvoiceDetailBysub(Integer sub_orderID);
+    //    public Procurement_order getProcurement(int orderID);
+    /**dkn*/
+    public int insertProcurementOrderSeries(List<Procurement_order> procurement_orderList);
+    public Integer deleteProcurementOrderSeriesBySub_orderID(List<Procurement_order> procurement_orderList);
+    public List<Procurement_order> selectPOBySubOrderID(List<Procurement_order> procurement_orderList);
+    public List<Procurement_order> selectAllPO(Integer userID);
+    public List<Procurement_order> selectPOByOrderID(List<Procurement_order> procurement_orderList);
+    public Integer deleteProcurementOrderSeriesByOrderID(List<Procurement_order> procurement_orderList);
 }
