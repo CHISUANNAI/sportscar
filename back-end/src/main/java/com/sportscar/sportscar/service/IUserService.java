@@ -19,5 +19,15 @@ public interface IUserService {
      */
     User login(String userName, String password);
 
+    //以下为员工展示页面
     List<User> load();
+
+    List<User> delete(Integer userID);
+
+    List<User> updateUsers(User user);
+
+    //以下为个人信息页面
+    void changePassword(String userName, String password);
+
+    User changeUser(User user);
 }

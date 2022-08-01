@@ -35,4 +35,27 @@ public class UserController extends BaseController {
         List<User> data = userService.load();
         return new JsonResult<>(OK,data);
     }
+
+    @RequestMapping("delete")
+    public JsonResult<List<User>> delete(Integer userID){
+        List<User> data = userService.delete(userID);
+        return new JsonResult<>(OK,data);
+    }
+
+    @RequestMapping("update")
+    public JsonResult<List<User>> updateUsers(User user){
+        List<User> data = userService.updateUsers(user);
+        return new JsonResult<>(OK,data);
+    }
+
+    @RequestMapping("changePw")
+    public JsonResult<Void> changePassword(String userName,String password){
+        userService.changePassword(userName,password);
+        return new JsonResult<>(OK);
+    }
+    @RequestMapping("changeIn")
+    public JsonResult<User> changeUser(User user){
+        User result = userService.changeUser(user);
+        return new JsonResult<>(OK,result);
+    }
 }

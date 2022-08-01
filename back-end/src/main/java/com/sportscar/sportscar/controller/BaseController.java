@@ -26,6 +26,12 @@ public class BaseController {
         }else if(e instanceof InsertException){
             result.setState(5000);
             result.setMessage("创建时产生未知异常");
+        }else if(e instanceof DeleteException){
+            result.setState(5001);
+            result.setMessage("删除时产生未知异常");
+        }else if(e instanceof UpdateException){
+            result.setState(5002);
+            result.setMessage("修改时产生未知异常");
         }else if(e instanceof SuppliernameDuplicatedException){
             result.setState(6000);
             result.setMessage("供应商名称被占用异常");
