@@ -11,4 +11,8 @@ public interface SupplierMapper {
 
     Supplier findByName(String supplierName);
 
+    //判断某供应商是否存在
+    Integer ifSupplierExist(Integer supplierID);
+    //查询供应商
+    Supplier findByID(Integer supplierID);
 }

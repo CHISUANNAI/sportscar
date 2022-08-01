@@ -13,4 +13,12 @@
         SELECT * FROM supplier WHERE supplierName = #{supplierName}
     </select>
 
+<!--    判断某供应商是否存在-->
+    <select id="ifSupplierExist" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT 1 FROM supplier WHERE supplierID = #{supplierID}
+    </select>
+<!--    通过id查询供应商-->
+    <select id="findByID" resultType="com.sportscar.sportscar.bean.Supplier" parameterType="java.lang.Integer">
+        SELECT * FROM supplier WHERE supplierID = #{supplierID}
+    </select>
 </mapper>

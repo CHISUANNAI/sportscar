@@ -7,4 +7,6 @@ public interface ISupplierService {
 
     void cre(Supplier supplier);
 
+    //用于判断某供应商是否存在
+    Integer ifSupplierExist(Integer supplierID);
 }

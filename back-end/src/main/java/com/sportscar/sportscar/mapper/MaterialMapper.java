@@ -11,4 +11,5 @@ public interface MaterialMapper {
 
     Material findByName(String materialName);
 
+    Material findByID(Integer materialID);
 }

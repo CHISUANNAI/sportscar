@@ -13,4 +13,8 @@
         SELECT * FROM material WHERE materialName = #{materialName}
     </select>
 
+<!--    用id查询物料-->
+    <select id="findByID" resultType="com.sportscar.sportscar.bean.Material">
+        SELECT * FROM material WHERE materialID = #{materialID}
+    </select>
 </mapper>

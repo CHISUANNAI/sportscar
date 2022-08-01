@@ -39,4 +39,10 @@ public class SupplierServiceImpl implements ISupplierService {
         }
     }
 
+    //用于判断某供应商是否存在
+    @Override
+    public Integer ifSupplierExist(Integer supplierID){
+        return supplierMapper.ifSupplierExist(supplierID);
+    }
+
 }

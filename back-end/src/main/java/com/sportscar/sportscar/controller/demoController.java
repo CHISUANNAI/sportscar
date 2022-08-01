@@ -2,8 +2,8 @@ package com.sportscar.sportscar.controller;
 
 import com.sportscar.sportscar.bean.Comparison;
 import com.sportscar.sportscar.bean.Procurement_order;
-import com.sportscar.sportscar.service.ComparisonService;
-import com.sportscar.sportscar.service.ProcurementOrderMapperService;
+import com.sportscar.sportscar.service.impl.ComparisonService;
+import com.sportscar.sportscar.service.impl.ProcurementOrderMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
