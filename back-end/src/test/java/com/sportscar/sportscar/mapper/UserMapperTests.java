@@ -30,4 +30,9 @@ public class UserMapperTests {
         System.out.println(user);
     }
 
+    @Test
+    public void findAll(){
+        System.out.println(userMapper.findAll());
+    }
+
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sportscar.sportscar.mapper.ProcurementOrderMapper">
+    <select id="SelectPOBysubpo" resultType="com.sportscar.sportscar.bean.Procurement_order">
+        select * from procurement_order where sub_orderID=#{sub_orderID}
+    </select>
+
+    <select id="SelectPO" resultType="java.lang.Integer">
+        select sub_orderID from procurement_order where orderID=#{orderID}
+    </select>
+
+    <select id="SelectMaterialBysub" resultType="com.sportscar.sportscar.bean.Material">
+        SELECT * FROM material WHERE materialID=#{materialID}
+    </select>
+
+    <select id="SelectInvoiceDetailBysub" resultType="com.sportscar.sportscar.bean.Invoice_detail">
+        SELECT * FROM invoice_detail WHERE sub_orderID=#{sub_orderID}
+    </select>
+<!-- by dkn-->
+    <insert id="insertProcurementOrderSeries" >
+        INSERT INTO procurement_order (sub_orderID,orderID,rfqID,supplierID,userID,amount,materialID,price,date) VALUES
+        <foreach collection="list" separator="," item="item">
+            (#{item.subOrderID},#{item.orderID},#{item.rfqID},#{item.supplierID},#{item.userID},#{item.amount},#{item.materialID},
+            #{item.price},#{item.date})
+        </foreach>
+    </insert>
+    <delete id="deleteProcurementOrderSeriesBySub_orderID" parameterType="java.util.List">
+        delete from procurement_order where (sub_orderID,userID) in
+        <foreach item="item" index="index" collection="list" separator="," open="(" close=")">
+             (#{item.subOrderID},#{item.userID})
+        </foreach>
+    </delete>
+    <select id="selectPOBySubOrderID" parameterType="java.util.List" resultType="com.sportscar.sportscar.bean.Procurement_order">
+        select * from procurement_order where (userID,sub_orderID) in
+        <foreach item="item" index="index" collection="list" separator="," open="(" close=")">
+            (#{item.userID},#{item.subOrderID})
+        </foreach>
+    </select>
+    <select id="selectAllPO" resultType="com.sportscar.sportscar.bean.Procurement_order">
+        select * from procurement_order where userID=#{userID}
+    </select>
+    <select id="selectPOByOrderID" parameterType="java.util.List" resultType="com.sportscar.sportscar.bean.Procurement_order">
+        select * from procurement_order where (userID,orderID) in
+        <foreach item="item" index="index" collection="list" separator="," open="(" close=")">
+            (#{item.userID},#{item.orderID})
+        </foreach>
+    </select>
+    <delete id="deleteProcurementOrderSeriesByOrderID" parameterType="java.util.List">
+        delete from procurement_order where (orderID,userID) in
+        <foreach item="item" index="index" collection="list" separator="," open="(" close=")">
+            (#{item.orderID},#{item.userID})
+        </foreach>
+    </delete>
+</mapper>

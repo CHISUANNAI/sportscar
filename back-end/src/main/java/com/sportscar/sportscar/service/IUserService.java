@@ -2,6 +2,8 @@ package com.sportscar.sportscar.service;
 
 import com.sportscar.sportscar.bean.User;
 
+import java.util.List;
+
 /** 用户模块业务层接口 */
 public interface IUserService {
     /**
@@ -16,4 +18,16 @@ public interface IUserService {
      * @param password 用户密码
      */
     User login(String userName, String password);
+
+    //以下为员工展示页面
+    List<User> load();
+
+    List<User> delete(Integer userID);
+
+    List<User> updateUsers(User user);
+
+    //以下为个人信息页面
+    void changePassword(String userName, String password);
+
+    User changeUser(User user);
 }

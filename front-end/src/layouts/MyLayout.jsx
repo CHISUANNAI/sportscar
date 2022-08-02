@@ -14,6 +14,7 @@ import ReceiveGoods from "../pages/ReceiveGoods";
 import RequisitionManagement from "../pages/RequisitionManagement";
 import SupplierManagement from "../pages/SupplierManagement";
 import PersonalManagement from "../pages/PersonalManagement";
+import PasswordEdit from "../pages/PasswordEdit";
 import documentflowmanagement from "../pages/documentflowmanagement";
 import Home from "../pages/Home";
 import logo from "../graphs/logo.png";
@@ -50,11 +51,11 @@ class MyLayout extends Component {
     render() {
         const menu = (
             <Menu onClick={this.handleClick}>
-                <Menu.Item key="/Home" icon={<HomeOutlined />}>
-                    个人首页
-                </Menu.Item>
                 <Menu.Item key="/Home/personalManagement" icon={<EditOutlined />}>
                     个人设置
+                </Menu.Item>
+                <Menu.Item key="/Home/passwordEdit" icon={<HomeOutlined />}>
+                    修改密码
                 </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item
@@ -125,7 +126,7 @@ class MyLayout extends Component {
                                 Today&nbsp; : &nbsp;{moment().format("YYYY-MM-DD")}
                             </Button>
                         </Popover>
-                        <Dropdown overlay={menu} placement="bottomCenter">
+                        <Dropdown overlay={menu} placement="bottom">
                             <Button
                                 type="text"
                                 size="large"
@@ -196,6 +197,10 @@ class MyLayout extends Component {
                             <Route
                                 path="/Home/personalManagement"
                                 component={PersonalManagement}
+                            />
+                            <Route
+                                path="/Home/passwordEdit"
+                                component={PasswordEdit}
                             />
                             <Route path="/Home" component={Home} />
                         </Switch>

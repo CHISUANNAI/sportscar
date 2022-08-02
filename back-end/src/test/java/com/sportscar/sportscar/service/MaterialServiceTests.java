@@ -2,7 +2,6 @@ package com.sportscar.sportscar.service;
 
 import com.sportscar.sportscar.bean.Material;
 import com.sportscar.sportscar.service.ex.ServiceException;
-import com.sportscar.sportscar.service.impl.IMaterialService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

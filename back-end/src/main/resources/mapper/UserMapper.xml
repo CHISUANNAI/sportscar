@@ -11,6 +11,19 @@
         ) VALUES (#{userName},#{password},#{salt},#{phone},#{email},#{gender},#{avatar},#{status})
     </insert>
 
+    <delete id="delete">
+        DELETE FROM user WHERE userID = #{userID}
+    </delete>
+
+    <update id="updatePassword">
+        UPDATE user SET password = #{password} WHERE userName = #{userName}
+    </update>
+
+    <update id="updateUser">
+        UPDATE user SET userName = #{userName}, phone = #{phone},email = #{email},
+                        gender = #{gender}, avatar = #{avatar} WHERE userID = #{userID}
+    </update>
+
     <!--类和表对应名字全都一致可以用resultType-->
     <select id="findByName" resultType="com.sportscar.sportscar.bean.User">
         SELECT * FROM user WHERE userName = #{userName}
@@ -18,6 +31,10 @@
 
     <select id="findByID" resultType="com.sportscar.sportscar.bean.User">
         SELECT * FROM user WHERE userID = #{userID}
+    </select>
+
+    <select id="findAll" resultType="com.sportscar.sportscar.bean.User">
+        SELECT * FROM user
     </select>
 
 </mapper>
