@@ -13,12 +13,12 @@ export default class CreateMaterial extends Component {
     onFinish = (values) => {
         // Supplieradd(values).then(
         // 	(response) => {
-        // 		if (response.data.result === 'success') {
-        // 			message.success('账号' + response.data.employee_id + '已创建成功');
+        // 		if (response.data.state === 200) {
+        // 			message.success('物料' + response.data.data.materialName + '已创建成功');
         // 			this.formRef.current.resetFields();
         // 			this.handleCreateClick();
         // 		} else {
-        // 			message.info('提交失败，请重试');
+        // 			message.info(response.data.message);
         // 		}
         // 	},
         // 	(error) => {

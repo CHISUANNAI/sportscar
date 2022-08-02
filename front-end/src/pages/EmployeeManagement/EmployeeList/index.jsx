@@ -2,39 +2,37 @@ import React, { Component } from 'react';
 import { Table, Input, Button, Space, Divider, Popconfirm, message, Badge, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined, DeleteOutlined } from '@ant-design/icons';
-//import { Employeelist, Employeedelete, Employeeedit } from '../../../services/auth';
+import { Employeelist } from '../../../API/auth';
 //import { getToken } from '../../../utils/auth';
 import EditEmployee from '../Edit';
 
 //静态测试员工列表
-const dataSource = [
-    {
-        userID: '11351',
-        userName: 'abc',
-        gender: 1,
-        telephone: '18018055555',
-        mail: 'test@group.com',
-        status: 1
-    },
-    {
-        userID: '11352',
-        userName: 'dfe',
-        gender: 0,
-        telephone: '18018055555',
-        mail: 'test111@group.com',
-        status: 0
-    },
-    {
-        userID: '11353',
-        userName: 'fgh',
-        gender: 1,
-        telephone: '18018055555',
-        mail: 'test222@group.com',
-        status: 0
-    }
-];
-
-
+// const dataSource = [
+//     {
+//         userID: '00000',
+//         userName: 'abc',
+//         gender: 1,
+//         phone: '18018055555',
+//         email: 'test@group.com',
+//         status: 1
+//     },
+//     {
+//         userID: '11352',
+//         userName: 'dfe',
+//         gender: 0,
+//         phone: '18018055555',
+//         email: 'test111@group.com',
+//         status: 0
+//     },
+//     {
+//         userID: '11353',
+//         userName: 'fgh',
+//         gender: 1,
+//         phone: '18018055555',
+//         email: 'test222@group.com',
+//         status: 0
+//     }
+// ];
 
 export default class EmployeeList extends Component {
     state = {
@@ -44,18 +42,18 @@ export default class EmployeeList extends Component {
     };
 
     componentDidMount() {
-        console.log(dataSource);
-        // 	Employeelist().then(
-        // 		(response) => {
-        // 			//拿到我们想要渲染的数据(res)
-        // 			this.setState({
-        // 							dataSource: response.data
-        // 			});
-        // 		},
-        // 		(error) => {
-        // 			console.log('失败了', error);
-        // 		}
-        // 	);
+        Employeelist().then(
+            (response) => {
+                //拿到我们想要渲染的数据(res)
+                this.setState({
+                    dataSource: response.data.data
+                });
+                console.log(response.data);
+            },
+            (error) => {
+                console.log('失败了', error);
+            }
+        );
     }
 
     // 搜索框函数
@@ -136,50 +134,54 @@ export default class EmployeeList extends Component {
     };
 
     // 传给抽屉用于编辑的函数
-     handleEditClick = (value) => {
+    handleEditClick = (value) => {
+        //转换数据内容
+        value.gender = (value.gender === '女') ? 1 : 0;
+        value.status = (value.status === '管理员') ? 1 : 0;
         console.log(value)
-    // 	// 先传值
-    // 	Employeeedit(value).then(
-    // 		(response) => {
-    // 			if (response.data === 'success') {
-    // 				message.success('修改成功');
-    // 				Employeelist().then(
-    // 					(response) => {
-    // 						this.setState({
-    // 							dataSource: response.data
-    // 						});
-    // 					},
-    // 					(error) => {
-    // 						console.log('失败了', error);
-    // 					}
-    // 				);
-    // 			} else {
-    // 				message.info('修改失败，请重试');
-    // 			}
-    // 		},
-    // 		(error) => {
-    // 			console.log('数据获取失败', error);
-    // 		}
-    // 	);
-     };
+        // 先传值
+        // 	Employeeedit(value).then(
+        // 		(response) => {
+        // 			if (response.data.state === 200) { //成功状态码200
+        // 				message.success('修改成功');
+        // 				Employeelist().then(
+        // 					(response) => {
+        // 						this.setState({
+        // 							dataSource: response.data.data
+        // 						});
+        // 					},
+        // 					(error) => {
+        // 						console.log('失败了', error);
+        // 					}
+        // 				);
+        // 			} else {
+        // 				message.info(response.data.message);
+        // 			}
+        // 		},
+        // 		(error) => {
+        // 			console.log('数据获取失败', error);
+        // 		}
+        // 	);
+    };
     // 用于删除员工的函数
-     handleDelete = (userID) => {
-    // 	Employeedelete(userID).then(
-    // 		(response) => {
-    // 			if (response.data === 'success') {
-    // 				message.success('删除成功');
-    // 				// 删除成功后改变页面内容
-    // 				const dataSource = [ ...this.state.dataSource ];
-    // 				this.setState({
-    // 					dataSource: dataSource.filter((item) => item.userID !== userID)
-    // 				});
-    // 			} else message.info('删除失败，请重试');
-    // 		},
-    // 		(error) => {
-    // 			console.log('数据获取失败', error);
-    // 		}
-    // 	);
-     };
+    handleDelete = (userID) => {
+        console.log(userID)
+        // 	Employeedelete(userID).then(
+        // 		(response) => {
+        // 			if (response.data.state === 200) {
+        // 				message.success('删除成功');
+        // 				// 删除成功后改变页面内容
+        // 				const dataSource = [ ...this.state.dataSource ];
+        // 				this.setState({
+        // 					dataSource: dataSource.filter((item) => item.userID !== userID)
+        // 				});
+        // 			} else message.info(response.data.message);
+        // 		},
+        // 		(error) => {
+        // 			console.log('数据获取失败', error);
+        // 		}
+        // 	);
+    };
 
 
     render() {
@@ -216,15 +218,15 @@ export default class EmployeeList extends Component {
             },
             {
                 title: '电话',
-                dataIndex: 'telephone',
+                dataIndex: 'phone',
                 align: 'center',
-                ...this.getColumnSearchProps('telephone')
+                ...this.getColumnSearchProps('phone')
             },
             {
                 title: '邮箱',
-                dataIndex: 'mail',
+                dataIndex: 'email',
                 align: 'center',
-                ...this.getColumnSearchProps('mail')
+                ...this.getColumnSearchProps('email')
             }
             ,
             {
@@ -248,7 +250,7 @@ export default class EmployeeList extends Component {
                     <Space>
                         <EditEmployee employee={record} handleEditClick={this.handleEditClick} />
                         <Divider type="vertical" />
-                        <Popconfirm title="确定要删除吗？" onConfirm={() => this.handleDelete(record.id)}>
+                        <Popconfirm title="确定要删除吗？" onConfirm={() => this.handleDelete(record.userID)}>
                             <Button danger type="text" size="small" icon={<DeleteOutlined />}>
                                 删除
                             </Button>
@@ -263,12 +265,17 @@ export default class EmployeeList extends Component {
                 <Table
                     className="table"
                     columns={columns}
-                    // dataSource={this.state.dataSource}
-                    dataSource={dataSource.map(dataSource => {
-                        dataSource.gender = (dataSource.gender === 1 || dataSource.gender === '女' ) ? '女' : '男';
-                        dataSource.status = (dataSource.status === 1 || dataSource.status === '管理员' ) ? '管理员' : '员工';
+                    dataSource={this.state.dataSource.map(dataSource => {
+                        dataSource.gender = (dataSource.gender === 1 || dataSource.gender === '女') ? '女' : '男';
+                        dataSource.status = (dataSource.status === 1 || dataSource.status === '管理员') ? '管理员' : '员工';
                         return dataSource
                     })}
+                    //静态测试数据
+                    // dataSource={dataSource.map(dataSource => {
+                    //     dataSource.gender = (dataSource.gender === 1 || dataSource.gender === '女') ? '女' : '男';
+                    //     dataSource.status = (dataSource.status === 1 || dataSource.status === '管理员') ? '管理员' : '员工';
+                    //     return dataSource
+                    // })}
                     rowKey={(record) => record.userID}
                     pagination={{ pageSize: 7 }}
                     size="small"
