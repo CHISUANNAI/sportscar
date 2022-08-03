@@ -12,10 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ProcurementOrderServiceImpl implements IProcurementOrderService {
@@ -173,6 +172,40 @@ public class ProcurementOrderServiceImpl implements IProcurementOrderService {
                     userID,0);
         }
         return code;
+    };
+    public List<Procurement_order> selectPOByField(String rfqID,
+                                                   Integer supplierID,
+                                                   Integer materialID,
+                                                   String date,
+                                                   HttpServletRequest request) throws ParseException {
+        Object sessionuserID=request.getSession().getAttribute("userID");
+        if(sessionuserID==null){
+            throw new NotLoggedInException("请登录后再操作！");
+        }
+        Integer userID=Integer.parseInt(sessionuserID.toString());
+        Procurement_order procurement_order=new Procurement_order();
+        if(rfqID.length()!=0){
+        procurement_order.setRfqID(rfqID);}
+        procurement_order.setUserID(userID);
+        procurement_order.setSupplierID(supplierID);
+        procurement_order.setMaterialID(materialID);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = new GregorianCalendar();
+        Date nextday=simpleDateFormat.parse(date);
+        calendar.setTime(nextday);
+        calendar.add(calendar.DATE,1);//1表示明天,-1表示昨天
+        nextday=calendar.getTime();
+        System.out.println(nextday);
+        if (date!=null&&!date.isEmpty()){
+            procurement_order.setDay(simpleDateFormat.parse(date));
+            procurement_order.setNextday(nextday);
+        }
+        List<Procurement_order> procurement_orderList=new LinkedList<>();
+        procurement_orderList=procurementOrderMapper.selectPOByField(procurement_order);
+        if(procurement_orderList==null||procurement_orderList.size()==0){
+            throw new NotFoundException("未找到相关数据");
+        }
+        return procurement_orderList;
     };
     /**yss*/
     public Procurement_order SelectPOBysubpo(Integer sub_orderID){

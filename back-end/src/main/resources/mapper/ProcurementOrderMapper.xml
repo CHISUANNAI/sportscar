@@ -53,4 +53,19 @@
             (#{item.orderID},#{item.userID})
         </foreach>
     </delete>
+    <select id="selectPOByField" parameterType="com.sportscar.sportscar.bean.Procurement_order" resultType="com.sportscar.sportscar.bean.Procurement_order">
+        select * from procurement_order where userID=#{userID}
+        <if test="rfqID!=null">
+            and rfqID=#{rfqID}
+        </if>
+        <if test="supplierID!=-1">
+            and supplierID=#{supplierID}
+        </if>
+        <if test="materialID!=-1">
+            and materialID=#{materialID}
+        </if>
+        <if test="day!=null and nextday!=null">
+            and date &gt; #{day} and date &lt; #{nextday}
+        </if>
+    </select>
 </mapper>
