@@ -13,7 +13,7 @@ public class ReceiveProductDetail {
     @TableId(type = IdType.AUTO)
     private Integer subReceiveid;
     private Integer receiveid;
-    private Integer subOrderid;
+    private String subOrderid;
     private Integer supplierid;
     private Integer userid;
     private Integer amount;
@@ -39,11 +39,11 @@ public class ReceiveProductDetail {
         this.receiveid = receiveid;
     }
 
-    public Integer getSubOrderid() {
+    public String getSubOrderid() {
         return subOrderid;
     }
 
-    public void setSubOrderid(Integer subOrderid) {
+    public void setSubOrderid(String subOrderid) {
         this.subOrderid = subOrderid;
     }
 

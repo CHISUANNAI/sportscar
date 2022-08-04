@@ -27,7 +27,7 @@ public class receiveProductController {
      */
     @ResponseBody
     @GetMapping("/getOrderStatus")
-    public JSONObject getOrderStatus(@RequestParam("orderID") Integer orderID
+    public JSONObject getOrderStatus(@RequestParam("orderID") String orderID
                                           ) throws ParseException {
         return receiveProductService.getOrderStatus(orderID);
     }
@@ -37,8 +37,8 @@ public class receiveProductController {
     */
     @ResponseBody
     @GetMapping("/receiveProduct")
-    public JSONObject ReceiveProduct(@RequestParam("orderID") Integer orderID,@RequestParam("subOrderID")
-            Integer subOrderID,@RequestParam("storageLocation") String storageLocation) throws ParseException {
+    public JSONObject ReceiveProduct(@RequestParam("orderID") String orderID,@RequestParam("subOrderID")
+            String subOrderID,@RequestParam("storageLocation") String storageLocation) throws ParseException {
         return receiveProductService.ReceiveProduct(orderID,subOrderID,storageLocation);
     }
     /*
@@ -46,7 +46,7 @@ public class receiveProductController {
     */
     @ResponseBody
     @GetMapping("/checkReceive")
-    public JSONObject CheckReceive(@RequestParam("orderID") Integer orderID) throws ParseException {
+    public JSONObject CheckReceive(@RequestParam("orderID") String orderID) throws ParseException {
         return receiveProductService.CheckReceive(orderID);
     }
 }

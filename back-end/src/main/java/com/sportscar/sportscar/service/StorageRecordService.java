@@ -40,9 +40,11 @@ public class StorageRecordService {
         for(int i=0;i<storageLocation.size();i++) {
             storageInfo.add(storageRecordMapper.selectReceiveByOrderID(materialID,storageLocation.get(i)).get(0));
         }
+        object.put("location", storageLocation);
         object.put("data", storageInfo);
         object.put("status", 200);
         object.put("desc", "查询成功");
+
         return object;
     }
     public JSONObject getHistoryStock(Integer materialID,String storageLocation) throws ParseException {

@@ -12,7 +12,7 @@ import java.util.List;
 public interface ReceiveProductDetailMapper extends BaseMapper<ReceiveProductDetail> {
     //根据小订单ID查询收货详情状态
     @Select("SELECT * FROM sportscar.receive_product_detail where(sub_orderID=#{SubOrderID});")
-    ReceiveProductDetail selectReceiveByID(Integer SubOrderID);
+    ReceiveProductDetail selectReceiveByID(String SubOrderID);
 
     //根据说收货单ID查询所有收货详情状态
     @Select("SELECT * FROM sportscar.receive_product_detail where(receiveID=#{receiveID});")

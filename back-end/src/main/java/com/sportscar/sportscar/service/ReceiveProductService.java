@@ -26,7 +26,7 @@ public class ReceiveProductService {
     ReceiveProductMapper receiveProductMapper;
     @Autowired
     StorageRecordMapper storageRecordMapper;
-    public JSONObject getOrderStatus(Integer orderID) throws ParseException {
+    public JSONObject getOrderStatus(String orderID) throws ParseException {
         List<Procurement_order> receiveInfo;
         JSONObject object = new JSONObject();
         try {
@@ -37,17 +37,19 @@ public class ReceiveProductService {
             object.put("desc", "查询失败！");
             return object;
         }
+        System.out.println("1");
         if(receiveInfo.size()==0)
         {
             object.put("status", 300);
             object.put("desc", "不存在该订单！");
             return object;
         }
+        System.out.println(receiveInfo);
         JSONArray jsonObject = JSONArray.fromObject(receiveInfo);
         for (int i = 0; i < receiveInfo.size(); i++) {
             ReceiveProductDetail detail;
             try {
-                detail = receiveProductDetailMapper.selectReceiveByID(receiveInfo.get(i).getSubOrderid());
+                detail = receiveProductDetailMapper.selectReceiveByID(receiveInfo.get(i).getSubOrderID());
                 jsonObject.getJSONObject(i).put("receiveDate", detail.getReceiveDate());
                 jsonObject.getJSONObject(i).put("storageLocation", detail.getStorageLocation());
                 jsonObject.getJSONObject(i).put("status", detail.getStatus());
@@ -57,13 +59,14 @@ public class ReceiveProductService {
                 jsonObject.getJSONObject(i).put("storageLocation", null);
             }
         }
+        System.out.println(jsonObject);
         object.put("data", jsonObject);
         object.put("status", 200);
         object.put("desc", "查询成功");
         return object;
     }
 
-    public JSONObject ReceiveProduct(Integer orderID,Integer subOrderID,String storageLocation) throws ParseException {
+    public JSONObject ReceiveProduct(String orderID,String subOrderID,String storageLocation) throws ParseException {
         JSONObject object = new JSONObject();
         //1.如果没有大的收货单，创建大收货单，并创建所有的小收货单，复制信息
         if(receiveProductMapper.selectReceiveByOrderID(orderID)==null) {
@@ -94,11 +97,11 @@ public class ReceiveProductService {
                 for (int i = 0; i < receiveInfo.size(); i++) {
                     ReceiveProductDetail newReceiveProductDetail = new ReceiveProductDetail();
                     newReceiveProductDetail.setReceiveid(receiveid);
-                    newReceiveProductDetail.setSubOrderid(receiveInfo.get(i).getSubOrderid());
-                    newReceiveProductDetail.setSupplierid(receiveInfo.get(i).getSupplierid());
-                    newReceiveProductDetail.setUserid(receiveInfo.get(i).getUserid());
+                    newReceiveProductDetail.setSubOrderid(receiveInfo.get(i).getSubOrderID());
+                    newReceiveProductDetail.setSupplierid(receiveInfo.get(i).getSupplierID());
+                    newReceiveProductDetail.setUserid(receiveInfo.get(i).getUserID());
                     newReceiveProductDetail.setAmount(receiveInfo.get(i).getAmount());
-                    newReceiveProductDetail.setMaterialid(receiveInfo.get(i).getMaterialid());
+                    newReceiveProductDetail.setMaterialid(receiveInfo.get(i).getMaterialID());
                     newReceiveProductDetail.setStorageLocation(null);
                     newReceiveProductDetail.setReceiveDate(null);
                     newReceiveProductDetail.setStatus("未收货");
@@ -166,7 +169,7 @@ public class ReceiveProductService {
             object.put("desc", "成功创建！");
             return object;
     }
-    public JSONObject CheckReceive(Integer orderID) throws ParseException {
+    public JSONObject CheckReceive(String orderID) throws ParseException {
         JSONObject object = new JSONObject();
         try {
             //1.根据订单号查找大收货单

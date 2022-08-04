@@ -11,7 +11,7 @@ public class ReceiveProduct {
 
     @TableId(type = IdType.AUTO)
     private Integer receiveid;
-    private Integer orderid;
+    private String orderid;
     private String status;
 
     public Integer getReceiveid() {
@@ -22,11 +22,11 @@ public class ReceiveProduct {
         this.receiveid = receiveid;
     }
 
-    public Integer getOrderid() {
+    public String getOrderid() {
         return orderid;
     }
 
-    public void setOrderid(Integer orderid) {
+    public void setOrderid(String orderid) {
         this.orderid = orderid;
     }
 
