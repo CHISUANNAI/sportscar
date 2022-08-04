@@ -14,4 +14,8 @@ public interface QuotationRequestMapper {
     List<Quotation_request> showAllQuatationRequest(Integer userID);
     List<Quotation_request> selectQuatationRequestByID(List<Quotation_request> quotation_requestList);
     List<Quotation_request> SelectQuatationRequestByField(Quotation_request quotation_request);
+    List<Quotation_request> SelectQuatationRequestByState(Integer userID);
+    Quotation_request SelectQuatationRequestByPrimaryKey(String rfqID,Integer supplierID,Integer materialID,Integer userID);
+    int updateQuatationRequestStateByPrimaryKey(String rfqID,Integer supplierID,Integer materialID,Integer userID,Integer state);
+    Integer isFinished (String rfqID,Integer supplierID,Integer materialID,Integer userID);
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--指定映射文件进行映射的接口-->
+<mapper namespace="com.sportscar.sportscar.mapper.UserMapper">
+
+    <!--id表示方法名称，内部写SQL语句；开启主键递增并告知主键-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="userID">
+        INSERT INTO user (userName,password,salt,phone,email,gender,avatar,status
+        ) VALUES (#{userName},#{password},#{salt},#{phone},#{email},#{gender},#{avatar},#{status})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM user WHERE userID = #{userID}
+    </delete>
+
+    <update id="updatePassword">
+        UPDATE user SET password = #{password} WHERE userName = #{userName}
+    </update>
+
+    <update id="updateUser">
+        UPDATE user SET userName = #{userName}, phone = #{phone},email = #{email},
+                        gender = #{gender}, avatar = #{avatar} WHERE userID = #{userID}
+    </update>
+
+    <!--类和表对应名字全都一致可以用resultType-->
+    <select id="findByName" resultType="com.sportscar.sportscar.bean.User">
+        SELECT * FROM user WHERE userName = #{userName}
+    </select>
+
+    <select id="findByID" resultType="com.sportscar.sportscar.bean.User">
+        SELECT * FROM user WHERE userID = #{userID}
+    </select>
+
+    <select id="findAll" resultType="com.sportscar.sportscar.bean.User">
+        SELECT * FROM user
+    </select>
+
+</mapper>

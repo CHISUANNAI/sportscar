@@ -4,7 +4,17 @@ import lombok.Data;
 
 @Data
 public class Comparison {
-    private Integer comparisonID;
-    private Integer quotationID;
+    private String comparisonID;
+    private String rfqID;
     private Integer userID;
+
+    public Integer getUserID() {
+        return this.userID;
+    }
+    public String getRfqID() {
+        return this.rfqID;
+    }
+    public String getComparisonID() {
+        return this.comparisonID;
+    }
 }

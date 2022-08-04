@@ -12,7 +12,7 @@ public class Quotation_request {
     private String supplierName;
     private Integer materialID;
     private Integer amount;
-    private Integer price;
+    private Float price;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

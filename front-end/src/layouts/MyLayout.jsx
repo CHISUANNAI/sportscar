@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Layout, Menu, Breadcrumb, Button, Dropdown, Avatar, Calendar, Popover } from 'antd';
-import { DatabaseOutlined, HomeOutlined, UserOutlined, DollarOutlined, CarryOutOutlined, ShoppingOutlined, EditOutlined, LogoutOutlined, CalendarOutlined } from '@ant-design/icons';
+import { DatabaseOutlined, HomeOutlined, UserOutlined, DollarOutlined, CarryOutOutlined, ShoppingOutlined, EditOutlined, LogoutOutlined, CalendarOutlined, LockOutlined } from '@ant-design/icons';
 import moment from "moment";
 import 'antd/dist/antd.css';
 import './MyLayout.css';
@@ -14,6 +14,7 @@ import ReceiveGoods from "../pages/ReceiveGoods";
 import RequisitionManagement from "../pages/RequisitionManagement";
 import SupplierManagement from "../pages/SupplierManagement";
 import PersonalManagement from "../pages/PersonalManagement";
+import PasswordEdit from "../pages/PasswordEdit";
 import documentflowmanagement from "../pages/documentflowmanagement";
 import Home from "../pages/Home";
 import logo from "../graphs/logo.png";
@@ -25,11 +26,11 @@ const user = {
     avatar: 'https://joeschmoe.io/api/v1/random'
 };
 
-function getItem(label, key, icon, children, type) {
+function getItem(label, key, icon, items, type) {
     return {
         key,
         icon,
-        children,
+        items,
         label,
         type,
     };
@@ -50,11 +51,11 @@ class MyLayout extends Component {
     render() {
         const menu = (
             <Menu onClick={this.handleClick}>
-                <Menu.Item key="/Home" icon={<HomeOutlined />}>
-                    个人首页
-                </Menu.Item>
                 <Menu.Item key="/Home/personalManagement" icon={<EditOutlined />}>
                     个人设置
+                </Menu.Item>
+                <Menu.Item key="/Home/passwordEdit" icon={<LockOutlined />}>
+                    修改密码
                 </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item
@@ -119,13 +120,13 @@ class MyLayout extends Component {
                         float: 'right'
                     }}>
                         <Popover placement="bottom" content={content} trigger="click">
-                            <Button danger shape="round" size="small" style={{ marginRight:"25px" }}
+                            <Button danger shape="round" size="small" style={{ marginRight:"50px" }}
                             >
                                 <CalendarOutlined />
                                 Today&nbsp; : &nbsp;{moment().format("YYYY-MM-DD")}
                             </Button>
                         </Popover>
-                        <Dropdown overlay={menu} placement="bottomCenter">
+                        <Dropdown overlay={menu} placement="bottom">
                             <Button
                                 type="text"
                                 size="large"
@@ -151,7 +152,7 @@ class MyLayout extends Component {
                 >
                     <Breadcrumb
                         style={{
-                            margin: '16px 0',
+                            margin: '10px 0',
                         }}
                     >
                     </Breadcrumb>
@@ -159,7 +160,7 @@ class MyLayout extends Component {
                         className="site-layout-background"
                         style={{
                             padding: 24,
-                            minHeight: 500,
+                            minHeight: 525,
                         }}
                     >
                         <Switch>
@@ -196,6 +197,10 @@ class MyLayout extends Component {
                             <Route
                                 path="/Home/personalManagement"
                                 component={PersonalManagement}
+                            />
+                            <Route
+                                path="/Home/passwordEdit"
+                                component={PasswordEdit}
                             />
                             <Route path="/Home" component={Home} />
                         </Switch>
