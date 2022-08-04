@@ -48,6 +48,8 @@ public class ReceiveProductService {
         JSONArray jsonObject = JSONArray.fromObject(receiveInfo);
         for (int i = 0; i < receiveInfo.size(); i++) {
             ReceiveProductDetail detail;
+            jsonObject.getJSONObject(i).discard("nextday");
+            jsonObject.getJSONObject(i).discard("day");
             try {
                 detail = receiveProductDetailMapper.selectReceiveByID(receiveInfo.get(i).getSubOrderID());
                 jsonObject.getJSONObject(i).put("receiveDate", detail.getReceiveDate());
