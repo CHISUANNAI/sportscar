@@ -1,30 +1,31 @@
 import React, { Component } from "react";
 import './index.css';
-import { Form, Input, Button, Layout, Space, message, Card } from 'antd';
+import { Form, Input, Button, Layout, Space, message, Col, Row} from 'antd';
 import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone} from '@ant-design/icons';
 import { setToken } from '../../utils/auth';
 import { loginApi } from '../../API/auth'
 
 import logo from "../../graphs/logo.png";
 const { Footer,Content } = Layout;
+
 export default class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			id: '',
+			name: '',
 			password: ''
 		};
 	}
 	
 	trylogin = () => {
 		let loginInfo = {
-			id: this.state.id,
+			name: this.state.name,
 			password: this.state.password
 		};
 		console.log(loginInfo);
 		
-		if ((loginInfo.id === '') | (loginInfo.password === '')) {
-			message.error('员工编号和密码不能为空');
+		if ((loginInfo.name === '') | (loginInfo.password === '')) {
+			message.error('员工名称和密码不能为空');
 		} else {
 			loginApi(loginInfo).then(
 				(response) => {
@@ -35,8 +36,6 @@ export default class Login extends Component {
 						setToken(JSON.stringify(response.data.user));
 						this.props.history.push({   //链接跳转
 							pathname: '/Home',
-							//user_id出现在哪里啊？
-							state: { user_id: loginInfo.id }
 						});
 					} else {
 						message.info('登录失败，请重试');
@@ -49,11 +48,11 @@ export default class Login extends Component {
 		}
 	};
 
-	// 当员工id发生改变
-	onInputChangeid(e) {
+	// 当员工姓名发生改变
+	onInputChangeName(e) {
 		let inputValue = e.target.value;
 		this.setState({
-			id: inputValue
+			name: inputValue
 		});
 	}
 
@@ -69,51 +68,55 @@ export default class Login extends Component {
 		return (
 			<Layout className="bg">
 				<Content>
-				<div className="login-form">
-					<Card
-						bordered={false}
-					>
-					<Form>
-						<Form.Item
-						name="id"
-						rules={[
-							{
-							required: true,
-							message: '请输入员工编号!'
-							},
-						]}
-						>
-							<Input
-							prefix={<UserOutlined/>}
-							onChange={(e) => this.onInputChangeid(e)}
+					<div className="login-form">
+						<Form>
+							<Form.Item
+							name="name"
+							rules={[
+								{
+								required: true,
+								message: '请输入员工名称!'
+								},
+							]}
+							>
+								<Input
+								prefix={<UserOutlined/>}
+								onChange={(e) => this.onInputChangeName(e)}
+								/>
+							</Form.Item>
+							<Form.Item
+							name="password"
+							rules={[
+								{
+								required: true,
+								message: '请输入密码！'
+								}
+							]}
+							>
+							<Input.Password
+								prefix={<LockOutlined/>}
+								iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+								onChange={(e) => this.onInputChangepw(e)}
 							/>
-						</Form.Item>
-						<Form.Item
-						name="password"
-						rules={[
-							{
-							required: true,
-							message: '请输入密码！'
-							}
-						]}
-						>
-						<Input.Password
-							prefix={<LockOutlined/>}
-							iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-							onChange={(e) => this.onInputChangepw(e)}
-						/>
-						</Form.Item>
-						<Form.Item >
-						<Button type="primary" htmlType="submit">
-							Submit
-						</Button>
-						<Button htmlType="reset">
-							Reset
-						</Button>
-						</Form.Item>
-					</Form>
-					</Card>
-				</div>
+							</Form.Item>
+							<Form.Item>
+							<Row gutter={5}>
+								<Col className="gutter-row" span={6} offset={6}>
+									<Button type="primary" htmlType="submit">
+									Submit
+									</Button>
+								</Col>
+								<Col className="gutter-row" span={6}>
+									<Button htmlType="reset">
+									Reset
+									</Button>
+								</Col>
+		
+							</Row>
+							</Form.Item>
+						</Form>
+					
+					</div>
 				</Content>
 						<Footer className="footer">2019级 系统分析与设计课程设计 Copyright © 2022 MIS Group 3</Footer>
 			</Layout>

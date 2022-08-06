@@ -1,4 +1,4 @@
-//存储用户授权信息
+//存储用户当前登录状态
 export function getToken() {
     return localStorage.getItem("token");
   }

@@ -1,8 +1,19 @@
 import axios from "axios";
+const baseURL = "http://localhost:8080";
+
+//用户登录信息验证
+export function loginApi(loginInfo) {
+	return axios.get(`${baseURL}/login`, {
+		params: {
+			id: loginInfo.id,
+			password: loginInfo.password
+		}
+	});
+}
+
 /**
  * 获取列表
  */
-const baseURL = "http://localhost:8080";
 export function Employeelist() {
   return axios.get(`${baseURL}/users/load`);
 }
