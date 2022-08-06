@@ -244,6 +244,29 @@ public class ProcurementOrderController {
         result.put("desc","删除成功");
         return result;
     }
+    /**根据字段选择购买订单*/
+    @ResponseBody
+    @RequestMapping("selectPOByField")
+    public JSONObject selectPOByField(@RequestParam("rfqID") String rfqID,
+                                      @RequestParam(value = "supplierID",defaultValue = "-1") Integer supplierID,
+                                      @RequestParam(value = "materialID",defaultValue = "-1") Integer materialID,
+                                      @RequestParam("date") String date,
+                                      HttpServletRequest request){
+        JSONObject result=new JSONObject();
+        List<Procurement_order> procurement_orderList=new LinkedList<>();
+        try {
+            procurement_orderList=iprocurementOrderService.selectPOByField(rfqID,supplierID,materialID,date,request);
+        }catch (Exception e){
+            result.put("status",500);
+            result.put("desc",e.getMessage());
+            System.out.println(e);
+            return result;
+        }
+        result.put("status",200);
+        result.put("desc","查询成功");
+        result.put("data",procurement_orderList);
+        return result;
+    }
 }
 
 

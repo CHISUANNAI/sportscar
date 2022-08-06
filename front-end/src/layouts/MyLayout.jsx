@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Layout, Menu, Breadcrumb, Button, Dropdown, Avatar, Calendar, Popover } from 'antd';
-import { DatabaseOutlined, HomeOutlined, UserOutlined, DollarOutlined, CarryOutOutlined, ShoppingOutlined, EditOutlined, LogoutOutlined, CalendarOutlined } from '@ant-design/icons';
+import { DatabaseOutlined, HomeOutlined, UserOutlined, DollarOutlined, CarryOutOutlined, ShoppingOutlined, EditOutlined, LogoutOutlined, CalendarOutlined, LockOutlined } from '@ant-design/icons';
 import moment from "moment";
 import 'antd/dist/antd.css';
 import './MyLayout.css';
@@ -26,11 +26,11 @@ const user = {
     avatar: 'https://joeschmoe.io/api/v1/random'
 };
 
-function getItem(label, key, icon, children, type) {
+function getItem(label, key, icon, items, type) {
     return {
         key,
         icon,
-        children,
+        items,
         label,
         type,
     };
@@ -54,7 +54,7 @@ class MyLayout extends Component {
                 <Menu.Item key="/Home/personalManagement" icon={<EditOutlined />}>
                     个人设置
                 </Menu.Item>
-                <Menu.Item key="/Home/passwordEdit" icon={<HomeOutlined />}>
+                <Menu.Item key="/Home/passwordEdit" icon={<LockOutlined />}>
                     修改密码
                 </Menu.Item>
                 <Menu.Divider />

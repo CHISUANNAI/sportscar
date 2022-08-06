@@ -24,4 +24,5 @@ public interface ProcurementOrderMapper {
     public List<Procurement_order> selectAllPO(Integer userID);
     public List<Procurement_order> selectPOByOrderID(List<Procurement_order> procurement_orderList);
     public Integer deleteProcurementOrderSeriesByOrderID(List<Procurement_order> procurement_orderList);
+    public  List<Procurement_order> selectPOByField(Procurement_order procurement_order);
 }

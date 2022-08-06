@@ -31,6 +31,11 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         patterns.add("/users/changeIn");
         patterns.add("/suppliers/cre");
         patterns.add("/materials/cre");
+        patterns.add("/receiveProduct");
+        patterns.add("/checkReceive");
+        patterns.add("/getMaterialStock");
+        patterns.add("/getHistoryStock");
+        patterns.add("/getOrderStatus");
 
         registry.addInterceptor(interceptor)
                 .addPathPatterns("/**")

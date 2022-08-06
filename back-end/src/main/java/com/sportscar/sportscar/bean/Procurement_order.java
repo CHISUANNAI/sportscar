@@ -17,4 +17,8 @@ public class Procurement_order {
     private Float price;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date day;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date nextday;
 }

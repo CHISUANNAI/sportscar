@@ -11,21 +11,21 @@ export default class CreateEmployee extends Component {
     }
     formRef = React.createRef();
     onFinish = (values) => {
+        console.log(values)
         // Employeeadd(values).then(
         // 	(response) => {
-        // 		if (response.data.result === 'success') {
-        // 			message.success('账号' + response.data.employee_id + '已创建成功');
+        // 		if (response.data.state === 200) {
+        // 			message.success('账号' + response.data.data.userName + '已创建成功');
         // 			this.formRef.current.resetFields();
         // 			this.handleCreateClick();
         // 		} else {
-        // 			message.info('提交失败，请重试');
+        // 			message.info(response.data.message);
         // 		}
         // 	},
         // 	(error) => {
         // 		console.log('数据获取失败', error);
         // 	}
         // );
-        console.log(values)
     };
 
     render() {
@@ -33,7 +33,7 @@ export default class CreateEmployee extends Component {
             <Form layout="vertical" hideRequiredMark onFinish={this.onFinish} ref={this.formRef}>
                 <Row gutter={24}>
                     <Col span={12}>
-                        <Form.Item name="userID" label="姓名" rules={[{ required: true, message: '请输入姓名' }]}>
+                        <Form.Item name="userName" label="姓名" rules={[{ required: true, message: '请输入姓名' }]}>
                             <Input placeholder="必填项" />
                         </Form.Item>
                     </Col>
@@ -48,12 +48,12 @@ export default class CreateEmployee extends Component {
                 </Row>
                 <Row gutter={24}>
                     <Col span={12}>
-                        <Form.Item name="telephone" label="手机号" rules={[{ pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的手机号' }]}>
+                        <Form.Item name="phone" label="手机号" rules={[{ pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的手机号' }]}>
                             <Input placeholder="可选项" />
                         </Form.Item>
                     </Col>
                     <Col span={12}>
-                        <Form.Item name="mail" label="邮箱" rules={[{ type: 'email', message: '请输入正确的邮箱' }]}>
+                        <Form.Item name="email" label="邮箱" rules={[{ type: 'email', message: '请输入正确的邮箱' }]}>
                             <Input placeholder="可选项" />
                         </Form.Item>
                     </Col>

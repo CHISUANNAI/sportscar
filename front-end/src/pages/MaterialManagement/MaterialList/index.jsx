@@ -46,19 +46,20 @@ export default class MaterialList extends Component {
 		dataSource: []
 	};
 
-	// componentDidMount() {
-	// 	Materiallist().then(
-	// 		(response) => {
-	// 			//拿到我们想要渲染的数据(res)
-	// 			this.setState({
-	// 				dataSource: response.data
-	// 			});
-	// 		},
-	// 		(error) => {
-	// 			console.log('失败了', error);
-	// 		}
-	// 	);
-	// }
+	componentDidMount() {
+		// 	Materiallist().then(
+		// 		(response) => {
+		// 			//拿到我们想要渲染的数据(res)
+		// 			this.setState({
+		// 				dataSource: response.data.data
+		// 			});
+		// 			console.log(response.data.data)
+		// 		},
+		// 		(error) => {
+		// 			console.log('失败了', error);
+		// 		}
+		// 	);
+	}
 	搜索框函数
 	getColumnSearchProps = (dataIndex) => ({
 		filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -137,16 +138,16 @@ export default class MaterialList extends Component {
 	};
 
 	// 传给抽屉用于编辑的函数
-	// handleEditClick = (value) => {
+	handleEditClick = (value) => {
 	// 	// 先传值
 	// 	Materialedit(value).then(
 	// 		(response) => {
-	// 			if (response.data === 'success') {
+	// 			if (response.data.state === 200) {
 	// 				message.success('修改成功');
 	// 				Materiallist().then(
 	// 					(response) => {
 	// 						this.setState({
-	// 							dataSource: response.data
+	// 							dataSource: response.data.data
 	// 						});
 	// 					},
 	// 					(error) => {
@@ -154,32 +155,32 @@ export default class MaterialList extends Component {
 	// 					}
 	// 				);
 	// 			} else {
-	// 				message.info('修改失败，请重试');
+	// 				message.info(response.data.message);
 	// 			}
 	// 		},
 	// 		(error) => {
 	// 			console.log('数据获取失败', error);
 	// 		}
 	// 	);
-	// };
+	};
 	// 用于删除供应商的函数
-	// handleDelete = (id) => {
-	// 	Materialdelete(id).then(
+	handleDelete = (materialID) => {
+	// 	Materialdelete(materialID).then(
 	// 		(response) => {
-	// 			if (response.data === 'success') {
+	// 			if (response.data.state === 200) {
 	// 				message.success('删除成功');
 	// 				// 删除成功后改变页面内容
 	// 				const dataSource = [ ...this.state.dataSource ];
 	// 				this.setState({
-	// 					dataSource: dataSource.filter((item) => item.id !== id)
+	// 					dataSource: dataSource.filter((item) => item.materialID !== materialID)
 	// 				});
-	// 			} else message.info('删除失败，请重试');
+	// 			} else message.info(response.data.message);
 	// 		},
 	// 		(error) => {
 	// 			console.log('数据获取失败', error);
 	// 		}
 	// 	);
-	// };
+	};
 
 	render() {
 		// const user = JSON.parse(getToken());

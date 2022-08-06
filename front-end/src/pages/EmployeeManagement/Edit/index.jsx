@@ -82,12 +82,12 @@ export default class EditEmployee extends Component {
                         </Row>
                         <Row gutter={24}>
                             <Col span={12}>
-                                <Form.Item name="telephone" label="电话" initialValue={employee.telephone} rules={[{ pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的手机号' }]}>
+                                <Form.Item name="phone" label="电话" initialValue={employee.phone} rules={[{ pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的手机号' }]}>
                                     <Input />
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
-                                <Form.Item name="mail" label="邮箱" initialValue={employee.mail} rules={[{ type: 'email', message: '请输入正确的邮箱' }]}>
+                                <Form.Item name="email" label="邮箱" initialValue={employee.email} rules={[{ type: 'email', message: '请输入正确的邮箱' }]}>
                                     <Input />
                                 </Form.Item>
                             </Col>
