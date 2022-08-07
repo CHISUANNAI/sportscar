@@ -16,6 +16,10 @@ export default class EditEmployee extends Component {
         this.setState({
             visible: true
         });
+        const { employee } = this.props;
+        employee.phone = employee.phone === '未知' ? null : employee.phone;
+        employee.email = employee.email === '未知' ? null : employee.email;
+        console.log(employee);
     };
 
     onClose = () => {

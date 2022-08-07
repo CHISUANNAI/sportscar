@@ -48,7 +48,7 @@ export default class EmployeeList extends Component {
                 this.setState({
                     dataSource: response.data.data
                 });
-                console.log(response.data);
+                console.log(response.data.data);
             },
             (error) => {
                 console.log('失败了', error);
@@ -136,9 +136,10 @@ export default class EmployeeList extends Component {
     // 传给抽屉用于编辑的函数
     handleEditClick = (value) => {
         //转换数据内容
-        value.gender = (value.gender === '女') ? 1 : 0;
-        value.status = (value.status === '管理员') ? 1 : 0;
+        value.gender = (value.gender === '1' || value.gender === '女')  ? 1 : (value.gender === '0' || value.gender === '男') ? 0 : null;
+        value.status = (value.status === '1' || value.status === '管理员') ? 1 : 0;
         console.log(value)
+        
         // 先传值
         // 	Employeeedit(value).then(
         // 		(response) => {
@@ -210,11 +211,14 @@ export default class EmployeeList extends Component {
                         <Tag color='volcano' key='女'>
                             女
                         </Tag>
-                    ) : (
+                    ) : gender === '男' ? (
                         <Tag color='geekblue' key='男'>
                             男
                         </Tag>
-                    ),
+                    ) : (
+                        <Tag color='default' key='null'>
+                            未知
+                        </Tag>),
             },
             {
                 title: '电话',
@@ -266,8 +270,10 @@ export default class EmployeeList extends Component {
                     className="table"
                     columns={columns}
                     dataSource={this.state.dataSource.map(dataSource => {
-                        dataSource.gender = (dataSource.gender === 1 || dataSource.gender === '女') ? '女' : '男';
+                        dataSource.gender = (dataSource.gender === 1 || dataSource.gender === '女') ? '女' : ((dataSource.gender === 0 || dataSource.gender === '男') ? '男' : null);
                         dataSource.status = (dataSource.status === 1 || dataSource.status === '管理员') ? '管理员' : '员工';
+                        dataSource.phone = (dataSource.phone === null) ? '未知' : dataSource.phone;
+                        dataSource.email = (dataSource.email === null) ? '未知' : dataSource.email;
                         return dataSource
                     })}
                     //静态测试数据
