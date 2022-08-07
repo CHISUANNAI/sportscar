@@ -26,11 +26,11 @@ const user = {
     avatar: 'https://joeschmoe.io/api/v1/random'
 };
 
-function getItem(label, key, icon, items, type) {
+function getItem(label, key, icon, children, type) {
     return {
         key,
         icon,
-        items,
+        children,
         label,
         type,
     };
