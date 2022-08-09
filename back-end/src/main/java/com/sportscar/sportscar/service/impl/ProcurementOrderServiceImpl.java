@@ -37,13 +37,13 @@ public class ProcurementOrderServiceImpl implements IProcurementOrderService {
         Date dNow = new Date( );
         SimpleDateFormat ft = new SimpleDateFormat ("yyyyMMddhhmmss");
         SimpleDateFormat ym = new SimpleDateFormat ("yyyy-MM-dd");
-        String subOrderID="so"+ft.format(dNow)+userID;
+        String orderID="o"+ft.format(dNow)+userID;
         List<Procurement_order> procurement_orderList=new LinkedList<>();
         //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
         for(int i=0;i<rfqID.length;i++){
             Procurement_order procurement_order=new Procurement_order();
+            String subOrderID="so"+ft.format(dNow)+Integer.toString(0)+Integer.toString(i)+userID;
             procurement_order.setSubOrderID(subOrderID);
-            String orderID="o"+ft.format(dNow)+Integer.toString(0)+Integer.toString(i)+userID;
             procurement_order.setOrderID(orderID);
             procurement_order.setRfqID(rfqID[i]);
             procurement_order.setSupplierID(supplierID[i]);
