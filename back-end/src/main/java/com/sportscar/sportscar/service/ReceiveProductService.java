@@ -47,9 +47,14 @@ public class ReceiveProductService {
         System.out.println(receiveInfo);
         JSONArray jsonObject = JSONArray.fromObject(receiveInfo);
         for (int i = 0; i < receiveInfo.size(); i++) {
-            ReceiveProductDetail detail;
+
+            SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dateString = df.format(receiveInfo.get(i).getDate());
+            jsonObject.getJSONObject(i).discard("date");
+            jsonObject.getJSONObject(i).put("date",dateString);
             jsonObject.getJSONObject(i).discard("nextday");
             jsonObject.getJSONObject(i).discard("day");
+            ReceiveProductDetail detail;
             try {
                 detail = receiveProductDetailMapper.selectReceiveByID(receiveInfo.get(i).getSubOrderID());
                 jsonObject.getJSONObject(i).put("receiveDate", detail.getReceiveDate());
@@ -168,7 +173,7 @@ public class ReceiveProductService {
             receiveProductMapper.updateById(receiveProduct2);
         }
             object.put("status", 200);
-            object.put("desc", "成功创建！");
+            object.put("desc", "成功创建收货单和入库单！");
             return object;
     }
     public JSONObject CheckReceive(String orderID) throws ParseException {
@@ -179,7 +184,15 @@ public class ReceiveProductService {
             object.put("receive", receiveProduct);
             //2.根据收货单号查询所有小收货单
             List<ReceiveProductDetail> receiveProductDetails = receiveProductDetailMapper.selectAllReceiveByID(receiveProduct.getReceiveid());
-            object.put("detail", receiveProductDetails);
+            JSONArray jsonObject = JSONArray.fromObject(receiveProductDetails);
+
+            for(int i=0;i<receiveProductDetails.size();i++){
+                SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String dateString = df.format(receiveProductDetails.get(i).getReceiveDate());
+                jsonObject.getJSONObject(i).put("date",dateString);
+            }
+
+            object.put("detail", jsonObject);
             object.put("status", 200);
             object.put("desc", "查询成功！");
             return object;
@@ -188,6 +201,21 @@ public class ReceiveProductService {
             object.put("desc", "订单不存在！");
         }
 
+        return object;
+    }
+    public JSONObject CheckAllReceive() throws ParseException {
+        JSONObject object = new JSONObject();
+
+        try {
+            //1.根据订单号查找大收货单
+            List<ReceiveProduct> receiveProduct = receiveProductMapper.selectAllReceive();
+            object.put("data", receiveProduct);
+        } catch (Exception e) {
+            object.put("status", 300);
+            object.put("desc", "订单不存在！");
+        }
+        object.put("status", 200);
+        object.put("desc", "成功查询！");
         return object;
     }
 

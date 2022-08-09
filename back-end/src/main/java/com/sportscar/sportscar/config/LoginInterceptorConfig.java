@@ -36,7 +36,7 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         patterns.add("/getMaterialStock");
         patterns.add("/getHistoryStock");
         patterns.add("/getOrderStatus");
-
+        patterns.add("/checkAllReceive");
         registry.addInterceptor(interceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(patterns);

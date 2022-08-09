@@ -40,7 +40,16 @@ public class StorageRecordService {
         for(int i=0;i<storageLocation.size();i++) {
             storageInfo.add(storageRecordMapper.selectReceiveByOrderID(materialID,storageLocation.get(i)).get(0));
         }
-        object.put("location", storageLocation);
+        if(storageLocation.size()!=0)
+            object.put("location", storageLocation);
+        ArrayList<JSONObject> barchart = new ArrayList();
+        for(int i=0;i<storageLocation.size();i++){
+            JSONObject barchartdetail = new JSONObject();
+            barchartdetail.put("name",storageLocation.get(i));
+            barchartdetail.put("value",storageInfo.get(i).getNewInventory());
+            barchart.add(barchartdetail);
+        }
+        object.put("barchart", barchart);
         object.put("data", storageInfo);
         object.put("status", 200);
         object.put("desc", "查询成功");

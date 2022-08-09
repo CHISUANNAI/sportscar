@@ -49,4 +49,12 @@ public class receiveProductController {
     public JSONObject CheckReceive(@RequestParam("orderID") String orderID) throws ParseException {
         return receiveProductService.CheckReceive(orderID);
     }
+    /*
+   查看所有收货单
+*/
+    @ResponseBody
+    @GetMapping("/checkAllReceive")
+    public JSONObject CheckAllReceive() throws ParseException {
+        return receiveProductService.CheckAllReceive();
+    }
 }

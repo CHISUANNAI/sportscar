@@ -18,4 +18,8 @@ public interface ReceiveProductMapper extends BaseMapper<ReceiveProduct> {
     @Select("SELECT * FROM sportscar.receive_product where(orderID=#{OrderID});")
     ReceiveProduct selectReceiveByOrderID(String OrderID);
 
+    //查询所有收货单
+    @Select("SELECT * FROM sportscar.receive_product;")
+    List<ReceiveProduct> selectAllReceive();
+
 }
