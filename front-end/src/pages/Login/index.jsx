@@ -22,18 +22,19 @@ export default class Login extends Component {
 			name: this.state.name,
 			password: this.state.password
 		};
-		console.log(loginInfo);
-		
 		if ((loginInfo.name === '') | (loginInfo.password === '')) {
-			message.error('员工名称和密码不能为空');
+			message.error('员工名称或密码不能为空');
 		} else {
 			loginApi(loginInfo).then(
 				(response) => {
-					console.log(response.data);
-					if (response.data.result === 'success') {
+					//response内容要注意！
+					console.log(response.data.data); //控制台输出response内容
+					console.log(loginInfo.name);
+					console.log(loginInfo.password);
+					//state:100表示返回成功；500表示失败
+					if (response.data.state === 100) {
 						message.success('登录成功');
-						//这里我有问题！！！！
-						setToken(JSON.stringify(response.data.user));
+						//setToken(JSON.stringify(response.data.user));
 						this.props.history.push({   //链接跳转
 							pathname: '/Home',
 						});
@@ -102,7 +103,7 @@ export default class Login extends Component {
 							<Form.Item>
 							<Row gutter={5}>
 								<Col className="gutter-row" span={6} offset={6}>
-									<Button type="primary" htmlType="submit">
+									<Button type="primary" htmlType="submit" onClick={this.trylogin}>
 									Submit
 									</Button>
 								</Col>

@@ -3,9 +3,9 @@ const baseURL = "http://localhost:8080";
 
 //用户登录信息验证
 export function loginApi(loginInfo) {
-	return axios.get(`${baseURL}/login`, {
+	return axios.get(`${baseURL}/users/login`, {
 		params: {
-			id: loginInfo.id,
+			userName: loginInfo.name,
 			password: loginInfo.password
 		}
 	});
