@@ -16,6 +16,11 @@ export default class EditSupplier extends Component {
         this.setState({
             visible: true
         });
+        const { supplier } = this.props;
+        supplier.region = supplier.region === '未知' ? null : supplier.region;
+        supplier.language = supplier.language === '未知' ? null : supplier.language;
+        supplier.clerk_vendor = supplier.clerk_vendor === '未知' ? null : supplier.clerk_vendor;
+        console.log(supplier);
     };
 
     onClose = () => {

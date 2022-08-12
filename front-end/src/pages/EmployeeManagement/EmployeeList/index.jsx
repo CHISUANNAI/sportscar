@@ -108,52 +108,56 @@ export default class EmployeeList extends Component {
     // 传给抽屉用于编辑的函数
     handleEditClick = (value) => {
         //转换数据内容
-        value.gender = (value.gender === '0' || value.gender === '女')  ? 0 : (value.gender === '1' || value.gender === '男') ? 1 : null;
+        value.gender = (value.gender === '0' || value.gender === '女') ? 0 : (value.gender === '1' || value.gender === '男') ? 1 : null;
         value.status = (value.status === '0' || value.status === '管理员') ? 0 : 1;
+        value.email = (value.email === '' || value.email === null) ? null : value.email;
+        value.phone = (value.phone === '' || value.phone === null) ? null : value.phone;
         console.log(value)
         // 先传值
-        	Employeeedit(value).then(
-        		(response) => {
-                    console.log(response.data)
-        			if (response.data.state === 200) { //成功状态码200
-        				message.success('修改成功');
-        				Employeelist().then(
-        					(response) => {
-        						this.setState({
-        							dataSource: response.data.data
-        						});
-        					},
-        					(error) => {
-        						console.log('失败了', error);
-        					}
-        				);
-        			} else {
-        				message.info(response.data.message);
-        			}
-        		},
-        		(error) => {
-        			console.log('数据获取失败', error);
-        		}
-        	);
+        Employeeedit(value).then(
+            (response) => {
+                console.log(response.data)
+                if (response.data.state === 200) { //成功状态码200
+                    message.success('修改成功');
+                    //重新获取员工列表
+                    Employeelist().then(
+                        (response) => {
+                            this.setState({
+                                dataSource: response.data.data
+                            });
+                        },
+                        (error) => {
+                            console.log('失败了', error);
+                        }
+                    );
+                } else {
+                    console.log(response.data);
+                    message.info(response.data.message);
+                }
+            },
+            (error) => {
+                console.log('数据获取失败', error);
+            }
+        );
     };
     // 用于删除员工的函数
     handleDelete = (userID) => {
         console.log(userID)
-        	Employeedelete(userID).then(
-        		(response) => {
-        			if (response.data.state === 200) {
-        				message.success('删除成功');
-        				// 删除成功后改变页面内容
-        				const dataSource = [ ...this.state.dataSource ];
-        				this.setState({
-        					dataSource: dataSource.filter((item) => item.userID !== userID)
-        				});
-        			} else message.info(response.data.message);
-        		},
-        		(error) => {
-        			console.log('数据获取失败', error);
-        		}
-        	);
+        Employeedelete(userID).then(
+            (response) => {
+                if (response.data.state === 200) {
+                    message.success('删除成功');
+                    // 删除成功后改变页面内容
+                    const dataSource = [...this.state.dataSource];
+                    this.setState({
+                        dataSource: dataSource.filter((item) => item.userID !== userID)
+                    });
+                } else message.info(response.data.message);
+            },
+            (error) => {
+                console.log('数据获取失败', error);
+            }
+        );
     };
 
 

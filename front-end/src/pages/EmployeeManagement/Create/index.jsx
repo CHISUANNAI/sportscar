@@ -63,7 +63,7 @@ export default class CreateEmployee extends Component {
 
                 <Row gutter={24}>
                     {/* 这里tag<text>会报一个warning */}
-                    <text style={{color:'#f56a00'}}>&nbsp;&nbsp; 初始登录密码：000000</text>
+                    <label style={{color:'#f56a00'}}>&nbsp;&nbsp; 初始登录密码：000000</label>
                 </Row>
                 <Row gutter={24} />
 

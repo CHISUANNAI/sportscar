@@ -1,6 +1,6 @@
 import { Form, Button, Col, Row, Input, Select, message } from 'antd';
 import React, { Component } from 'react';
-//import { Supplieradd } from '../../../services/auth';
+import { Supplieradd } from '../../../API/auth';
 const { Option } = Select;
 
 export default class CreateSupplier extends Component {
@@ -11,20 +11,20 @@ export default class CreateSupplier extends Component {
     }
     formRef = React.createRef();
     onFinish = (values) => {
-        // Supplieradd(values).then(
-        // 	(response) => {
-        // 		if (response.data.state === 200) {
-        // 			message.success('供应商' + response.data.data.supplierName + '已创建成功');
-        // 			this.formRef.current.resetFields();
-        // 			this.handleCreateClick();
-        // 		} else {
-        // 			message.info(response.data.message);
-        // 		}
-        // 	},
-        // 	(error) => {
-        // 		console.log('数据获取失败', error);
-        // 	}
-        // );
+        Supplieradd(values).then(
+            (response) => {
+                if (response.data.state === 200) {
+                    message.success('供应商' + response.data.data.supplierName + '已创建成功');
+                    this.formRef.current.resetFields();
+                    this.handleCreateClick();
+                } else {
+                    message.info(response.data.message);
+                }
+            },
+            (error) => {
+                console.log('数据获取失败', error);
+            }
+        );
         console.log(values)
     };
 

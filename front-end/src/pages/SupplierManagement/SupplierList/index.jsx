@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Table, Input, Button, Space, Divider, Popconfirm, message, Badge } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined, DeleteOutlined } from '@ant-design/icons';
-//import { Supplierlist, Supplierdelete, Supplieredit } from '../../../services/auth';
+import { Supplierlist, Supplierdelete, Supplieredit } from '../../../API/auth';
 //import { getToken } from '../../../utils/auth';
 import EditSupplier from '../Edit';
 
@@ -44,18 +44,18 @@ export default class SupplierList extends Component {
 	};
 
 	componentDidMount() {
-		// 	Supplierlist().then(
-		// 		(response) => {
-		// 			//拿到我们想要渲染的数据(res)
-		// 			this.setState({
-		// 				dataSource: response.data.data
-		// 			});
-		// 			console.log(response.data.data)
-		// 		},
-		// 		(error) => {
-		// 			console.log('失败了', error);
-		// 		}
-		// 	);
+		Supplierlist().then(
+			(response) => {
+				//拿到我们想要渲染的数据(res)
+				this.setState({
+					dataSource: response.data.data
+				});
+				console.log(response.data.data)
+			},
+			(error) => {
+				console.log('失败了', error);
+			}
+		);
 	}
 	搜索框函数
 	getColumnSearchProps = (dataIndex) => ({
@@ -136,112 +136,120 @@ export default class SupplierList extends Component {
 
 	// 传给抽屉用于编辑的函数
 	handleEditClick = (value) => {
-		// 	// 先传值
-		// 	Supplieredit(value).then(
-		// 		(response) => {
-		// 			if (response.data === 'success') {
-		// 				message.success('修改成功');
-		// 				Supplierlist().then(
-		// 					(response) => {
-		// 						this.setState({
-		// 							dataSource: response.data.data
-		// 						});
-		// 					},
-		// 					(error) => {
-		// 						console.log('失败了', error);
-		// 					}
-		// 				);
-		// 			} else {
-		// 				message.info('修改失败，请重试');
-		// 			}
-		// 		},
-		// 		(error) => {
-		// 			console.log('数据获取失败', error);
-		// 		}
-		// 	);
+		value.region = (value.region === '' || value.region === null) ? null : value.region;
+		value.language = (value.language === '' || value.language === null) ? null : value.language;
+		value.clerk_vendor = (value.clerk_vendor === '' || value.clerk_vendor === null) ? null : value.clerk_vendor;
+		// 先传值
+		Supplieredit(value).then(
+			(response) => {
+				if (response.data === 'success') {
+					message.success('修改成功');
+					Supplierlist().then(
+						(response) => {
+							this.setState({
+								dataSource: response.data.data
+							});
+						},
+						(error) => {
+							console.log('失败了', error);
+						}
+					);
+				} else {
+					message.info('修改失败，请重试');
+				}
+			},
+			(error) => {
+				console.log('数据获取失败', error);
+			}
+		);
 	};
 	// 用于删除供应商的函数
 	handleDelete = (supplierID) => {
-	// Supplierdelete(supplierID).then(
-	// 		(response) => {
-	// 			if (response.data === 'success') {
-	// 				message.success('删除成功');
-	// 				// 删除成功后改变页面内容
-	// 				const dataSource = [ ...this.state.dataSource ];
-	// 				this.setState({
-	// 					dataSource: dataSource.filter((item) => item.supplierID !== supplierID)
-	// 				});
-	// 			} else message.info('删除失败，请重试');
-	// 		},
-	// 		(error) => {
-	// 			console.log('数据获取失败', error);
-	// 		}
-	// 	);
+		console.log(supplierID)
+		Supplierdelete(supplierID).then(
+			(response) => {
+				if (response.data === 200) {
+					message.success('删除成功');
+					// 删除成功后改变页面内容
+					const dataSource = [...this.state.dataSource];
+					this.setState({
+						dataSource: dataSource.filter((item) => item.supplierID !== supplierID)
+					});
+				} else message.info(response.data.message);
+			},
+			(error) => {
+				console.log('数据获取失败', error);
+			}
+		);
 	};
 
-render() {
-	// const user = JSON.parse(getToken());
-	const columns = [
-		{
-			title: '供应商标识码',
-			dataIndex: 'supplierID',
-			align: 'center',
-			...this.getColumnSearchProps('supplierID')
-		},
-		{
-			title: '供应商名称',
-			dataIndex: 'supplierName',
-			align: 'center',
-			...this.getColumnSearchProps('supplierName')
-		},
-		{
-			title: '供应商地址',
-			dataIndex: 'region',
-			align: 'center',
-			...this.getColumnSearchProps('region')
-		},
-		{
-			title: '沟通语言',
-			dataIndex: 'language',
-			align: 'center',
-			...this.getColumnSearchProps('language')
-		}
-		,
-		{
-			title: '本公司对应员工编号',
-			dataIndex: 'clerk_vendor',
-			align: 'center',
-			...this.getColumnSearchProps('clerk_vendor')
-		},
-		{
-			title: '',
-			key: 'action',
-			align: 'center',
-			render: (record) => (
-				<Space>
-					<EditSupplier supplier={record} handleEditClick={this.handleEditClick} />
-					<Divider type="vertical" />
-					<Popconfirm title="确定要删除吗？" onConfirm={() => this.handleDelete(record.id)}>
-						<Button danger type="text" size="small" icon={<DeleteOutlined />}>
-							删除
-						</Button>
-					</Popconfirm>
-				</Space>
-			)
-		}
-	];
-	return (
-		<div>
-			<Table
-				className="table"
-				columns={columns}
-				// dataSource={this.state.dataSource}
-				dataSource={dataSource}
-				rowKey={(record) => record.id}
-				pagination={{ pageSize: 7 }}
-				size="small"
-			/>
-		</div>
-	);
-}
+	render() {
+		// const user = JSON.parse(getToken());
+		const columns = [
+			{
+				title: '供应商标识码',
+				dataIndex: 'supplierID',
+				align: 'center',
+				...this.getColumnSearchProps('supplierID')
+			},
+			{
+				title: '供应商名称',
+				dataIndex: 'supplierName',
+				align: 'center',
+				...this.getColumnSearchProps('supplierName')
+			},
+			{
+				title: '供应商地址',
+				dataIndex: 'region',
+				align: 'center',
+				...this.getColumnSearchProps('region')
+			},
+			{
+				title: '沟通语言',
+				dataIndex: 'language',
+				align: 'center',
+				...this.getColumnSearchProps('language')
+			}
+			,
+			{
+				title: '本公司对应员工编号',
+				dataIndex: 'clerk_vendor',
+				align: 'center',
+				...this.getColumnSearchProps('clerk_vendor')
+			},
+			{
+				title: '',
+				key: 'action',
+				align: 'center',
+				render: (record) => (
+					<Space>
+						<EditSupplier supplier={record} handleEditClick={this.handleEditClick} />
+						<Divider type="vertical" />
+						<Popconfirm title="确定要删除吗？" onConfirm={() => this.handleDelete(record.supplierID)}>
+							<Button danger type="text" size="small" icon={<DeleteOutlined />}>
+								删除
+							</Button>
+						</Popconfirm>
+					</Space>
+				)
+			}
+		];
+		return (
+			<div>
+				<Table
+					className="table"
+					columns={columns}
+					dataSource={this.state.dataSource.map(dataSource => {
+						dataSource.region = (dataSource.region === null) ? '未知' : dataSource.region;
+						dataSource.language = (dataSource.language === null) ? '未知' : dataSource.language;
+						dataSource.clerk_vendor = (dataSource.clerk_vendor === null) ? '未知' : dataSource.clerk_vendor;
+						return dataSource
+					})}
+					rowKey={(record) => record.supplierID}
+					pagination={{ pageSize: 7 }}
+					size="small"
+				/>
+			</div>
+		);
+	}
 }

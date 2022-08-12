@@ -16,6 +16,11 @@ export default class EditMaterial extends Component {
         this.setState({
             visible: true
         });
+        const { material } = this.props;
+        material.description = material.description === '未知' ? null : material.description;
+        material.weight = material.weight === '未知' ? null : material.weight;
+        material.factory = material.factory === '未知' ? null : material.factory;
+        console.log(material);
     };
 
     onClose = () => {
