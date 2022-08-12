@@ -23,10 +23,11 @@ public class UserController extends BaseController {
 
     @RequestMapping("login")
     public JsonResult<User> login(@RequestParam String userName, String password, HttpSession session){
-        User result = userService.login(userName,password);
-        session.setAttribute("userID",result.getUserID());
-        session.setAttribute("userName",result.getUserName());
-        return new JsonResult<>(OK,result);
+        User data = userService.login(userName,password);
+        session.setAttribute("userID",data.getUserID());
+        session.setAttribute("userName",data.getUserName());
+        System.out.println(session.getAttribute("userID"));
+        return new JsonResult<>(OK,data);
     }
 
     @RequestMapping("load")

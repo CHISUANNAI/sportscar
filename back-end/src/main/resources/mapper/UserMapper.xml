@@ -21,7 +21,7 @@
 
     <update id="updateUser">
         UPDATE user SET userName = #{userName}, phone = #{phone},email = #{email},
-                        gender = #{gender}, avatar = #{avatar} WHERE userID = #{userID}
+                        gender = #{gender}, status = #{status} WHERE userID = #{userID}
     </update>
 
     <!--类和表对应名字全都一致可以用resultType-->
