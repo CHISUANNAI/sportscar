@@ -9,6 +9,15 @@
         ) VALUES (#{supplierName},#{region},#{language},#{clerkVendor})
     </insert>
 
+    <delete id="delete">
+        DELETE FROM supplier WHERE supplierID = #{supplierID}
+    </delete>
+
+    <update id="update">
+        UPDATE supplier SET supplierName = #{supplierName}, region = #{region},language = #{language},
+                        clerk_verdor = #{clerkVendor}
+    </update>
+
     <select id="findByName" resultType="com.sportscar.sportscar.bean.Supplier">
         SELECT * FROM supplier WHERE supplierName = #{supplierName}
     </select>
@@ -17,8 +26,14 @@
     <select id="ifSupplierExist" resultType="java.lang.Integer" parameterType="java.lang.Integer">
         SELECT 1 FROM supplier WHERE supplierID = #{supplierID}
     </select>
+
 <!--    通过id查询供应商-->
     <select id="findByID" resultType="com.sportscar.sportscar.bean.Supplier" parameterType="java.lang.Integer">
         SELECT * FROM supplier WHERE supplierID = #{supplierID}
     </select>
+
+    <select id="findAll" resultType="com.sportscar.sportscar.bean.Supplier">
+        SELECT * FROM supplier
+    </select>
+
 </mapper>

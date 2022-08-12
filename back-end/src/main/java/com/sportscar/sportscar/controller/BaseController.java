@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 /** 控制层类的基类 */
 public class BaseController {
     /** 操作成功的状态码 */
-    public static final int OK = 100;
+    public static final int OK = 200;
 
     @ExceptionHandler(ServiceException.class)
     public JsonResult<Void> handleException(Throwable e){
@@ -35,12 +35,18 @@ public class BaseController {
         }else if(e instanceof SuppliernameDuplicatedException){
             result.setState(6000);
             result.setMessage("供应商名称被占用异常");
-        }else if(e instanceof ClerkNotFoundException){
+        }else if(e instanceof SupplierNotFoundException){
             result.setState(6001);
+            result.setMessage("供应商数据不存在异常");
+        }else if(e instanceof ClerkNotFoundException){
+            result.setState(6002);
             result.setMessage("对应员工编号不存在异常");
         }else if(e instanceof MaterialnameDuplicatedException) {
             result.setState(7000);
             result.setMessage("物料名称被占用异常");
+        }else if(e instanceof MaterialNotFoundException){
+            result.setState(7001);
+            result.setMessage("物料数据不存在异常");
         }
         return result;
     }

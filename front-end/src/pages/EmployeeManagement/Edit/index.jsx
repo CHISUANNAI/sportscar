@@ -70,16 +70,16 @@ export default class EditEmployee extends Component {
                             <Col span={12}>
                                 <Form.Item name="gender" label="性别" initialValue={employee.gender}>
                                     <Select placeholder="可选项">
-                                        <Option value="1">女</Option>
-                                        <Option value="0">男</Option>
+                                        <Option value="0">女</Option>
+                                        <Option value="1">男</Option>
                                     </Select>
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
                                 <Form.Item name="status" label="身份" initialValue={employee.status}>
                                     <Select>
-                                        <Option value="1">管理员</Option>
-                                        <Option value="0">员工</Option>
+                                        <Option value="0">管理员</Option>
+                                        <Option value="1">员工</Option>
                                     </Select>
                                 </Form.Item>
                             </Col>

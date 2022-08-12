@@ -1,0 +1,17 @@
+.bg{
+    height: 100vh;
+}
+.login-form
+{
+   width: 33%;
+   height: 66%;
+   position: absolute;
+   top: 24%;
+   left: 33%;
+
+}
+footer
+{
+    text-align: center; 
+    height: 10vh;
+}

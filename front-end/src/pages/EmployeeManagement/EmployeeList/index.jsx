@@ -2,37 +2,9 @@ import React, { Component } from 'react';
 import { Table, Input, Button, Space, Divider, Popconfirm, message, Badge, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Employeelist } from '../../../API/auth';
+import { Employeelist, Employeeedit, Employeedelete } from '../../../API/auth';
 //import { getToken } from '../../../utils/auth';
 import EditEmployee from '../Edit';
-
-//静态测试员工列表
-// const dataSource = [
-//     {
-//         userID: '00000',
-//         userName: 'abc',
-//         gender: 1,
-//         phone: '18018055555',
-//         email: 'test@group.com',
-//         status: 1
-//     },
-//     {
-//         userID: '11352',
-//         userName: 'dfe',
-//         gender: 0,
-//         phone: '18018055555',
-//         email: 'test111@group.com',
-//         status: 0
-//     },
-//     {
-//         userID: '11353',
-//         userName: 'fgh',
-//         gender: 1,
-//         phone: '18018055555',
-//         email: 'test222@group.com',
-//         status: 0
-//     }
-// ];
 
 export default class EmployeeList extends Component {
     state = {
@@ -136,52 +108,52 @@ export default class EmployeeList extends Component {
     // 传给抽屉用于编辑的函数
     handleEditClick = (value) => {
         //转换数据内容
-        value.gender = (value.gender === '1' || value.gender === '女')  ? 1 : (value.gender === '0' || value.gender === '男') ? 0 : null;
-        value.status = (value.status === '1' || value.status === '管理员') ? 1 : 0;
+        value.gender = (value.gender === '0' || value.gender === '女')  ? 0 : (value.gender === '1' || value.gender === '男') ? 1 : null;
+        value.status = (value.status === '0' || value.status === '管理员') ? 0 : 1;
         console.log(value)
-        
         // 先传值
-        // 	Employeeedit(value).then(
-        // 		(response) => {
-        // 			if (response.data.state === 200) { //成功状态码200
-        // 				message.success('修改成功');
-        // 				Employeelist().then(
-        // 					(response) => {
-        // 						this.setState({
-        // 							dataSource: response.data.data
-        // 						});
-        // 					},
-        // 					(error) => {
-        // 						console.log('失败了', error);
-        // 					}
-        // 				);
-        // 			} else {
-        // 				message.info(response.data.message);
-        // 			}
-        // 		},
-        // 		(error) => {
-        // 			console.log('数据获取失败', error);
-        // 		}
-        // 	);
+        	Employeeedit(value).then(
+        		(response) => {
+                    console.log(response.data)
+        			if (response.data.state === 200) { //成功状态码200
+        				message.success('修改成功');
+        				Employeelist().then(
+        					(response) => {
+        						this.setState({
+        							dataSource: response.data.data
+        						});
+        					},
+        					(error) => {
+        						console.log('失败了', error);
+        					}
+        				);
+        			} else {
+        				message.info(response.data.message);
+        			}
+        		},
+        		(error) => {
+        			console.log('数据获取失败', error);
+        		}
+        	);
     };
     // 用于删除员工的函数
     handleDelete = (userID) => {
         console.log(userID)
-        // 	Employeedelete(userID).then(
-        // 		(response) => {
-        // 			if (response.data.state === 200) {
-        // 				message.success('删除成功');
-        // 				// 删除成功后改变页面内容
-        // 				const dataSource = [ ...this.state.dataSource ];
-        // 				this.setState({
-        // 					dataSource: dataSource.filter((item) => item.userID !== userID)
-        // 				});
-        // 			} else message.info(response.data.message);
-        // 		},
-        // 		(error) => {
-        // 			console.log('数据获取失败', error);
-        // 		}
-        // 	);
+        	Employeedelete(userID).then(
+        		(response) => {
+        			if (response.data.state === 200) {
+        				message.success('删除成功');
+        				// 删除成功后改变页面内容
+        				const dataSource = [ ...this.state.dataSource ];
+        				this.setState({
+        					dataSource: dataSource.filter((item) => item.userID !== userID)
+        				});
+        			} else message.info(response.data.message);
+        		},
+        		(error) => {
+        			console.log('数据获取失败', error);
+        		}
+        	);
     };
 
 
@@ -270,18 +242,12 @@ export default class EmployeeList extends Component {
                     className="table"
                     columns={columns}
                     dataSource={this.state.dataSource.map(dataSource => {
-                        dataSource.gender = (dataSource.gender === 1 || dataSource.gender === '女') ? '女' : ((dataSource.gender === 0 || dataSource.gender === '男') ? '男' : null);
-                        dataSource.status = (dataSource.status === 1 || dataSource.status === '管理员') ? '管理员' : '员工';
+                        dataSource.gender = (dataSource.gender === 0 || dataSource.gender === '女') ? '女' : ((dataSource.gender === 1 || dataSource.gender === '男') ? '男' : null);
+                        dataSource.status = (dataSource.status === 0 || dataSource.status === '管理员') ? '管理员' : '员工';
                         dataSource.phone = (dataSource.phone === null) ? '未知' : dataSource.phone;
                         dataSource.email = (dataSource.email === null) ? '未知' : dataSource.email;
                         return dataSource
                     })}
-                    //静态测试数据
-                    // dataSource={dataSource.map(dataSource => {
-                    //     dataSource.gender = (dataSource.gender === 1 || dataSource.gender === '女') ? '女' : '男';
-                    //     dataSource.status = (dataSource.status === 1 || dataSource.status === '管理员') ? '管理员' : '员工';
-                    //     return dataSource
-                    // })}
                     rowKey={(record) => record.userID}
                     pagination={{ pageSize: 7 }}
                     size="small"

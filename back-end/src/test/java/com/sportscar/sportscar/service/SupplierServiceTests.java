@@ -15,13 +15,9 @@ public class SupplierServiceTests {
     private ISupplierService supplierService;
 
     @Test
-    public void cre(){
+    public void create(){
         try {
-            Supplier supplier = new Supplier();
-            supplier.setSupplierName("供应商再测试");
-            supplier.setLanguage("英语");
-            supplier.setClerkVendor(1003);
-            supplierService.cre(supplier);
+            supplierService.create("供应商再测试","中国上海","英语",1003);
             System.out.println("OK");
         } catch (ServiceException e) {
             System.out.println(e.getClass().getSimpleName());

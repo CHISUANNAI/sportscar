@@ -22,9 +22,11 @@ public interface IUserService {
     //以下为员工展示页面
     List<User> load();
 
-    List<User> delete(Integer userID);
+    User create(String userName,Integer gender,String phone,String email);
 
-    List<User> updateUsers(User user);
+    void delete(Integer userID);
+
+    void updateUsers(Integer userID,String userName,Integer gender,String phone,String email,Integer status);
 
     //以下为个人信息页面
     void changePassword(String userName, String password);

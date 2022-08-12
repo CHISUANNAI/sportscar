@@ -9,6 +9,15 @@
         ) VALUES (#{materialName},#{description},#{weight},#{factory})
     </insert>
 
+    <delete id="delete">
+        DELETE FROM material WHERE materialID = #{materialID}
+    </delete>
+
+    <update id="update">
+        UPDATE material SET materialName = #{materialName}, description = #{description},factory = #{factory},
+                            weight = #{weight}
+    </update>
+
     <select id="findByName" resultType="com.sportscar.sportscar.bean.Material">
         SELECT * FROM material WHERE materialName = #{materialName}
     </select>
@@ -17,4 +26,9 @@
     <select id="findByID" resultType="com.sportscar.sportscar.bean.Material">
         SELECT * FROM material WHERE materialID = #{materialID}
     </select>
+
+    <select id="findAll" resultType="com.sportscar.sportscar.bean.Material">
+        SELECT * FROM material
+    </select>
+
 </mapper>

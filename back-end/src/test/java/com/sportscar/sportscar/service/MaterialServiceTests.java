@@ -17,10 +17,7 @@ public class MaterialServiceTests {
     @Test
     public void cre(){
         try {
-            Material material = new Material();
-            material.setMaterialName("物料再测试");
-            material.setDescription("嘎嘎嘎嘎嘎嘎嘎嘎");
-            materialService.cre(material);
+            materialService.create("物料名","描述哈哈哈",null,null);
             System.out.println("OK");
         } catch (ServiceException e) {
             System.out.println(e.getClass().getSimpleName());
