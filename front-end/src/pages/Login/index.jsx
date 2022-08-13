@@ -31,10 +31,10 @@ export default class Login extends Component {
 					console.log(response.data.data); //控制台输出response内容
 					console.log(loginInfo.name);
 					console.log(loginInfo.password);
-					//state:200表示返回成功；其他表示失败
-					if (response.data.state === 200) {
+					//state:100表示返回成功；500表示失败
+					if (response.data.state === 100) {
 						message.success('登录成功');
-						//setToken(JSON.stringify(response.data.data));
+						//setToken(JSON.stringify(response.data.user));
 						this.props.history.push({   //链接跳转
 							pathname: '/Home',
 						});
@@ -94,29 +94,32 @@ export default class Login extends Component {
 								}
 							]}
 							>
-							<Input.Password
-								prefix={<LockOutlined/>}
-								iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-								onChange={(e) => this.onInputChangepw(e)}
-							/>
+								<Input.Password
+									prefix={<LockOutlined/>}
+									iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+									onChange={(e) => this.onInputChangepw(e)}
+								/>
 							</Form.Item>
 							<Form.Item>
-							<Row gutter={5}>
-								<Col className="gutter-row" span={6} offset={6}>
+							<Row gutter={16}>
+								<Col className="gutter-row" span={3} offset={2}>
 									<Button type="primary" htmlType="submit" onClick={this.trylogin}>
 									Submit
 									</Button>
 								</Col>
-								<Col className="gutter-row" span={6}>
+								<Col className="gutter-row" span={3}>
 									<Button htmlType="reset">
 									Reset
 									</Button>
 								</Col>
-		
+								<Col className="gutter-row" span={3}>
+									<Button onClick={this.trylogin}>
+									Register
+									</Button>
+								</Col>
 							</Row>
 							</Form.Item>
 						</Form>
-					
 					</div>
 				</Content>
 						<Footer className="footer">2019级 系统分析与设计课程设计 Copyright © 2022 MIS Group 3</Footer>
