@@ -142,7 +142,7 @@ export default class MaterialList extends Component {
 		// 先传值
 		value.description = (value.description === '' || value.description === null) ? null : value.description;
         value.weight = (value.weight === '' || value.weight === null) ? null : value.weight;
-		value.fatory = (value.fatory === '' || value.fatory === null) ? null : value.fatory;
+		value.factory = (value.factory === '' || value.factory === null) ? null : value.factory;
 		console.log(value)
 		Materialedit(value).then(
 			(response) => {

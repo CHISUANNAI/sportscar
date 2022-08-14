@@ -1,6 +1,7 @@
 package com.sportscar.sportscar.service.impl;
 
 import com.sportscar.sportscar.bean.User;
+import com.sportscar.sportscar.mapper.SupplierMapper;
 import com.sportscar.sportscar.mapper.UserMapper;
 import com.sportscar.sportscar.service.IUserService;
 import com.sportscar.sportscar.service.ex.*;
@@ -16,6 +17,8 @@ import java.util.UUID;
 public class UserServiceImpl implements IUserService {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private SupplierMapper supplierMapper;
 
     @Override
     public void reg(User user) {
@@ -92,6 +95,7 @@ public class UserServiceImpl implements IUserService {
         if(user == null){
             throw new UserNotFoundException("用户账号不存在");
         }
+        supplierMapper.clear(userID);
         Integer rows = userMapper.delete(userID);
         if(rows != 1){
             throw new DeleteException("删除时产生未知异常");

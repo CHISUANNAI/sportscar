@@ -31,13 +31,17 @@ export default class Login extends Component {
 					console.log(response.data.data); //控制台输出response内容
 					console.log(loginInfo.name);
 					console.log(loginInfo.password);
-					//state:100表示返回成功；500表示失败
-					if (response.data.state === 100) {
+					//state:200表示返回成功；500表示失败
+					if (response.data.state === 200) {
 						message.success('登录成功');
-						//setToken(JSON.stringify(response.data.user));
+						setToken(JSON.stringify(response.data.data));
 						this.props.history.push({   //链接跳转
 							pathname: '/Home',
 						});
+					} else if(response.data.state === 4001){
+						message.info('用户名不存在');
+					} else if(response.data.state === 4002){
+						message.info('用户密码错误');
 					} else {
 						message.info('登录失败，请重试');
 					}
@@ -76,7 +80,7 @@ export default class Login extends Component {
 							rules={[
 								{
 								required: true,
-								message: '请输入员工名称!'
+								message: '请输入用户名称!'
 								},
 							]}
 							>

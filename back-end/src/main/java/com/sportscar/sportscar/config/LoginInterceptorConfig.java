@@ -20,8 +20,6 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         HandlerInterceptor interceptor = new LoginInterceptor();
 
         List<String> patterns = new ArrayList<>();  //白名单集合
-        patterns.add("/templates/demo.html");
-        patterns.add("/templates/rfqTest.html");
         patterns.add("/users/reg");
         patterns.add("/users/login");
         patterns.add("/users/load");
@@ -31,7 +29,7 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         patterns.add("/users/changePw");
         patterns.add("/users/changeIn");
         patterns.add("/suppliers/load");
-        patterns.add("/suppliers/crate");
+        patterns.add("/suppliers/create");
         patterns.add("/suppliers/delete");
         patterns.add("/suppliers/update");
         patterns.add("/materials/load");

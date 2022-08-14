@@ -13,26 +13,26 @@ const dataSource = [
 		supplierName: '公司1',
 		region: '中国上海市嘉定区安亭镇创新港',
 		language: '中文',
-		clerk_vendor: '10351'
+		clerkVendor: '10351'
 	},
 	{
 		supplierID: '10002',
 		supplierName: '公司2',
 		region: '中国上海市嘉定区曹安公路',
 		language: '英语',
-		clerk_vendor: '10352'
+		clerkVendor: '10352'
 	}, {
 		supplierID: '10003',
 		supplierName: '公司3',
 		region: '中国上海市杨浦区四平路',
 		language: '法语',
-		clerk_vendor: '10353'
+		clerkVendor: '10353'
 	}, {
 		supplierID: '10004',
 		supplierName: '公司4',
 		region: '中国上海市杨浦区五角场',
 		language: '中文',
-		clerk_vendor: '10354'
+		clerkVendor: '10354'
 	}
 ];
 
@@ -138,11 +138,11 @@ export default class SupplierList extends Component {
 	handleEditClick = (value) => {
 		value.region = (value.region === '' || value.region === null) ? null : value.region;
 		value.language = (value.language === '' || value.language === null) ? null : value.language;
-		value.clerk_vendor = (value.clerk_vendor === '' || value.clerk_vendor === null) ? null : value.clerk_vendor;
+		value.clerkVendor = (value.clerkVendor === '' || value.clerkVendor === null) ? null : value.clerkVendor;
 		// 先传值
 		Supplieredit(value).then(
 			(response) => {
-				if (response.data === 'success') {
+				if (response.data.state === 200) {
 					message.success('修改成功');
 					Supplierlist().then(
 						(response) => {
@@ -154,8 +154,10 @@ export default class SupplierList extends Component {
 							console.log('失败了', error);
 						}
 					);
+				} else if(response.data.state === 6002) {
+					message.info('员工编码不存在');
 				} else {
-					message.info('修改失败，请重试');
+					message.info('修改失败，请重试')
 				}
 			},
 			(error) => {
@@ -168,7 +170,7 @@ export default class SupplierList extends Component {
 		console.log(supplierID)
 		Supplierdelete(supplierID).then(
 			(response) => {
-				if (response.data === 200) {
+				if (response.data.state === 200) {
 					message.success('删除成功');
 					// 删除成功后改变页面内容
 					const dataSource = [...this.state.dataSource];
@@ -213,9 +215,9 @@ export default class SupplierList extends Component {
 			,
 			{
 				title: '本公司对应员工编号',
-				dataIndex: 'clerk_vendor',
+				dataIndex: 'clerkVendor',
 				align: 'center',
-				...this.getColumnSearchProps('clerk_vendor')
+				...this.getColumnSearchProps('clerkVendor')
 			},
 			{
 				title: '',
@@ -242,7 +244,7 @@ export default class SupplierList extends Component {
 					dataSource={this.state.dataSource.map(dataSource => {
 						dataSource.region = (dataSource.region === null) ? '未知' : dataSource.region;
 						dataSource.language = (dataSource.language === null) ? '未知' : dataSource.language;
-						dataSource.clerk_vendor = (dataSource.clerk_vendor === null) ? '未知' : dataSource.clerk_vendor;
+						dataSource.clerkVendor = (dataSource.clerkVendor === null) ? '未知' : dataSource.clerkVendor;
 						return dataSource
 					})}
 					rowKey={(record) => record.supplierID}
