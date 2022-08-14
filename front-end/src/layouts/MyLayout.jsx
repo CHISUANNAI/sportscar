@@ -18,12 +18,15 @@ import PasswordEdit from "../pages/PasswordEdit";
 import documentflowmanagement from "../pages/documentflowmanagement";
 import Home from "../pages/Home";
 import logo from "../graphs/logo.png";
+import { getToken } from '../utils/auth';
 
 const { Header, Footer, Content } = Layout;
 
+const base="http://localhost:3000/avatar/"
+
 const user = {
-    name: 'user name',
-    avatar: 'https://joeschmoe.io/api/v1/random'
+    name: JSON.parse(getToken()).userName,
+    avatar: JSON.parse(getToken()).avatar
 };
 
 function getItem(label, key, icon, children, type) {
@@ -133,7 +136,7 @@ class MyLayout extends Component {
                                 icon={
                                     <Avatar
                                         style={{ backgroundColor: '#f56a00' }}
-                                        src={user.avatar}
+                                        src={`${base}${user.avatar}`}
                                         size="large"
                                     />
                                 }

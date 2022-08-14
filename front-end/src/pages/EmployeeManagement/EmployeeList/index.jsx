@@ -130,6 +130,10 @@ export default class EmployeeList extends Component {
                             console.log('失败了', error);
                         }
                     );
+                } else if (response.data.state === 4001){
+                    message.info('用户账号不存在')
+                } else if (response.data.state === 5002){
+                    message.info('修改产生未知异常')
                 } else {
                     console.log(response.data);
                     message.info(response.data.message);
@@ -152,6 +156,10 @@ export default class EmployeeList extends Component {
                     this.setState({
                         dataSource: dataSource.filter((item) => item.userID !== userID)
                     });
+                } else if (response.data.state === 4001){
+                    message.info('用户账号不存在')
+                } else if (response.data.state === 5001){
+                    message.info('删除产生未知异常')
                 } else message.info(response.data.message);
             },
             (error) => {

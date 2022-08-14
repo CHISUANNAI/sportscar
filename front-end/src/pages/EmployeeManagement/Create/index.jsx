@@ -20,7 +20,11 @@ export default class CreateEmployee extends Component {
         			message.success('账号' + response.data.data.userID + '已创建成功');
         			this.formRef.current.resetFields();
         			this.handleCreateClick();
-        		} else {
+        		} else if (response.data.state === 4000){
+                    message.info('用户名已被占用')
+                } else if (response.data.state === 5000){
+                    message.info('创建产生未知异常')
+                } else {
         			message.info(response.data.message);
         		}
         	},
