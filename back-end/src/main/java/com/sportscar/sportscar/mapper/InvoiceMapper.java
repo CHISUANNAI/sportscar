@@ -15,4 +15,6 @@ public interface InvoiceMapper extends BaseMapper<Invoice> {
     @Select("select distinct orderID from procurement_order p where p.orderID=#{orderID} ")
     String getid(String orderID);
 
+    @Select("select distinct orderID from procurement_order p where p.sub_orderID=#{sub_orderID} ")
+    String getorderid(String sub_orderID);
 }
