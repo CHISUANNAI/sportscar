@@ -15,7 +15,7 @@
 
     <update id="update">
         UPDATE material SET materialName = #{materialName}, description = #{description},factory = #{factory},
-                            weight = #{weight}
+                            weight = #{weight} WHERE materialID = #{materialID}
     </update>
 
     <select id="findByName" resultType="com.sportscar.sportscar.bean.Material">

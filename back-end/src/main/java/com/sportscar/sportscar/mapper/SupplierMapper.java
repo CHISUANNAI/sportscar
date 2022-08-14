@@ -23,4 +23,6 @@ public interface SupplierMapper {
     Supplier findByID(Integer supplierID);
 
     List<Supplier> findAll();
+
+    Integer clear(Integer userID);
 }

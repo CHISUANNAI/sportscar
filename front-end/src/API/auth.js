@@ -72,7 +72,7 @@ export function Supplieredit(value) {
       supplierName: value.supplierName,
       region: value.region,
       language: value.language,
-      clerk_vendor: value.clerk_vendor
+      clerkVendor: value.clerkVendor
     }
   });
 }
@@ -107,7 +107,7 @@ export function Supplieradd(value) {
       supplierName: value.supplierName,
       region: value.region,
       language: value.language,
-      clerk_vendor: value.clerk_vendor
+      clerkVendor: value.clerkVendor
     }
   });
 }

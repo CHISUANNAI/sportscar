@@ -15,7 +15,7 @@
 
     <update id="update">
         UPDATE supplier SET supplierName = #{supplierName}, region = #{region},language = #{language},
-                        clerk_verdor = #{clerkVendor}
+                            clerk_vendor = #{clerkVendor} WHERE supplierID = #{supplierID}
     </update>
 
     <select id="findByName" resultType="com.sportscar.sportscar.bean.Supplier">
@@ -35,5 +35,9 @@
     <select id="findAll" resultType="com.sportscar.sportscar.bean.Supplier">
         SELECT * FROM supplier
     </select>
+
+    <update id="clear">
+        UPDATE supplier SET clerk_vendor = null WHERE clerk_vendor = #{userID}
+    </update>
 
 </mapper>

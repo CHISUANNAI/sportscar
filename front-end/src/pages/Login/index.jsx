@@ -31,8 +31,8 @@ export default class Login extends Component {
 					console.log(response.data.data); //控制台输出response内容
 					console.log(loginInfo.name);
 					console.log(loginInfo.password);
-					//state:100表示返回成功；500表示失败
-					if (response.data.state === 100) {
+					//state:200表示返回成功；500表示失败
+					if (response.data.state === 200) {
 						message.success('登录成功');
 						//setToken(JSON.stringify(response.data.user));
 						this.props.history.push({   //链接跳转

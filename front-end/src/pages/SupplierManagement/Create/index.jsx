@@ -17,6 +17,8 @@ export default class CreateSupplier extends Component {
                     message.success('供应商' + response.data.data.supplierName + '已创建成功');
                     this.formRef.current.resetFields();
                     this.handleCreateClick();
+                } else if (response.data.state === 6002){
+                    message.info('员工编号不存在')
                 } else {
                     message.info(response.data.message);
                 }
@@ -38,7 +40,7 @@ export default class CreateSupplier extends Component {
                         </Form.Item>
                     </Col>
                     <Col span={12}>
-                        <Form.Item name="clerk_vendor" label="本公司对应员工编号" rules={[{ pattern: /^\d{5}$/, message: '请输入正确的员工编号' }]}>
+                        <Form.Item name="clerkVendor" label="本公司对应员工编号" rules={[{ pattern: /^\d{4}$/, message: '请输入正确的员工编号' }]}>
                             <Input placeholder="可选项" />
                         </Form.Item>
                     </Col>

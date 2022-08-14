@@ -68,7 +68,13 @@ public class SupplierServiceImpl implements ISupplierService {
     public void update(Integer supplierID,String supplierName,String region,String language,Integer clerkVendor){
         Supplier test = supplierMapper.findByID(supplierID);
         if(test == null){
-            throw new SupplierNotFoundException("用户账号不存在");
+            throw new SupplierNotFoundException("供应商不存在");
+        }
+        if (clerkVendor != null){
+            User exist = userMapper.findByID(clerkVendor);
+            if(exist == null){
+                throw new ClerkNotFoundException("供应商对应员工编号不存在");
+            }
         }
         test.setSupplierName(supplierName);
         test.setRegion(region);

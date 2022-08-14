@@ -19,7 +19,7 @@ export default class EditSupplier extends Component {
         const { supplier } = this.props;
         supplier.region = supplier.region === '未知' ? null : supplier.region;
         supplier.language = supplier.language === '未知' ? null : supplier.language;
-        supplier.clerk_vendor = supplier.clerk_vendor === '未知' ? null : supplier.clerk_vendor;
+        supplier.clerkVendor = supplier.clerkVendor === '未知' ? null : supplier.clerkVendor;
         console.log(supplier);
     };
 
@@ -71,10 +71,10 @@ export default class EditSupplier extends Component {
 
                             <Col span={12}>
                                 <Form.Item
-                                    name="clerk_vendor"
+                                    name="clerkVendor"
                                     label="本公司对应员工编号"
-                                    initialValue={supplier.clerk_vendor}
-                                    rules={[{ pattern: /^\d{5}$/, message: '请输入正确的供应商标识码' }]}
+                                    initialValue={supplier.clerkVendor}
+                                    rules={[{ pattern: /^\d{4}$/, message: '请输入正确的供应商标识码' }]}
                                 >
                                     <Input />
                                 </Form.Item>
