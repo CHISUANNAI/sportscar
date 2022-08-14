@@ -10,7 +10,7 @@ import java.util.Date;
 public class Payment_detail {
     /** 账单的实体类 */
     private Integer paymentID;
-    private Integer orderID;
+    private String orderID;
     private Date  post_time;
     private Float price;
 }

@@ -10,7 +10,7 @@ import java.util.Date;
 /** 发票单的实体类 */
 public class Invoice {
     private Integer invoiceID;
-    private Integer orderID;
+    private String orderID;
     private String storage_location;
     private Date receive_date;
     private String description;
