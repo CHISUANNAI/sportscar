@@ -57,7 +57,7 @@ public class InvoiceController {
         Integer invoiceid=invoice.getInvoiceid();
 
 
-        /**生成发票详情单 **/
+        /**生成发票详情单 **/ /**未解决：同时点两个子订单开发票 需结合前端 **/
         Invoice_detail invoice_detail=new Invoice_detail();
         invoice_detail.setInvoiceid(invoiceid);
         invoice_detail.setSub_orderid(map.get("sub_orderID"));
