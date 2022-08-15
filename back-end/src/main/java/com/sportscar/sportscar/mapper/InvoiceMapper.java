@@ -17,4 +17,20 @@ public interface InvoiceMapper extends BaseMapper<Invoice> {
 
     @Select("select distinct orderID from procurement_order p where p.sub_orderID=#{sub_orderID} ")
     String getorderid(String sub_orderID);
+
+
+    @Select("select supplierID  from  procurement_order p where p.sub_orderID=#{sub_orderID}")
+    Integer  getsupplierid(String sub_orderID);
+
+    @Select("select userID  from  procurement_order p where p.sub_orderID=#{sub_orderID}")
+    Integer getuserid(String sub_orderID);
+
+    @Select("select materialID  from  procurement_order p where p.sub_orderID=#{sub_orderID}")
+    Integer getmaterailid(String sub_orderID);
+
+    @Select("select amount from  procurement_order p where p.sub_orderID=#{sub_orderID}")
+    Integer getamount(String sub_orderID);
+
+    @Select("select price from  procurement_order p where p.sub_orderID=#{sub_orderID}")
+    Float getprice(String sub_orderID);
 }

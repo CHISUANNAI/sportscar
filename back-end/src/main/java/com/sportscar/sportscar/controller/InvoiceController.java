@@ -53,17 +53,19 @@ public class InvoiceController {
         invoice.setReceive_date(new Date());
         invoice.setStorage_location(map.get("storage_location"));
         invoiceMapper.insert(invoice);
+        Integer invoiceid=invoice.getInvoiceid();
 
-//        /**生成发票详情单 **/
-//        Invoice_detail invoice_detail=new Invoice_detail();
-//        invoice_detail.setInvoiceid(invoice.getInvoiceid());
-//        invoice_detail.setSub_orderID(map.get("sub_orderID"));
-//        invoice_detail.setSupplierid(invoiceDetailMapper.getsupplierid(map.get("sub_orderID")));
-//        invoice_detail.setUserid(invoiceDetailMapper.getuserid(map.get("sub_orderID")));
-//        invoice_detail.setMaterialid(invoiceDetailMapper.getmaterailid(map.get("sub_orderID")));
-//        invoice_detail.setAmount(invoiceDetailMapper.getamount(map.get("sub_orderID")));
-//        invoice_detail.setPrice(invoiceDetailMapper.getprice(map.get("sub_orderID")));
-//        invoiceDetailMapper.insert(invoice_detail);
+
+        /**生成发票详情单 **/
+        Invoice_detail invoice_detail=new Invoice_detail();
+        invoice_detail.setInvoiceid(invoiceid);
+        invoice_detail.setSub_orderID(map.get("sub_orderID"));
+        invoice_detail.setSupplierid(invoiceMapper.getsupplierid(map.get("sub_orderID")));
+        invoice_detail.setUserid(invoiceMapper.getuserid(map.get("sub_orderID")));
+        invoice_detail.setMaterialid(invoiceMapper.getmaterailid(map.get("sub_orderID")));
+        invoice_detail.setAmount(invoiceMapper.getamount(map.get("sub_orderID")));
+        invoice_detail.setPrice(invoiceMapper.getprice(map.get("sub_orderID")));
+        invoiceDetailMapper.insert(invoice_detail);
 
         return Result.success();
     }
