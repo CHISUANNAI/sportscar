@@ -1,6 +1,7 @@
 package com.sportscar.sportscar.controller;
 
 
+import com.sportscar.sportscar.bean.Invoice_detail;
 import com.sportscar.sportscar.mapper.InvoiceDetailMapper;
 import com.sportscar.sportscar.mapper.InvoiceMapper;
 import com.sportscar.sportscar.mapper.PaymentMapper;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/payment")
@@ -33,6 +35,21 @@ public class PaymentController {
         else{
             return  Result.error("1","不存在该订单号");
         }
-
     }
+    /**接口2：根据大订单id，查找对应的所有发票详情 **/
+    @GetMapping("/showinvoice")
+    public Result<?> showinvoice(@RequestParam String orderID){
+        String Orderid=invoiceMapper.getid(orderID);
+        List<Invoice_detail> invoice_detail=paymentMapper.getinvoice(orderID);
+
+        if(Orderid!=null){
+            return Result.success(invoice_detail);
+
+        }
+        else{
+            return  Result.error("1","不存在该订单号");
+        }
+    }
+
+    
 }
