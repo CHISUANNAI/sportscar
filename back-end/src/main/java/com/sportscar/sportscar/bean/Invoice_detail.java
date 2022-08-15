@@ -9,7 +9,7 @@ public class Invoice_detail {
     @TableId(value="sub_invoiceID",type= IdType.AUTO)
     private Integer sub_invoiceID;
     private Integer invoiceid;
-    private String sub_orderID;
+    private String sub_orderid;
     private Integer supplierid;
     private Integer userid;
     private Integer materialid;

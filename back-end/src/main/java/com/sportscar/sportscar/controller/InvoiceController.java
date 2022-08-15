@@ -20,6 +20,7 @@ import java.util.Map;
 public class InvoiceController {
     @Resource
     InvoiceMapper invoiceMapper;
+    @Resource
     InvoiceDetailMapper invoiceDetailMapper;
 
     /**接口1：根据大订单id查询没开过发票详情单的小订单id **/
@@ -59,7 +60,7 @@ public class InvoiceController {
         /**生成发票详情单 **/
         Invoice_detail invoice_detail=new Invoice_detail();
         invoice_detail.setInvoiceid(invoiceid);
-        invoice_detail.setSub_orderID(map.get("sub_orderID"));
+        invoice_detail.setSub_orderid(map.get("sub_orderID"));
         invoice_detail.setSupplierid(invoiceMapper.getsupplierid(map.get("sub_orderID")));
         invoice_detail.setUserid(invoiceMapper.getuserid(map.get("sub_orderID")));
         invoice_detail.setMaterialid(invoiceMapper.getmaterailid(map.get("sub_orderID")));
