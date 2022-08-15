@@ -16,18 +16,14 @@ import SupplierManagement from "../pages/SupplierManagement";
 import PersonalManagement from "../pages/PersonalManagement";
 import PasswordEdit from "../pages/PasswordEdit";
 import documentflowmanagement from "../pages/documentflowmanagement";
+import PaymentManagement from "../pages/PaymentManagement";
 import Home from "../pages/Home";
 import logo from "../graphs/logo.png";
 import { getToken } from '../utils/auth';
 
 const { Header, Footer, Content } = Layout;
 
-const base="http://localhost:3000/avatar/"
-
-const user = {
-    name: JSON.parse(getToken()).userName,
-    avatar: JSON.parse(getToken()).avatar
-};
+const base = "http://localhost:3000/avatar/"
 
 function getItem(label, key, icon, children, type) {
     return {
@@ -40,9 +36,16 @@ function getItem(label, key, icon, children, type) {
 }
 
 class MyLayout extends Component {
+    state = {
+        user: {
+            name: JSON.parse(getToken()).userName,
+            avatar: JSON.parse(getToken()).avatar
+        }
+    };
     handleClick = (e) => {
         this.setState({
             current: e.key,
+            selectedKey: this.props.location.pathname
         });
         const path = e.key.toString();
         this.props.history.push({
@@ -51,9 +54,23 @@ class MyLayout extends Component {
         console.log(e);
     };
 
+    componentDidMount() {
+        // 刷新菜单更新默认状态
+        this.setState({
+            selectedKey: this.props.location.pathname
+        });
+
+        // 浏览器前进后退按钮更新菜单状态
+        if (window.history && window.history.pushState) {
+            window.onpopstate = function () {
+                window.location.reload(true); //刷新页面
+            };
+        }
+    };
+
     render() {
         const menu = (
-            <Menu onClick={this.handleClick}>
+            <Menu onClick={this.handleClick} selectedKeys='sub2'>
                 <Menu.Item key="/Home/personalManagement" icon={<EditOutlined />}>
                     个人设置
                 </Menu.Item>
@@ -116,14 +133,17 @@ class MyLayout extends Component {
                                 getItem('单据流管理', '/Home/documentflowmanagement'),
                             ]),
                             getItem('收货管理', '/Home/receiveGoods', <CarryOutOutlined />),
-                            getItem('财务管理', '/Home/financialManagement', <DollarOutlined />),
+                            getItem('财务管理', 'sub3', <DollarOutlined />, [
+                                getItem('发票管理', '/Home/financialManagement'),
+                                getItem('账单管理', '/Home/paymentManagement')
+                            ])
                         ]}
                     />
                     <span style={{
                         float: 'right'
                     }}>
                         <Popover placement="bottom" content={content} trigger="click">
-                            <Button danger shape="round" size="small" style={{ marginRight:"50px" }}
+                            <Button danger shape="round" size="small" style={{ marginRight: "50px" }}
                             >
                                 <CalendarOutlined />
                                 Today&nbsp; : &nbsp;{moment().format("YYYY-MM-DD")}
@@ -136,12 +156,12 @@ class MyLayout extends Component {
                                 icon={
                                     <Avatar
                                         style={{ backgroundColor: '#f56a00' }}
-                                        src={`${base}${user.avatar}`}
+                                        src={`${base}${this.state.user.avatar}`}
                                         size="large"
                                     />
                                 }
                             >
-                                &nbsp;&nbsp;{user.name}
+                                &nbsp;&nbsp;{this.state.user.name}
                             </Button>
                         </Dropdown>
                     </span>
@@ -200,6 +220,10 @@ class MyLayout extends Component {
                             <Route
                                 path="/Home/personalManagement"
                                 component={PersonalManagement}
+                            />
+                            <Route
+                                path="/Home/paymentManagement"
+                                component={PaymentManagement}
                             />
                             <Route
                                 path="/Home/passwordEdit"

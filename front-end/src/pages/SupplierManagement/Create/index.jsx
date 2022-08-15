@@ -1,13 +1,36 @@
 import { Form, Button, Col, Row, Input, Select, message } from 'antd';
 import React, { Component } from 'react';
-import { Supplieradd } from '../../../API/auth';
+import { Supplieradd, Employeelist } from '../../../API/auth';
+
 const { Option } = Select;
+
+
+const renderOption = (arr , code , name) => arr ?  arr.map( (item,index)=>{
+    return (<Option key={index+item[code]} value={ typeof(item[code]) === 'number' ? item[code].toString() : item[code]}>{item[name]}</Option>)
+  }) : null
 
 export default class CreateSupplier extends Component {
     constructor(props) {
         super(props);
         const { handleCreateClick } = this.props;
         this.handleCreateClick = handleCreateClick;
+    }
+    state = {
+        dataSource: []
+    };
+    componentDidMount() {
+        Employeelist().then(
+            (response) => {
+                //拿到我们想要渲染的数据(res)
+                this.setState({
+                    dataSource: response.data.data
+                });
+                console.log(response.data.data);
+            },
+            (error) => {
+                console.log('失败了', error);
+            }
+        );
     }
     formRef = React.createRef();
     onFinish = (values) => {
@@ -17,7 +40,7 @@ export default class CreateSupplier extends Component {
                     message.success('供应商' + response.data.data.supplierName + '已创建成功');
                     this.formRef.current.resetFields();
                     this.handleCreateClick();
-                } else if (response.data.state === 6002){
+                } else if (response.data.state === 6002) {
                     message.info('员工编号不存在')
                 } else {
                     message.info(response.data.message);
@@ -41,7 +64,7 @@ export default class CreateSupplier extends Component {
                     </Col>
                     <Col span={12}>
                         <Form.Item name="clerkVendor" label="本公司对应员工编号" rules={[{ pattern: /^\d{4}$/, message: '请输入正确的员工编号' }]}>
-                            <Input placeholder="可选项" />
+                        <Select placeholder="可选项">{renderOption(this.state.dataSource,'userID','userID')}</Select>
                         </Form.Item>
                     </Col>
                 </Row>
