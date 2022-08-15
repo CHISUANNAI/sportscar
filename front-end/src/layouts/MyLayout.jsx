@@ -40,12 +40,12 @@ class MyLayout extends Component {
         user: {
             name: JSON.parse(getToken()).userName,
             avatar: JSON.parse(getToken()).avatar
-        }
+        },
+        selectedKey: []
     };
     handleClick = (e) => {
         this.setState({
-            current: e.key,
-            selectedKey: this.props.location.pathname
+            current: e.key
         });
         const path = e.key.toString();
         this.props.history.push({
@@ -57,8 +57,9 @@ class MyLayout extends Component {
     componentDidMount() {
         // 刷新菜单更新默认状态
         this.setState({
-            selectedKey: this.props.location.pathname
-        });
+            selectedKeys: this.props.location.pathname
+        })
+
 
         // 浏览器前进后退按钮更新菜单状态
         if (window.history && window.history.pushState) {
@@ -70,7 +71,7 @@ class MyLayout extends Component {
 
     render() {
         const menu = (
-            <Menu onClick={this.handleClick} selectedKeys='sub2'>
+            <Menu onClick={this.handleClick}>
                 <Menu.Item key="/Home/personalManagement" icon={<EditOutlined />}>
                     个人设置
                 </Menu.Item>
@@ -119,6 +120,7 @@ class MyLayout extends Component {
                         mode="horizontal"
                         onClick={this.handleClick}
                         defaultSelectedKeys={['/Home']}
+                        selectedKeys={this.state.selectedKeys}
                         items={[
                             getItem('首页', '/Home', <HomeOutlined />),
                             getItem('用户管理', 'sub2', <UserOutlined />, [
