@@ -126,7 +126,7 @@ export default class Login extends Component {
 						</Form>
 					</div>
 				</Content>
-						<Footer className="footer">2019级 系统分析与设计课程设计 Copyright © 2022 MIS Group 3</Footer>
+				<Footer className="footer">2019级 系统分析与设计课程设计 Copyright © 2022 MIS Group 3</Footer>
 			</Layout>
 		);
 	}

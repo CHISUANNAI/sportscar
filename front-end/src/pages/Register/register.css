@@ -1,13 +1,16 @@
 .bg{
     height: 100vh;
 }
+
 .register-form
 {
-   width: 33%;
-   height: 66%;
    position: absolute;
-   top: 24%;
-   left: 33%;
+   width: 50%;
+   height: 66%; 
+  
+   top: 20%;
+   left: 25%;
+   
 
 }
 footer

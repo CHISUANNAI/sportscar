@@ -11,6 +11,16 @@ export function loginApi(loginInfo) {
   });
 }
 
+//用户密码修改
+export function pwEditApi(newPwInfo) {
+  return axios.get(`${baseURL}/users/changePw`, {
+    params: {
+      userName: newPwInfo.userName,
+      password: newPwInfo.password
+    }
+  });
+}
+
 /**
  * 获取列表
  */
