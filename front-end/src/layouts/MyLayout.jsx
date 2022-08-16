@@ -217,6 +217,9 @@ class MyLayout extends Component {
                             <Route path="/Home/orderManagement"
                                 component={OrderManagement}
                             />
+                            <Route path="/Home/documentflowmanagement"
+                                component={documentflowmanagement}
+                            />
                             <Route path="/Home/receiveGoods"
                                 component={ReceiveGoods}
                             />
