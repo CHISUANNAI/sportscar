@@ -23,13 +23,13 @@ public class InvoiceController {
     @Resource
     InvoiceDetailMapper invoiceDetailMapper;
 
-    /**接口1：根据大订单id查询没开过发票详情单的小订单id **/
+    /**接口1：根据大订单id查询没开过发票详情单的小订单详情 **/
     @GetMapping("/id")
     public Result<?> getid(@RequestParam String orderID){
-        List<String> Suborderid=invoiceMapper.getsubid(orderID);
+        List<Procurement_order> procument_order=invoiceMapper.getsubid(orderID);
         String Orderid=invoiceMapper.getid(orderID);
         if(Orderid!=null){
-        return Result.success(Suborderid);
+        return Result.success(procument_order);
         }
         else {
             return  Result.error("1","不存在该订单号");
