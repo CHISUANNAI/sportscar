@@ -3,7 +3,7 @@ import { Table, Input, Button, Space, Divider, Popconfirm, message, Badge, Tag }
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Employeelist, Employeeedit, Employeedelete } from '../../../API/auth';
-//import { getToken } from '../../../utils/auth';
+import { getToken, setToken } from '../../../utils/auth';
 import EditEmployee from '../Edit';
 
 export default class EmployeeList extends Component {
@@ -116,9 +116,19 @@ export default class EmployeeList extends Component {
         // 先传值
         Employeeedit(value).then(
             (response) => {
-                console.log(response.data)
+                console.log(response.data.data)
                 if (response.data.state === 200) { //成功状态码200
                     message.success('修改成功');
+                    //对token更新
+                    if (JSON.parse(getToken()).userID === value.userID){
+                        let token = JSON.parse(getToken());
+                        token.userName = value.userName
+                        token.phone = value.phone
+                        token.email = value.email
+                        token.gender = value.gender
+                        token.status = value.status
+                        setToken(JSON.stringify(token))
+                    }
                     //重新获取员工列表
                     Employeelist().then(
                         (response) => {

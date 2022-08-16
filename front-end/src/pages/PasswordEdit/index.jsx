@@ -22,6 +22,7 @@ export default class PasswordEdit extends Component {
     //console.log(value.confirm)
     let newPwInfo = {
       userName: this.state.user.name,
+      old: value.old,
       password: value.confirm
     };
     pwEditApi(newPwInfo).then(
@@ -34,8 +35,12 @@ export default class PasswordEdit extends Component {
           this.props.history.push({   //链接跳转
             pathname: '/Home',
           });
+        } else if (response.data.state === 4001){
+          message.info('用户信息异常');
+        } else if (response.data.state === 4002){
+          message.info('初始密码错误');
         } else {
-          message.info('密码修改失败，请重试');
+          message.info(response.data.message);
         }
       },
       (error) => {
@@ -53,6 +58,7 @@ export default class PasswordEdit extends Component {
             <Form labelCol={{span: 8}} onFinish={this.onFinish} ref={this.formRef}>
                 {/* 当前密码 */}
                 <Form.Item
+                name="old"
                 label="当前密码"
                 rules={[
                   {

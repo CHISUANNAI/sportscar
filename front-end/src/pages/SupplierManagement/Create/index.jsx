@@ -41,7 +41,7 @@ export default class CreateSupplier extends Component {
                     this.formRef.current.resetFields();
                     this.handleCreateClick();
                 } else if (response.data.state === 6002) {
-                    message.info('员工编号不存在')
+                    message.info('对应员工编号不存在')
                 } else {
                     message.info(response.data.message);
                 }

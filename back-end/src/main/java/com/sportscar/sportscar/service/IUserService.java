@@ -29,7 +29,7 @@ public interface IUserService {
     void updateUsers(Integer userID,String userName,Integer gender,String phone,String email,Integer status);
 
     //以下为个人信息页面
-    void changePassword(String userName, String password);
+    void changePassword(String userName, String old, String password);
 
     User changeUser(User user);
 }

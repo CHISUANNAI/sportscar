@@ -55,8 +55,8 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping("changePw")
-    public JsonResult<Void> changePassword(@RequestParam String userName,String password){
-        userService.changePassword(userName,password);
+    public JsonResult<Void> changePassword(@RequestParam String userName,String old,String password){
+        userService.changePassword(userName,old,password);
         return new JsonResult<>(OK);
     }
     @RequestMapping("changeIn")

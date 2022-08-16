@@ -16,6 +16,7 @@ export function pwEditApi(newPwInfo) {
   return axios.get(`${baseURL}/users/changePw`, {
     params: {
       userName: newPwInfo.userName,
+      old: newPwInfo.old,
       password: newPwInfo.password
     }
   });

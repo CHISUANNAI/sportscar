@@ -45,7 +45,8 @@ class MyLayout extends Component {
     };
     handleClick = (e) => {
         this.setState({
-            current: e.key
+            current: e.key,
+            selectedKeys: e.key
         });
         const path = e.key.toString();
         this.props.history.push({
@@ -56,10 +57,14 @@ class MyLayout extends Component {
 
     componentDidMount() {
         // 刷新菜单更新默认状态
+        console.log(JSON.parse(getToken()));
         this.setState({
+            user: {
+                name: JSON.parse(getToken()).userName,
+                avatar: JSON.parse(getToken()).avatar
+            },
             selectedKeys: this.props.location.pathname
         })
-
 
         // 浏览器前进后退按钮更新菜单状态
         if (window.history && window.history.pushState) {
@@ -158,7 +163,7 @@ class MyLayout extends Component {
                                 icon={
                                     <Avatar
                                         style={{ backgroundColor: '#f56a00' }}
-                                        src={`${base}${this.state.user.avatar}`}
+                                        src={this.state.user.avatar !== null ? `${base}${this.state.user.avatar}`:'https://joeschmoe.io/api/v1/random'}
                                         size="large"
                                     />
                                 }

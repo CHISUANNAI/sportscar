@@ -16,13 +16,13 @@ public class BaseController {
         JsonResult<Void> result = new JsonResult<>(e);
         if(e instanceof UsernameDuplicatedException) {
             result.setState(4000);
-            result.setMessage("用户名被占用异常");
+            result.setMessage("用户名被占用");
         }else if(e instanceof UserNotFoundException){
             result.setState(4001);
-            result.setMessage("用户数据不存在异常");
+            result.setMessage("用户数据不存在");
         }else if(e instanceof PasswordNotMatchException){
             result.setState(4002);
-            result.setMessage("用户密码错误异常");
+            result.setMessage("用户密码错误");
         }else if(e instanceof InsertException){
             result.setState(5000);
             result.setMessage("创建时产生未知异常");
@@ -34,19 +34,19 @@ public class BaseController {
             result.setMessage("修改时产生未知异常");
         }else if(e instanceof SuppliernameDuplicatedException){
             result.setState(6000);
-            result.setMessage("供应商名称被占用异常");
+            result.setMessage("供应商名称被占用");
         }else if(e instanceof SupplierNotFoundException){
             result.setState(6001);
-            result.setMessage("供应商数据不存在异常");
+            result.setMessage("供应商数据不存在");
         }else if(e instanceof ClerkNotFoundException){
             result.setState(6002);
-            result.setMessage("对应员工编号不存在异常");
+            result.setMessage("供应商对应员工编号不存在");
         }else if(e instanceof MaterialnameDuplicatedException) {
             result.setState(7000);
-            result.setMessage("物料名称被占用异常");
+            result.setMessage("物料名称被占用");
         }else if(e instanceof MaterialNotFoundException){
             result.setState(7001);
-            result.setMessage("物料数据不存在异常");
+            result.setMessage("物料数据不存在");
         }
         return result;
     }

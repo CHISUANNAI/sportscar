@@ -120,13 +120,17 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void changePassword(String userName, String password){
+    public void changePassword(String userName, String old, String password){
         User user = userMapper.findByName(userName);
         if(user == null){
             throw new UserNotFoundException("用户账号不存在");
         }
         String salt = user.getSalt();
         String newMd5Password = getMD5Password(password, salt);
+        String oldMd5Password = getMD5Password(old, salt);
+        if(!oldMd5Password.equals(user.getPassword())){
+            throw new PasswordNotMatchException("初始密码错误");
+        }
         Integer rows = userMapper.updatePassword(userName,newMd5Password);
         if(rows != 1){
             throw new UpdateException("修改时产生未知异常");
