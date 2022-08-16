@@ -45,7 +45,7 @@ export default class CreateMaterial extends Component {
                 </Row>
                 <Row gutter={24}>
                     <Col span={12}>
-                        <Form.Item name="weight" label="毛重（kg）" >
+                        <Form.Item name="weight" label="毛重（kg）" rules={[{ pattern: /^\d*\.\d*$/, message: '请输入正浮点数' }]}>
                             <Input placeholder="可选项" />
                         </Form.Item>
                     </Col>
