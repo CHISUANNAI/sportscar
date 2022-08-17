@@ -137,7 +137,7 @@ export function Materialadd(value) {
 export function showsubid(value){
   return axios.get(`${baseURL}/invoice/id`,{
     params:{
-      orderID:value.orderID
+      orderID:value
     }
   });
 }
