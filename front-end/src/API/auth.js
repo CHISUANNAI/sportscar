@@ -11,6 +11,15 @@ export function loginApi(loginInfo) {
   });
 }
 
+//用户注册
+export function registerApi(registerInfo) {
+  return axios.get(`${baseURL}/users/changeIn`, {
+    params: {
+      /* user */
+    }
+  });
+}
+
 //用户密码修改
 export function pwEditApi(newPwInfo) {
   return axios.get(`${baseURL}/users/changePw`, {

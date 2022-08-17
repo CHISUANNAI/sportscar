@@ -2,24 +2,14 @@ import React, { Component, useState} from "react";
 import './register.css';
 import { Form, Input, Button, Layout, Steps, message, Col, Row, Select,Space} from 'antd';
 import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone,MailOutlined,PhoneOutlined} from '@ant-design/icons';
-//import { loginApi } from '../../API/auth'
+import { registerApi } from '../../API/auth'
+import { setToken } from "../../utils/auth";
 /* import logo from "../../graphs/logo.png";
 import Avatar from "antd/lib/avatar/avatar";
  */
 
 const { Option } = Select;
 const { Footer,Content } = Layout;
-const { Step } = Steps;
-const steps = [
-  {
-    title: '基础信息',
-    content: 'First-content',
-  },
-  {
-    title: '密码设置',
-    content: 'Second-content',
-  },
-];
 
 
 export default class Register extends Component {
@@ -31,10 +21,9 @@ export default class Register extends Component {
             phone:'',
             email:'',
             gender:'',
-            avatar:'',
-        
 		};
 	}
+    formRef = React.createRef();
 	
     
     onNameChange(e) {
@@ -65,16 +54,19 @@ export default class Register extends Component {
 		});
 	}
 
-    /* //尝试注册
+    
 	tryregister = () => {
 		let registerInfo = {
 			name: this.state.name,
-			password: this.state.password
+			password: this.state.password,
+            gender:this.state.gender,
+            phone:this.state.phone,
+            email:this.state.email
 		};
-		if ((loginInfo.name === '') | (loginInfo.password === '')) {
-			message.error('员工名称和密码不能为空');
+		if ((registerInfo.name === '') | (registerInfo.password === '')) {
+			message.error('员工姓名和密码不能为空');
 		} else {
-			loginApi(loginInfo).then(
+			registerApi(registerInfo).then(
 				(response) => {
 					console.log(response.data.result);
 					if (response.data.result === 'success') {
@@ -84,7 +76,7 @@ export default class Register extends Component {
 							pathname: '/Home',
 						});
 					} else {
-						message.info('登录失败，请重试');
+						message.info('注册失败，请重试');
 					}
 				},
 				(error) => {
@@ -92,7 +84,7 @@ export default class Register extends Component {
 				}
 			);
 		}
-	}; */
+	};
 
 	
 
@@ -106,42 +98,61 @@ export default class Register extends Component {
                         {/* userName */}
                         <Form.Item
                         name="name"
-                        label='Name'
+                        label='姓名'
                         rules={[
                             {
                             required: true,
-                            message: '请输入员工名称!'
+                            message: '请输入您的姓名!'
                             },
                         ]}
                         >
                             <Input
                             prefix={<UserOutlined/>}
                             onChange={(e) => this.onNameChange(e)}
+                            maxLength={10}
                             />
                         </Form.Item>
                         
                         {/* 密码 */}
                         <Form.Item
-                        label='Password'
+                        name='pw'
+                        label='密码'
                         rules={[
                             {
                             required: true,
                             message: '请输入密码!'
                             },
                         ]}>
-                            <Space direction="vertical">
-                                <Input.Password placeholder="input password" />
-                                <Input.Password
-                                placeholder="input password"
-                                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                                />
-                            </Space>
+                            <Input.Password />
                         </Form.Item>
+                        <Form.Item
+                            name="confirm"
+                            label="请再次输入新密码"
+                            dependencies={['pw']}
+                            hasFeedback
+                            rules={[
+                                {
+                                required: true,
+                                message: '请确认新密码！',
+                                },
+                                ({ getFieldValue }) => ({
+                                validator(_, value) {
+                                    //空or两次密码相同
+                                    if (!value || getFieldValue('newpassword') === value) {
+                                    return Promise.resolve();
+                                    }
+                                    return Promise.reject(new Error('您所输入的两次密码不同，请重新输入！'));
+                                },
+                                }),
+                            ]}
+                            >
+                            <Input.Password />
+                         </Form.Item>
 
                         {/* //Gender */}
                         <Form.Item
                             name="gender"
-                            label="Gender"
+                            label="性别"
                         >
                             <Select
                             placeholder="性别"
@@ -156,7 +167,7 @@ export default class Register extends Component {
                         
                         <Form.Item
                         name="phone"
-                        label='Phone'>
+                        label='电话'>
                             <Input
                             prefix={<PhoneOutlined/>}
                             onChange={(e) => this.onPhoneChange(e)}
@@ -172,15 +183,6 @@ export default class Register extends Component {
                             />
                         </Form.Item>
 
-                        {/* <Form.Item
-                        name="gender"
-                        required tooltip="This is a required field">
-                            <Input
-                            prefix={<UserOutlined/>}
-                            onChange={(e) => this.onInputChangeName(e)}
-                            />
-                        </Form.Item> */}
-                        
                         {/* 提交与重置按钮 */}
                         <Form.Item>
                         <Row gutter={5}>
@@ -197,7 +199,6 @@ export default class Register extends Component {
                         </Row>
                         </Form.Item>
                     </Form>   
-                
                 </Content>
                 <Footer className="footer">2019级 系统分析与设计课程设计 Copyright © 2022 MIS Group 3</Footer>
             </Layout>
