@@ -1,7 +1,7 @@
 import { Tabs } from 'antd';
 import React, { Component } from 'react';
 // 引入组件列表
-import EmployeeList from './EmployeeList';
+import ShowRQ from './ShowRQ';
 import CreateEmployee from './Create';
 
 const { TabPane } = Tabs;
@@ -58,7 +58,7 @@ export default class RequisitionManagement extends Component {
           onEdit={this.onEdit}
         >
           <TabPane tab="报价列表" key="1" closable={false}>
-            {this.state.activeKey === '1' ? <EmployeeList /> : null}
+          {this.state.activeKey === '1' ? <ShowRQ /> : null}
           </TabPane>
           <TabPane tab="创建报价" key="2" closable={false}>
             {this.state.activeKey === '2' ? (

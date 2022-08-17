@@ -1,4 +1,5 @@
 import axios from "axios";
+import qs from 'qs'
 const baseURL = "http://localhost:8080";
 
 //用户登录信息验证
@@ -149,6 +150,52 @@ export function showsubid(value){
       orderID:value
     }
   });
+}
+/*** 
+ * 报价订单接口
+*/
+//查询报价订单
+export function ShowAllQuatationRequest() {
+  return axios({
+    url:`${baseURL}/ShowAllQuatationRequest`,
+    params:{
+    },
+    method:'get',
+    withCredentials : true
+})
+}
+//删除报价订单
+export function DeleteQuatationRequest(rfqID) {
+  return axios({
+    url:`${baseURL}/DeleteQuatationRequest`,
+    params:{
+      rfqID:rfqID
+    },
+    method:'get',
+    withCredentials : true
+})
+}
+//添加报价订单
+export function AddQuatationRequest(value) {
+  return axios({
+    url:`${baseURL}/AddQuatationRequest`,
+    params:{
+      supplierID:value.supplierID,
+      materialID:value.materialID,
+      amount:value.amount,
+      date_limit:value.date_limit
+    },
+    paramsSerializer: params => {
+      return qs.stringify(params, { indices: false })
+    },
+    method:'get',
+    withCredentials : true
+})
+  // axios.get(`${baseURL}/DeleteQuatationRequest`,{withCredentials : true},{
+  //   params: {
+  //     rfqID: rfqID,
+  //   }
+  // });
 }
 
 
