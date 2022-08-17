@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import './index.css';
 import { AudioOutlined } from '@ant-design/icons';
-import { Input, Space,Checkbox, message } from 'antd';
+import { Input, Space,Checkbox, message,Alert } from 'antd';
 import {Table, Tag } from 'antd';
 import { showsubid } from "../../API/auth";
 const { Search } = Input;
+// const onSearch = (value) => console.log(value);
+
 const onChange = (e) => {
   console.log(`checked = ${e.target.checked}`);
 };
@@ -73,29 +75,28 @@ const data = [
   }
 ];
 
+
 export default class FinancialManagement extends Component {
+
   onSearch = (value) =>{
     showsubid(value).then(
      
       (response)=>{
-        console.log(value)
-        console.log(response.data)
-        if (response.data.code === 1){
-          message.info("不存在该订单号")
-  
+        if(response.data.msg=="不存在该订单号"){
+          message.error(response.data.msg)
         }
-        else{
+        else {
           console.log(response.data.data)
         }
+        
       },
-
+  
       (error)=>{
         console.log('数据获取失败', error);
       }
     );
-  
-  
   }; 
+ 
   render() {
     return (
       <div>
@@ -108,10 +109,8 @@ export default class FinancialManagement extends Component {
       {/* 间距 */}
       <h1>   </h1> 
   
-      <Table columns={columns} dataSource={data} />;
-
-
-
+      <Table columns={columns} dataSource={data} />
+    
       </div>
       
       
