@@ -33,10 +33,16 @@ export default class Register extends Component {
 		});
 	}
 
-    onGenderChange(e) {
+    onPwChange(e) {
 		let inputValue = e.target.value;
 		this.setState({
-			gender: inputValue
+			password: inputValue
+		});
+	}
+
+    onGenderChange(e) {
+		this.setState({
+			gender: e
 		});
 	}
 
@@ -59,23 +65,28 @@ export default class Register extends Component {
 		let registerInfo = {
 			name: this.state.name,
 			password: this.state.password,
-            gender:this.state.gender,
-            phone:this.state.phone,
-            email:this.state.email
+            gender: (this.state.gender === '0') ? 0 : (this.state.gender === '1') ? 1 : null,
+            phone: (this.state.phone === '' || this.state.phone === null) ? null : this.state.phone,
+            email: (this.state.email === '' || this.state.email === null) ? null : this.state.email,
 		};
-		if ((registerInfo.name === '') | (registerInfo.password === '')) {
+		if ((registerInfo.name === '') | (registerInfo.pw === '')) {
+            console.log(this.state)
 			message.error('员工姓名和密码不能为空');
 		} else {
 			registerApi(registerInfo).then(
 				(response) => {
-					console.log(response.data.result);
-					if (response.data.result === 'success') {
-						message.success('登录成功');
-						setToken(JSON.stringify(response.data.user));
+					console.log(response.data);
+					if (response.data.state === 200) {
+						message.success('注册成功');
+						setToken(JSON.stringify(response.data.data));
 						this.props.history.push({   //链接跳转
 							pathname: '/Home',
 						});
-					} else {
+					} else if (response.data.state === 4000){
+                        message.info('用户名已被占用');
+                    } else if (response.data.state === 5000){
+                        message.info('注册时出现异常');
+                    } else {
 						message.info('注册失败，请重试');
 					}
 				},
@@ -86,7 +97,6 @@ export default class Register extends Component {
 		}
 	};
 
-	
 
     render(){
         return(
@@ -123,7 +133,10 @@ export default class Register extends Component {
                             message: '请输入密码!'
                             },
                         ]}>
-                            <Input.Password />
+                            <Input.Password
+                            iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                            onChange={(e) => this.onPwChange(e)}
+                            />
                         </Form.Item>
                         <Form.Item
                             name="confirm"
@@ -138,7 +151,7 @@ export default class Register extends Component {
                                 ({ getFieldValue }) => ({
                                 validator(_, value) {
                                     //空or两次密码相同
-                                    if (!value || getFieldValue('newpassword') === value) {
+                                    if (!value || getFieldValue('pw') === value) {
                                     return Promise.resolve();
                                     }
                                     return Promise.reject(new Error('您所输入的两次密码不同，请重新输入！'));
@@ -156,18 +169,18 @@ export default class Register extends Component {
                         >
                             <Select
                             placeholder="性别"
-                            onChange={(e) => this.onGenderChange(e)}
                             allowClear
+                            onChange={(e) => this.onGenderChange(e)}
                             >
-                            <Option value="male">male</Option>
-                            <Option value="female">female</Option>
-                            <Option value="other">other</Option>
+                            <Option value="0">女</Option>
+                            <Option value="1">男</Option>
                             </Select>
                         </Form.Item>
                         
                         <Form.Item
                         name="phone"
-                        label='电话'>
+                        label='电话'
+                        rules={[{ pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的手机号' }]}>
                             <Input
                             prefix={<PhoneOutlined/>}
                             onChange={(e) => this.onPhoneChange(e)}
@@ -176,7 +189,8 @@ export default class Register extends Component {
 
                         <Form.Item
                         name="email"
-                        label='Email'>
+                        label='邮箱'
+                        rules={[{ type: 'email', message: '请输入正确的邮箱' }]}>
                             <Input
                             prefix={<MailOutlined/>}
                             onChange={(e) => this.onEmailChange(e)}
@@ -187,13 +201,13 @@ export default class Register extends Component {
                         <Form.Item>
                         <Row gutter={5}>
                             <Col className="gutter-row" span={6} offset={8}>
-                                <Button type="primary" htmlType="submit">
-                                Submit
+                                <Button type="primary" htmlType="submit" onClick={this.tryregister}>
+                                提交
                                 </Button>
                             </Col>
                             <Col className="gutter-row" span={6}>
                                 <Button htmlType="reset">
-                                Reset
+                                清空
                                 </Button>
                             </Col>
                         </Row>

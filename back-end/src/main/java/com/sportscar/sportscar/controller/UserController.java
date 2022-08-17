@@ -16,9 +16,9 @@ public class UserController extends BaseController {
     private IUserService userService;
 
     @RequestMapping("reg")
-    public JsonResult<Void> reg(@RequestBody User user){
-        userService.reg(user);
-        return new JsonResult<>(OK);
+    public JsonResult<User> reg(@RequestParam String userName,String password,Integer gender,String phone,String email){
+        User data = userService.reg(userName,password,gender,phone,email);
+        return new JsonResult<>(OK,data);
     }
 
     @RequestMapping("login")
@@ -60,8 +60,8 @@ public class UserController extends BaseController {
         return new JsonResult<>(OK);
     }
     @RequestMapping("changeIn")
-    public JsonResult<User> changeUser(@RequestBody User user){
-        User result = userService.changeUser(user);
-        return new JsonResult<>(OK,result);
+    public JsonResult<User> changeUser(@RequestParam Integer userID,String userName,Integer gender,String phone,String email,String avatar){
+        User data = userService.changeUser(userID,userName,gender,phone,email,avatar);
+        return new JsonResult<>(OK,data);
     }
 }

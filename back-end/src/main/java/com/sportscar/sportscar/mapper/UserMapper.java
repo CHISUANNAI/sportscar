@@ -19,6 +19,8 @@ public interface UserMapper {
 
     Integer updatePassword(String userName,String password);
 
+    Integer updateUsers(User user);
+
     Integer updateUser(User user);
 
     /**

@@ -16,7 +16,13 @@ export default class Login extends Component {
 			password: ''
 		};
 	}
-	
+
+	tryregister = () => {
+		this.props.history.push({   //链接跳转
+			pathname: '/Register',
+		});
+	}
+
 	trylogin = () => {
 		let loginInfo = {
 			name: this.state.name,
@@ -117,7 +123,7 @@ export default class Login extends Component {
 									</Button>
 								</Col>
 								<Col className="gutter-row" span={3}>
-									<Button onClick={this.trylogin}>
+									<Button onClick={this.tryregister}>
 									Register
 									</Button>
 								</Col>

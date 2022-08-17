@@ -14,11 +14,16 @@ export function loginApi(loginInfo) {
 }
 
 //用户注册
-export function registerApi(registerInfo) {
-  return axios.get(`${baseURL}/users/changeIn`, {
+export function registerApi(value) {
+  return axios.get(`${baseURL}/users/reg`, {
     params: {
-      /* user */
-    }
+      userName: value.name,
+      password: value.password,
+      gender: value.gender,
+      phone: value.phone,
+      email: value.email
+    },
+    withCredentials : true
   });
 }
 
@@ -29,7 +34,8 @@ export function pwEditApi(newPwInfo) {
       userName: newPwInfo.userName,
       old: newPwInfo.old,
       password: newPwInfo.password
-    }
+    },
+    withCredentials : true
   });
 }
 
@@ -37,13 +43,16 @@ export function pwEditApi(newPwInfo) {
  * 获取列表
  */
 export function Employeelist() {
-  return axios.get(`${baseURL}/users/load`);
+  return axios.get(`${baseURL}/users/load`,
+  {withCredentials : true});
 }
 export function Supplierlist() {
-  return axios.get(`${baseURL}/suppliers/load`);
+  return axios.get(`${baseURL}/suppliers/load`,
+  {withCredentials : true});
 }
 export function Materiallist() {
-  return axios.get(`${baseURL}/materials/load`);
+  return axios.get(`${baseURL}/materials/load`,
+  {withCredentials : true});
 }
 
 
@@ -54,21 +63,24 @@ export function Employeedelete(userID) {
   return axios.get(`${baseURL}/users/delete`, {
     params: {
       userID: userID
-    }
+    },
+    withCredentials : true
   });
 }
 export function Supplierdelete(supplierID) {
   return axios.get(`${baseURL}/suppliers/delete`, {
     params: {
       supplierID: supplierID
-    }
+    },
+    withCredentials : true
   });
 }
 export function Materialdelete(materialID) {
   return axios.get(`${baseURL}/materials/delete`, {
     params: {
       materialID: materialID
-    }
+    },
+    withCredentials : true
   });
 }
 
@@ -84,7 +96,8 @@ export function Employeeedit(value) {
       phone: value.phone,
       email: value.email,
       status: value.status
-    }
+    },
+    withCredentials : true
   });
 }
 export function Supplieredit(value) {
@@ -95,7 +108,8 @@ export function Supplieredit(value) {
       region: value.region,
       language: value.language,
       clerkVendor: value.clerkVendor
-    }
+    },
+    withCredentials : true
   });
 }
 export function Materialedit(value) {
@@ -106,7 +120,8 @@ export function Materialedit(value) {
       description: value.description,
       weight: value.weight,
       factory: value.factory
-    }
+    },
+    withCredentials : true
   });
 }
 
@@ -120,7 +135,8 @@ export function Employeeadd(value) {
       gender: value.gender,
       phone: value.phone,
       email: value.email
-    }
+    },
+    withCredentials : true
   });
 }
 export function Supplieradd(value) {
@@ -130,7 +146,8 @@ export function Supplieradd(value) {
       region: value.region,
       language: value.language,
       clerkVendor: value.clerkVendor
-    }
+    },
+    withCredentials : true
   });
 }
 export function Materialadd(value) {
@@ -140,7 +157,8 @@ export function Materialadd(value) {
       description: value.description,
       weight: value.weight,
       factory: value.factory
-    }
+    },
+    withCredentials : true
   });
 }
 
@@ -149,7 +167,8 @@ export function showsubid(value){
   return axios.get(`${baseURL}/invoice/id`,{
     params:{
       orderID:value
-    }
+    },
+    withCredentials : true
   });
 }
 /*** 
@@ -198,6 +217,4 @@ export function AddQuatationRequest(value) {
   //   }
   // });
 }
-
-
 

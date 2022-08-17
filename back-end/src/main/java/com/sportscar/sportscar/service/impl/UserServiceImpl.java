@@ -21,24 +21,28 @@ public class UserServiceImpl implements IUserService {
     private SupplierMapper supplierMapper;
 
     @Override
-    public void reg(User user) {
-        String username =user.getUserName();
-        User result = userMapper.findByName(username);
+    public User reg(String userName,String password,Integer gender,String phone,String email) {
+        User result = userMapper.findByName(userName);
         if(result != null){
             throw new UsernameDuplicatedException("用户名被占用");
         }
+        User user = new User();
+        user.setUserName(userName);
+        user.setPhone(phone);
+        user.setEmail(email);
+        user.setGender(gender);
+        user.setStatus(1);
         //密码加密处理的实现：盐值+password+盐值 ---- md5算法进行加密，盐值为一个随机字符串
-        String oldPassword = user.getPassword();
+        String oldPassword = password;
         String salt = UUID.randomUUID().toString().toUpperCase();
         String md5Password = getMD5Password(oldPassword,salt);
         user.setPassword(md5Password);
-        //补全用户数据：salt,status
         user.setSalt(salt);
-        user.setStatus(1);
         Integer rows = userMapper.insert(user);
         if(rows != 1){
             throw new InsertException("注册时产生未知异常");
         }
+        return user;
     }
 
     @Override
@@ -113,7 +117,7 @@ public class UserServiceImpl implements IUserService {
         test.setPhone(phone);
         test.setEmail(email);
         test.setStatus(status);
-        Integer rows = userMapper.updateUser(test);
+        Integer rows = userMapper.updateUsers(test);
         if(rows != 1){
             throw new UpdateException("修改时产生未知异常");
         }
@@ -138,13 +142,17 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User changeUser(User user){
-        Integer userID = user.getUserID();
+    public User changeUser(Integer userID,String userName,Integer gender,String phone,String email,String avatar){
         User test = userMapper.findByID(userID);
         if(test == null){
             throw new UserNotFoundException("用户账号不存在");
         }
-        Integer rows = userMapper.updateUser(user);
+        test.setUserName(userName);
+        test.setGender(gender);
+        test.setPhone(phone);
+        test.setEmail(email);
+        test.setAvatar(avatar);
+        Integer rows = userMapper.updateUser(test);
         if(rows != 1){
             throw new UpdateException("修改时产生未知异常");
         }
