@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, { Component }from "react";
+import { useState } from 'react';
 import './index.css';
 import { AudioOutlined } from '@ant-design/icons';
-import { Input, Space,Checkbox, message,Alert } from 'antd';
+import { Input, Space,Checkbox, message,Alert ,Button} from 'antd';
 import {Table, Tag } from 'antd';
 import { showsubid } from "../../API/auth";
 const { Search } = Input;
@@ -21,17 +22,17 @@ const suffix = (
 
 const columns = [
   {
-    title: '子订单ID',
-    dataIndex: 'sub_orderID',
-    key: 'sub_orderID',
+    title: '子订单编号',
+    dataIndex: 'subOrderID',
+    key: 'subOrderID',
   },
   {
-    title: '供应商ID',
+    title: '供应商编号',
     dataIndex: 'supplierID',
     key: 'supplierID',
   },
   {
-    title: '物料ID',
+    title: '物料编号',
     dataIndex: 'materialID',
     key: 'materialID',
   },
@@ -54,39 +55,35 @@ const columns = [
   },
 
 ];
-const data = [
-  {
-    key: '1',
-    sub_orderID: 'John Brown',
-    supplierID: 32,
-    materialID: 'New York No. 1 Lake Park',
-    amount:30,
-    price:27.8
-  },
-  {
-    key: '2',
-    key: '1',
-    sub_orderID: 'John Brown2',
-    supplierID: 32,
-    materialID: 'New York No. 1 Lake Park',
-    amount:30,
-    price:27.8
-    
-  }
-];
+
 
 
 export default class FinancialManagement extends Component {
+ 
+  
+  state = {   
+    data:[]
+};
 
+/** 输入订单id，查询出没有开过发票详情单的子订单情况 */
   onSearch = (value) =>{
     showsubid(value).then(
-     
+   
       (response)=>{
+        this.setState({
+          data:[]
+        }) //重置刷新
         if(response.data.msg=="不存在该订单号"){
-          message.error(response.data.msg)
+          message.error("不存在该订单号！")
+        }
+        else if(response.data.msg!="不存在该订单号" && response.data.data.length==0)
+        {
+          message.info("该订单已开过发票！")
         }
         else {
-          console.log(response.data.data)
+          this.setState({
+            data:response.data.data
+        })
         }
         
       },
@@ -96,6 +93,11 @@ export default class FinancialManagement extends Component {
       }
     );
   }; 
+
+  componentDidMount() {
+    this.onSearch();
+
+}
  
   render() {
     return (
@@ -107,9 +109,13 @@ export default class FinancialManagement extends Component {
       </Space>
 
       {/* 间距 */}
-      <h1>   </h1> 
+      <div style={{height:30}}> </div>
   
-      <Table columns={columns} dataSource={data} />
+      <Table style={{height:250}} columns={columns} dataSource={this.state.data} />
+
+      <div style={{height:30}}> </div>
+
+      <Button type="primary">开发票</Button>
     
       </div>
       
