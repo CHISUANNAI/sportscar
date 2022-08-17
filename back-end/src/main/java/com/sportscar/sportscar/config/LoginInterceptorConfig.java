@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** 拦截器的注册 */
-@Configuration
+//@Configuration
 public class LoginInterceptorConfig implements WebMvcConfigurer {
 
     /** 配置拦截器 */
