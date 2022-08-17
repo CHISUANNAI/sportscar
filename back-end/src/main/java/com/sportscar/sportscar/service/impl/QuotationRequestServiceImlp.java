@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class QuotationRequestServiceImlp implements IQuotationRequestService {
@@ -160,7 +161,10 @@ public class QuotationRequestServiceImlp implements IQuotationRequestService {
             throw new NotLoggedInException("请登录后再操作！");
         }
         Integer userID=Integer.parseInt(sessionuserID.toString());
-        return quotationRequestMapper.showAllQuatationRequest(userID);
+        List<Quotation_request> quotation_requestListSorted=new LinkedList<>();
+        quotation_requestListSorted = quotationRequestMapper.showAllQuatationRequest(userID).stream().sorted(Comparator.comparing(Quotation_request::getDate).reversed())
+                .collect(Collectors.toList());
+        return quotation_requestListSorted;
     };
 
 

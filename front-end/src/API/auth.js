@@ -8,7 +8,8 @@ export function loginApi(loginInfo) {
     params: {
       userName: loginInfo.name,
       password: loginInfo.password
-    }
+    },
+    withCredentials : true
   });
 }
 
