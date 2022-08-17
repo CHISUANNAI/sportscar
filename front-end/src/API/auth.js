@@ -132,3 +132,15 @@ export function Materialadd(value) {
     }
   });
 }
+
+//输入大订单id，加载没有开过发票的小订单id(发票管理)
+export function showsubid(value){
+  return axios.get(`${baseURL}/invoice/id`,{
+    params:{
+      orderID:value.orderID
+    }
+  });
+}
+
+
+
