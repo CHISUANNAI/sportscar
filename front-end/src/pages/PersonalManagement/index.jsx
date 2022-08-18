@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Upload, Avatar, Form, Button, Col, Row, Input, Select, message , Space, Card} from 'antd';
 import './index.css';
 import { UploadOutlined } from '@ant-design/icons';
-import { getToken } from "../../utils/auth";
+import { useredit } from '../../API/auth';
+import { getToken, setToken } from '../../utils/auth';
 const { Option } = Select;
 const base="http://localhost:3000/avatar/"
 
@@ -17,29 +18,44 @@ export default class PersonalManagement extends Component {
     
    
     onFinish = (value) => {
-        value.gender = (value.gender === '女')? 0 :(value.gender === '男')? 1 : null;
+
+      let userID = JSON.parse(getToken()).userID;
+
+        //转换数据内容
+        value.gender = (value.gender === '0' || value.gender === '女') ? 0 : (value.gender === '1' || value.gender === '男') ? 1 : null;
+        value.email = (value.email === '' || value.email === null) ? null : value.email;
+        value.phone = (value.phone === '' || value.phone === null) ? null : value.phone;
         console.log(value)
-        /* Employeeadd(value).then(
-          (response) => {
-                console.log(response.data)
-            if (response.data.state === 200) {
-              message.success('账号' + response.data.data.userID + '已创建成功');
-              this.formRef.current.resetFields();
-              this.handleChangeClick();
-            } else if (response.data.state === 4000){
-                    message.info('用户名已被占用')
-                } else if (response.data.state === 5000){
-                    message.info('创建产生未知异常')
+        // 先传值
+        useredit(value,userID).then(
+            (response) => {
+                console.log(response.data.data)
+                if (response.data.state === 200) { //成功状态码200
+                    message.success('修改成功');
+                    //对token更新
+                    if (userID){
+                        let token = JSON.parse(getToken());
+                        token.userName = value.userName
+                        token.phone = value.phone
+                        token.email = value.email
+                        token.gender = value.gender
+                        token.gender = value.avatar
+                        setToken(JSON.stringify(token))
+                    }
+                } else if (response.data.state === 4001){
+                    message.info('用户账号不存在')
+                } else if (response.data.state === 5002){
+                    message.info('修改产生未知异常')
                 } else {
-              message.info(response.data.message);
+                    message.info(response.data.message);
+                }
+            },
+            (error) => {
+                console.log('数据获取失败', error);
             }
-          },
-          (error) => {
-            console.log('数据获取失败', error);
-          }
-        ); */
+        );
     }
- 
+
 
   render() {
     const user = JSON.parse(getToken());
@@ -58,14 +74,17 @@ export default class PersonalManagement extends Component {
               <Row gutter={12}>
                 {/* 姓名 */}
                 <Col span={12}>
-                  <Form.Item name="userName" label="姓名" rules={[{ required: true, message: '请输入姓名' }]}>
-                      <Input placeholder="必填项" />
+                  <Form.Item name="userName" label="姓名"
+                  rules={[{ required: true, message: '请输入姓名' }]}
+                  initialValue={user.userName} >
+                      <Input />
                   </Form.Item>
                 </Col>
                 {/* 性别 */}
                 <Col span={12}>
-                  <Form.Item name="gender" label="性别">
-                    <Select placeholder="可选项">
+                  <Form.Item name="gender" label="性别"
+                  initialValue={(user.gender === 0) ? '女' : (user.gender === 1) ? '男' : null}>
+                    <Select>
                       <Option value="0">女</Option>
                       <Option value="1">男</Option>
                     </Select>
@@ -75,14 +94,18 @@ export default class PersonalManagement extends Component {
               <Row gutter={12}>
                 {/* 手机号 */}
                 <Col span={12}>
-                  <Form.Item name="phone" label="手机号" rules={[{ pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的手机号' }]}>
-                      <Input placeholder="可选项" />
+                  <Form.Item name="phone" label="手机号"
+                  rules={[{ pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的手机号' }]}
+                  initialValue={user.phone} >
+                      <Input />
                   </Form.Item>
                 </Col>
                 {/* 邮箱 */}
                 <Col span={12}>
-                  <Form.Item name="email" label="邮箱" rules={[{ type: 'email', message: '请输入正确的邮箱' }]}>
-                      <Input placeholder="可选项" />
+                  <Form.Item name="email" label="邮箱"
+                  rules={[{ type: 'email', message: '请输入正确的邮箱' }]}
+                  initialValue={user.email} >
+                      <Input />
                   </Form.Item>
                 </Col>
               </Row>
@@ -112,7 +135,7 @@ export default class PersonalManagement extends Component {
             >
               <div className="avatar">
                 <Avatar size={64} 
-                src={`${base}${user.avatar}` !== null ? `${base}${user.avatar}`:'https://joeschmoe.io/api/v1/random'} 
+                src={user.avatar !== null ? `${base}${user.avatar}`:'https://joeschmoe.io/api/v1/random'} 
                 />
               </div>
               <div offset={0.5}>
@@ -122,7 +145,7 @@ export default class PersonalManagement extends Component {
                     getValueFromEvent={normFile}
                   >
                     <Upload
-                      action={`${base}${user.avatar}`}
+                      action={`${base}`}
                       listType="picture"
                       maxCount={1}
                     >

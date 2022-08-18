@@ -39,6 +39,22 @@ export function pwEditApi(newPwInfo) {
   });
 }
 
+//修改个人信息
+export function useredit(value,id) {
+  return axios.get(`${baseURL}/users/changeIn`, {
+    params: {
+      userID: id,
+      userName: value.userName,
+      gender: value.gender,
+      phone: value.phone,
+      email: value.email,
+      avatar: value.avatar
+    },
+    withCredentials : true
+  });
+}
+
+
 /**
  * 获取列表
  */
