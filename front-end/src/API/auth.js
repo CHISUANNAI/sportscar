@@ -298,4 +298,29 @@ export function deletePOBySubOrderID(sub_orderID) {
     withCredentials : true
 })
 }
+//单据流
+export function DocumentFlow() {
+  return axios.get(`${baseURL}/ProcurementOrder/SelectPO`,
+  {withCredentials : true});
+}
 
+//比价实现
+export function GetRfq() {
+  return axios.get(`${baseURL}/SelectQuatationRequestByState`,
+  {withCredentials : true});
+}
+
+export function CreatPO(value1,value2,value3) {
+  return axios.get(`${baseURL}/ProcurementOrder/CreateProcurementOrder`, {
+    params: {
+      rfqID:value1,
+      supplierID:value2,
+      materialID:value3,
+    },
+    paramsSerializer: params => {
+      return qs.stringify(params, { indices: false })
+    },
+    method:'get',
+    withCredentials : true
+  });
+}
