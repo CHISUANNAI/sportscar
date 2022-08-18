@@ -2,7 +2,7 @@ import { Tabs } from 'antd';
 import React, { Component } from 'react';
 // 引入组件列表
 import ShowRQ from './ShowRQ';
-import CreateEmployee from './Create';
+import Create from './Create';
 
 const { TabPane } = Tabs;
 
@@ -62,7 +62,7 @@ export default class RequisitionManagement extends Component {
           </TabPane>
           <TabPane tab="创建报价" key="2" closable={false}>
             {this.state.activeKey === '2' ? (
-              <CreateEmployee handleCreateClick={this.handleCreateClick} />
+              <Create handleCreateClick={this.handleCreateClick} />
             ) : null}
           </TabPane>
           {this.state.panes.map((pane) => (

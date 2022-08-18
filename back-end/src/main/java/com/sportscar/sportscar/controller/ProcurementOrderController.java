@@ -133,7 +133,7 @@ public class ProcurementOrderController {
         result.put("desc","订单创建失败");
         return result;
     }
-    /**根据大订单号删除*/
+    /**根据小订单号删除*/
     @ResponseBody
     @RequestMapping("deleteProcurementOrderSeriesBySub_orderID")
     public JSONObject deleteProcurementOrderSeriesBySub_orderID(@RequestParam("sub_orderID") String[] sub_orderID,
@@ -157,7 +157,7 @@ public class ProcurementOrderController {
         result.put("desc","删除成功");
         return result;
     }
-    /**根据大订单号查询PO*/
+    /**根据小订单号查询PO*/
     @ResponseBody
     @RequestMapping("selectPOBySubOrderID")
     public JSONObject selectPOBySubOrderID(String[] sub_orderID,HttpServletRequest request){
@@ -200,7 +200,7 @@ public class ProcurementOrderController {
         result.put("data",procurement_orderList);
         return result;
     }
-    /**根据小订单号查询PO*/
+    /**根据大订单号查询PO*/
     @ResponseBody
     @RequestMapping("selectPOByOrderID")
     public JSONObject selectPOByOrderID(@RequestParam("OrderID") String[] OrderID,

@@ -211,10 +211,40 @@ export function AddQuatationRequest(value) {
     method:'get',
     withCredentials : true
 })
-  // axios.get(`${baseURL}/DeleteQuatationRequest`,{withCredentials : true},{
-  //   params: {
-  //     rfqID: rfqID,
-  //   }
-  // });
+}
+/**
+ * 采购订单相关接口
+*/
+//查询所有订单
+export function selectAllPO() {
+  return axios({
+    url:`${baseURL}/ProcurementOrder/selectAllPO`,
+    params:{
+    },
+    method:'get',
+    withCredentials : true
+})
+}
+//根据订单号删除订单
+export function deletePOByOrderID(OrderID) {
+  return axios({
+    url:`${baseURL}/ProcurementOrder/deleteProcurementOrderSeriesByOrderID`,
+    params:{
+      OrderID:OrderID,
+    },
+    method:'get',
+    withCredentials : true
+})
+}
+//根据子订单号删除订单
+export function deletePOBySubOrderID(sub_orderID) {
+  return axios({
+    url:`${baseURL}/ProcurementOrder/deleteProcurementOrderSeriesBySub_orderID`,
+    params:{
+      sub_orderID:sub_orderID,
+    },
+    method:'get',
+    withCredentials : true
+})
 }
 

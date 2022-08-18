@@ -5,7 +5,6 @@ import { SearchOutlined, DeleteOutlined } from '@ant-design/icons';
 //import { AddQuatationRequest, DeleteQuatationRequest, ShowAllQuatationRequest } from '../../../services/auth';
 //import { getToken } from '../../../utils/auth';
 import { ShowAllQuatationRequest,DeleteQuatationRequest} from '../../../API/auth';
-import EditEmployee from '../Edit';
 //静态测试员工列表
 const dataSource = [
     {
@@ -62,7 +61,7 @@ export default class ShowRQ extends Component {
 				this.setState({
 					dataSource: response.data.data
 				});
-				// console.log(response.data.data)
+				// console.log(state.dataSource)
 			},
 			(error) => {
 				console.log("出错了",error);

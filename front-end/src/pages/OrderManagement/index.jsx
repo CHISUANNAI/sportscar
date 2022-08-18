@@ -1,12 +1,13 @@
 import { Tabs } from 'antd';
 import React, { Component } from 'react';
 // 引入组件列表
-import MaterialList from './MaterialList';
+import OrderList from './OrderList';
+import SubOrderList from './SubOrderList'
 
- 
+
 const { TabPane } = Tabs;
- 
-export default class MaterialManagement extends Component {
+
+export default class OrderManagement extends Component {
     // 这个类的一些属性
     newTabIndex = 0;
     state = {
@@ -46,7 +47,7 @@ export default class MaterialManagement extends Component {
         }
         this.setState({ panes, activeKey });
     };
- 
+
     render() {
         return (
             <div>
@@ -58,9 +59,13 @@ export default class MaterialManagement extends Component {
                     onEdit={this.onEdit}
                 >
                     <TabPane tab="订单列表" key="1" closable={false}>
-                        {this.state.activeKey === '1' ? <MaterialList /> : null}
+                        {this.state.activeKey === '1' ? <OrderList /> : null}
                     </TabPane>
-                    
+                    <TabPane tab="查看所有子订单" key="2" closable={false}>
+                        {this.state.activeKey === '2' ? (
+                            <SubOrderList handleCreateClick={this.handleCreateClick} />
+                        ) : null}
+                    </TabPane>
                     {this.state.panes.map((pane) => (
                         <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>
                             {pane.content}

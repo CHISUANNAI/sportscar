@@ -45,6 +45,10 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         patterns.add("/ShowAllQuatationRequest");
         patterns.add("/DeleteQuatationRequest");
         patterns.add("/AddQuatationRequest");
+        patterns.add("/ProcurementOrder/selectAllPO");
+        patterns.add("/ProcurementOrder/deleteProcurementOrderSeriesByOrderID");
+        patterns.add("/ProcurementOrder/deleteProcurementOrderSeriesBySub_orderID");
+        patterns.add("/ProcurementOrder/selectPOBySubOrderID");
         registry.addInterceptor(interceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(patterns);
