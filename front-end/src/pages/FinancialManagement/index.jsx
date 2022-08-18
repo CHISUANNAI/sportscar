@@ -2,7 +2,7 @@ import React, { Component }from "react";
 import { useState } from 'react';
 import './index.css';
 import { AudioOutlined } from '@ant-design/icons';
-import { Input, Space,Checkbox, message,Alert ,Button} from 'antd';
+import { Input, Space,Checkbox, message,Alert ,Button,Col, Row,Statistic,PageHeader } from 'antd';
 import {Table, Tag } from 'antd';
 import { showsubid } from "../../API/auth";
 const { Search } = Input;
@@ -102,14 +102,22 @@ export default class FinancialManagement extends Component {
   render() {
     return (
       <div>
-        <h1>发票管理</h1>
+        <PageHeader 
+       
+       className="site-page-header"
+     
+       title="发票管理"
+       subTitle="查询 | 开发票"
+     />
+     <div style={{height:30}}> </div>
       <Space direction="vertical">
         <Search placeholder="输入订单号"  size="large" onSearch={this.onSearch} enterButton />
 
       </Space>
+      
 
       {/* 间距 */}
-      <div style={{height:30}}> </div>
+      <div style={{height:55}}> </div>
   
       <Table style={{height:250}} columns={columns} dataSource={this.state.data} />
 

@@ -1,5 +1,6 @@
 package com.sportscar.sportscar.bean;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -9,7 +10,8 @@ public class Invoice_detail {
     @TableId(value="sub_invoiceID",type= IdType.AUTO)
     private Integer sub_invoiceID;
     private Integer invoiceid;
-    private String sub_orderid;
+    @TableField("sub_orderID")
+    private String suborderid;
     private Integer supplierid;
     private Integer userid;
     private Integer materialid;
