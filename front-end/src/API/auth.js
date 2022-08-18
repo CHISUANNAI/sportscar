@@ -39,6 +39,22 @@ export function pwEditApi(newPwInfo) {
   });
 }
 
+//修改个人信息
+export function useredit(value,id) {
+  return axios.get(`${baseURL}/users/changeIn`, {
+    params: {
+      userID: id,
+      userName: value.userName,
+      gender: value.gender,
+      phone: value.phone,
+      email: value.email,
+      avatar: value.avatar
+    },
+    withCredentials : true
+  });
+}
+
+
 /**
  * 获取列表
  */
@@ -162,6 +178,9 @@ export function Materialadd(value) {
   });
 }
 
+/**发票接口
+ * +
+ * 账单接口 */
 //输入大订单id，加载没有开过发票的小订单id(发票管理)
 export function showsubid(value){
   return axios.get(`${baseURL}/invoice/id`,{
@@ -171,6 +190,38 @@ export function showsubid(value){
     withCredentials : true
   });
 }
+
+//输入大订单id，加载所有订单的金额之和（账单管理）
+export function count(value){
+  return axios.get(`${baseURL}/payment/count`,{
+    params:{
+      orderID:value
+    },
+    withCredentials : true
+  })
+}
+//输入大订单id，加载开过的所有发票详情（账单管理）
+export function showinvoice(value){
+  return axios.get(`${baseURL}/payment/showinvoice`,{
+    params:{
+      orderID:value
+    },
+    withCredentials : true
+  })
+}
+//生成账单（账单管理）
+export function addpayment(value){
+  return axios.get(`${baseURL}/payment/addpayment`,{
+    params:{
+      orderID:value.orderID,
+      price:value.price2
+    },
+    withCredentials : true
+  })
+}
+
+
+
 /*** 
  * 报价订单接口
 */

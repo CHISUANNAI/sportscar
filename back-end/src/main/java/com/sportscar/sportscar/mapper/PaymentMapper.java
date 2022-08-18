@@ -18,5 +18,8 @@ public interface PaymentMapper extends BaseMapper<Payment_detail> {
             "(select sub_orderID from procurement_order p where p.orderID=#{orderID}) ")
     List<Invoice_detail> getinvoice(String orderID);
 
+    @Select("select count(*) from payment_detail p where p.orderID=#{orderID}")
+    Integer countpayment(String orderID);
+
 
 }
