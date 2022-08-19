@@ -10,7 +10,8 @@ export default class EmployeeList extends Component {
     state = {
         searchText: '',
         searchedColumn: '',
-        dataSource: []
+        dataSource: [],
+        isAdmin: JSON.parse(getToken()).status === 0 ? false : true
     };
 
     componentDidMount() {
@@ -26,6 +27,7 @@ export default class EmployeeList extends Component {
                 console.log('失败了', error);
             }
         );
+        console.log(this.state.isAdmin)
     }
 
     // 搜索框函数
@@ -246,10 +248,10 @@ export default class EmployeeList extends Component {
                 align: 'center',
                 render: (record) => (
                     <Space>
-                        <EditEmployee employee={record} handleEditClick={this.handleEditClick} />
+                        <EditEmployee employee={record} isAdmin={this.state.isAdmin} handleEditClick={this.handleEditClick} />
                         <Divider type="vertical" />
                         <Popconfirm title="确定要删除吗？" onConfirm={() => this.handleDelete(record.userID)}>
-                            <Button danger type="text" size="small" icon={<DeleteOutlined />}>
+                            <Button danger disabled = {this.state.isAdmin} type="text" size="small" icon={<DeleteOutlined />}>
                                 删除
                             </Button>
                         </Popconfirm>

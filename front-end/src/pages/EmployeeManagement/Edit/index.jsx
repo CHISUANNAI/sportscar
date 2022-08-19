@@ -17,9 +17,10 @@ export default class EditEmployee extends Component {
             visible: true
         });
         const { employee } = this.props;
+        const { isAdmin } = this.props;
         employee.phone = employee.phone === '未知' ? null : employee.phone;
         employee.email = employee.email === '未知' ? null : employee.email;
-        console.log(employee);
+        console.log(isAdmin);
     };
 
     onClose = () => {
@@ -35,9 +36,10 @@ export default class EditEmployee extends Component {
 
     render() {
         const { employee } = this.props;
+        const { isAdmin } = this.props;
         return (
             <div>
-                <Button type="link" onClick={this.showDrawer} size="small" icon={<EditOutlined />}>
+                <Button type="link" disabled = {isAdmin} onClick={this.showDrawer} size="small" icon={<EditOutlined />}>
                     编辑
                 </Button>
                 <Drawer

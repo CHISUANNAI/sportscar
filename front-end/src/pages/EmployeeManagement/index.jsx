@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // 引入组件列表
 import EmployeeList from './EmployeeList';
 import CreateEmployee from './Create';
- 
+import { getToken, setToken } from '../../utils/auth';
 const { TabPane } = Tabs;
  
 export default class EmployeeManagement extends Component {
@@ -11,7 +11,8 @@ export default class EmployeeManagement extends Component {
     newTabIndex = 0;
     state = {
         activeKey: '1',
-        panes: []
+        panes: [],
+        isAdmin: JSON.parse(getToken()).status === 0 ? false : true
     };
     // handleCreateClick用于新建后返回列表页
     handleCreateClick = () => {
@@ -60,7 +61,7 @@ export default class EmployeeManagement extends Component {
                     <TabPane tab="员工列表" key="1" closable={false}>
                         {this.state.activeKey === '1' ? <EmployeeList /> : null}
                     </TabPane>
-                    <TabPane tab="创建员工" key="2" closable={false}>
+                    <TabPane tab="创建员工" key="2" closable={false} disabled = {this.state.isAdmin}>
                         {this.state.activeKey === '2' ? (
                             <CreateEmployee handleCreateClick={this.handleCreateClick} />
                         ) : null}
