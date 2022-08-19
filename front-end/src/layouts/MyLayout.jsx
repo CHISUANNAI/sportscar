@@ -112,7 +112,7 @@ class MyLayout extends Component {
                                 getItem('采购订单管理', '/Home/orderManagement'),
                                 getItem('单据流管理', '/Home/documentflowmanagement'),
                             ]),
-                            getItem('收货管理', '/Home/receiveGoods', <CarryOutOutlined />),
+                            getItem('收货管理', '/Home/ReceiveGoods', <CarryOutOutlined />),
                             getItem('财务管理', '/Home/financialManagement', <DollarOutlined />),
                         ]}
                     />
@@ -187,7 +187,7 @@ class MyLayout extends Component {
                             <Route path="/Home/orderManagement"
                                 component={OrderManagement}
                             />
-                            <Route path="/Home/receiveGoods"
+                            <Route path="/Home/ReceiveGoods"
                                 component={ReceiveGoods}
                             />
                             <Route

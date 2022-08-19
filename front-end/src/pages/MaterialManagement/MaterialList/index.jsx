@@ -242,7 +242,7 @@ export default class MaterialList extends Component {
 					columns={columns}
 					// dataSource={this.state.dataSource}
 					dataSource={dataSource}
-					rowKey={(record) => record.id}
+					rowKey={(record) => record.materialID}
 					pagination={{ pageSize: 7 }}
 					size="small"
 				/>
