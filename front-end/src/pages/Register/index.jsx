@@ -7,6 +7,7 @@ import { setToken } from "../../utils/auth";
 /* import logo from "../../graphs/logo.png";
 import Avatar from "antd/lib/avatar/avatar";
  */
+import bgvideo from './bgvideo.mp4';
 
 const { Option } = Select;
 const { Footer,Content } = Layout;
@@ -101,6 +102,9 @@ export default class Register extends Component {
     render(){
         return(
             <Layout className="bg">
+                <video playsInline autoPlay loop muted width="100%">
+					<source src={bgvideo} type='video/mp4' />
+				</video>
                 <Content>
                     <Form className="register-form" 
                     labelCol={{span: 4}}>

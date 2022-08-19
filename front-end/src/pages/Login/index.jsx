@@ -4,6 +4,9 @@ import { Form, Input, Button, Layout, Space, message, Col, Row} from 'antd';
 import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone} from '@ant-design/icons';
 import { setToken } from '../../utils/auth';
 import { loginApi } from '../../API/auth'
+import bgvideo from './bgvideo.mp4';
+
+
 
 import logo from "../../graphs/logo.png";
 const { Footer,Content } = Layout;
@@ -78,7 +81,11 @@ export default class Login extends Component {
 	render() {
 		return (
 			<Layout className="bg">
+				
 				<Content>
+				<video playsInline autoPlay loop muted width="100%">
+					<source src={bgvideo} type='video/mp4' />
+				</video>		
 					<div className="login-form">
 						<Form labelCol={{span: 4}}>
 							<Form.Item
@@ -145,8 +152,9 @@ export default class Login extends Component {
 							</Form.Item>
 						</Form>
 					</div>
+					
 				</Content>
-				<Footer className="footer">2019级 系统分析与设计课程设计 Copyright © 2022 MIS Group 3</Footer>
+				<Footer ghost className="footer">2019级 系统分析与设计课程设计 Copyright © 2022 MIS Group 3</Footer>
 			</Layout>
 		);
 	}

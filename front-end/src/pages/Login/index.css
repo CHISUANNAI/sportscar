@@ -6,12 +6,14 @@
    width: 33%;
    height: 66%;
    position: absolute;
-   top: 24%;
    left: 33%;
+   top: 17%;
+   
+  
 
 }
 footer
 {
     text-align: center; 
-    height: 10vh;
+    height: 1vh;
 }
