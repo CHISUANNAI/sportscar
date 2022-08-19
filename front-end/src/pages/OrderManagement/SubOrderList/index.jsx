@@ -282,6 +282,7 @@ export default class SubOrderList extends Component {
                     // dataSource={dataSource}
                     dataSource={this.state.dataSource?.map(dataSource => {
                         dataSource.date = dataSource.date.slice(0,10)+" "+dataSource.date.slice(11,19);
+                        dataSource.date=new Date(dataSource.date + 'Z').toLocaleString()
                         return dataSource
                     })}
                     rowKey={(record,index) => index }

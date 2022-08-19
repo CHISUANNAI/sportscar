@@ -68,6 +68,7 @@ export default class OrderManagement extends Component {
 				var posum = [];
 				response.data.data?.map((item, index) => {
 					item.date = item.date.slice(0, 10) + " " + item.date.slice(11, 19)
+					item.date=new Date(item.date + 'Z').toLocaleString()
 					if (!list1.some((i) => i == item.orderID)) {
 						list1.push(item.orderID)
 					}

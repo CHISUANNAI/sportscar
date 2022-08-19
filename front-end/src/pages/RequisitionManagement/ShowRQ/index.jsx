@@ -58,6 +58,7 @@ export default class ShowRQ extends Component {
         ShowAllQuatationRequest().then(
 			(response) => {
 				//拿到我们想要渲染的数据(res)
+                // console.log(response.data.data)
 				this.setState({
 					dataSource: response.data.data
 				});
@@ -245,7 +246,7 @@ export default class ShowRQ extends Component {
             }
             ,
             {
-                title: '当前日期',
+                title: '创建日期',
                 dataIndex: 'date',
                 align: 'center',
                 ...this.getColumnSearchProps('date')
@@ -298,6 +299,10 @@ export default class ShowRQ extends Component {
                     dataSource={this.state.dataSource?.map(dataSource => {
                         dataSource.state = (dataSource.state === 0 || dataSource.state === '否' ) ? '否' : '是';
                         dataSource.date = dataSource.date.slice(0,10);
+                        dataSource.date=new Date(dataSource.date + 'Z').toLocaleString()
+                        dataSource.date = dataSource.date.slice(0,10);
+                        dataSource.limitedDate = dataSource.limitedDate.slice(0,10);
+                        dataSource.limitedDate=new Date(dataSource.limitedDate + 'Z').toLocaleString()
                         dataSource.limitedDate = dataSource.limitedDate.slice(0,10);
                         return dataSource
                     })}
