@@ -299,9 +299,15 @@ export function deletePOBySubOrderID(sub_orderID) {
 })
 }
 //单据流
-export function DocumentFlow() {
-  return axios.get(`${baseURL}/ProcurementOrder/SelectPO`,
-  {withCredentials : true});
+export function DocumentFlow(orderID) {
+  return axios({
+    url:`${baseURL}/ProcurementOrder/SelectPO`,
+    params:{
+      orderID:orderID,
+    },
+    method:'get',
+    withCredentials : true
+  });
 }
 
 //比价实现
