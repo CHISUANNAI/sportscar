@@ -39,7 +39,7 @@ export default class PersonalManagement extends Component {
                         token.phone = value.phone
                         token.email = value.email
                         token.gender = value.gender
-                        token.gender = value.avatar
+                        //token.avatar = value.avatar
                         setToken(JSON.stringify(token))
                     }
                 } else if (response.data.state === 4001){
@@ -83,7 +83,7 @@ export default class PersonalManagement extends Component {
                 {/* 性别 */}
                 <Col span={12}>
                   <Form.Item name="gender" label="性别"
-                  initialValue={(user.gender === 0) ? '女' : (user.gender === 1) ? '男' : null}>
+                  initialValue={(user.gender === 0) ? '0' : (user.gender === 1) ? '1' : null}>
                     <Select>
                       <Option value="0">女</Option>
                       <Option value="1">男</Option>
