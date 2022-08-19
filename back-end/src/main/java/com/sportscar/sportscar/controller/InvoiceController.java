@@ -44,15 +44,15 @@ public class InvoiceController {
 
 
     /**接口2：用户输入发票信息，生成发票单和发票详情单 **/
-    @PostMapping("/addinvoice")
-    public Result<?> addinvoice(@RequestBody Map<String,String>map){
+    @GetMapping("/addinvoice")
+    public Result<?> addinvoice(@RequestParam String sub_orderID,@RequestParam String description,@RequestParam String companyName,@RequestParam String storage_location){
         /**生成发票单 **/
         Invoice invoice=new Invoice();
-        invoice.setOrderid(invoiceMapper.getorderid(map.get("sub_orderID")));
-        invoice.setDescription(map.get("description"));
-        invoice.setCompanyname(map.get("companyName"));
+        invoice.setOrderid(invoiceMapper.getorderid(sub_orderID));
+        invoice.setDescription(description);
+        invoice.setCompanyname(companyName);
         invoice.setReceive_date(new Date());
-        invoice.setStorage_location(map.get("storage_location"));
+        invoice.setStorage_location(storage_location);
         invoiceMapper.insert(invoice);
         Integer invoiceid=invoice.getInvoiceid();
 
@@ -60,12 +60,12 @@ public class InvoiceController {
         /**生成发票详情单 **/ /**未解决：同时点两个子订单开发票 需结合前端 **/
         Invoice_detail invoice_detail=new Invoice_detail();
         invoice_detail.setInvoiceid(invoiceid);
-        invoice_detail.setSuborderid(map.get("sub_orderID"));
-        invoice_detail.setSupplierid(invoiceMapper.getsupplierid(map.get("sub_orderID")));
-        invoice_detail.setUserid(invoiceMapper.getuserid(map.get("sub_orderID")));
-        invoice_detail.setMaterialid(invoiceMapper.getmaterailid(map.get("sub_orderID")));
-        invoice_detail.setAmount(invoiceMapper.getamount(map.get("sub_orderID")));
-        invoice_detail.setPrice(invoiceMapper.getprice(map.get("sub_orderID")));
+        invoice_detail.setSuborderid(sub_orderID);
+        invoice_detail.setSupplierid(invoiceMapper.getsupplierid(sub_orderID));
+        invoice_detail.setUserid(invoiceMapper.getuserid(sub_orderID));
+        invoice_detail.setMaterialid(invoiceMapper.getmaterailid(sub_orderID));
+        invoice_detail.setAmount(invoiceMapper.getamount(sub_orderID));
+        invoice_detail.setPrice(invoiceMapper.getprice(sub_orderID));
         invoiceDetailMapper.insert(invoice_detail);
 
         return Result.success();

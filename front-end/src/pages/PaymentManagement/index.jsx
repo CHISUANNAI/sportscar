@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import './index.css';
 import { Input, Space,Checkbox, message,Alert ,Button,Col, Row, Statistic,Divider,PageHeader} from 'antd';
-import { CheckOutlined} from '@ant-design/icons';
+import { CheckOutlined,TransactionOutlined} from '@ant-design/icons';
 import {Table, Tag } from 'antd';
 import { count, showinvoice,addpayment } from "../../API/auth";
 const { Search } = Input;
@@ -198,12 +198,10 @@ onClick(record){
        <PageHeader 
        
     className="site-page-header"
-    icon={<CheckOutlined />}
+  
     title="账单管理"
     subTitle="清账 | 付款"
-  >
-
-  </PageHeader>
+  />
   <div style={{height:30}}> </div>
 
         <Row gutter={700}>
@@ -224,7 +222,7 @@ onClick(record){
       <Table style={{height:250}} columns={this.getcolumns()} dataSource={this.state.invoicelist} />
 
       <div style={{height:30}}> </div>
-      <Button  type="primary" icon={<CheckOutlined />}  onClick={() =>{this.Click(this.state)}}  disabled={this.state.flag}>Post</Button>
+      <Button  type="primary" icon={<TransactionOutlined />}  onClick={() =>{this.Click(this.state)}}  disabled={this.state.flag}>开账单</Button>
       </div>
 
       

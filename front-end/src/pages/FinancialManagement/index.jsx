@@ -2,15 +2,15 @@ import React, { Component }from "react";
 import { useState } from 'react';
 import './index.css';
 import { AudioOutlined } from '@ant-design/icons';
-import { Input, Space,Checkbox, message,Alert ,Button,Col, Row,Statistic,PageHeader } from 'antd';
+import { Input, Space,Checkbox, message,Alert ,Button,Col, Row,Statistic,PageHeader,Form, Select,Modal,Radio  } from 'antd';
 import {Table, Tag } from 'antd';
-import { showsubid } from "../../API/auth";
+import { addinvoice, showsubid } from "../../API/auth";
+import { CheckOutlined,TransactionOutlined,SnippetsOutlined} from '@ant-design/icons';
+import { resolveOnChange } from "antd/lib/input/Input";
 const { Search } = Input;
 // const onSearch = (value) => console.log(value);
 
-const onChange = (e) => {
-  console.log(`checked = ${e.target.checked}`);
-};
+
 const suffix = (
   <AudioOutlined
     style={{
@@ -19,50 +19,108 @@ const suffix = (
     }}
   />
 );
+const layout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+};
+const tailLayout = {
+  wrapperCol: {
+    offset: 8,
+    span: 16,
+  },
+};
 
-const columns = [
-  {
-    title: '子订单编号',
-    dataIndex: 'subOrderID',
-    key: 'subOrderID',
-  },
-  {
-    title: '供应商编号',
-    dataIndex: 'supplierID',
-    key: 'supplierID',
-  },
-  {
-    title: '物料编号',
-    dataIndex: 'materialID',
-    key: 'materialID',
-  },
-  {
-    title: '数量',
-    dataIndex: 'amount',
-    key: 'amount',
-  },
-  {
-    title: '金额',
-    dataIndex: 'price',
-    key: 'pirce',
-  },
-  {
-    title: '操作',
-    key: 'action',
-    render: (_, record) => (
-      <Checkbox onChange={onChange}>选择</Checkbox>
-    ),
-  },
 
-];
 
 
 
 export default class FinancialManagement extends Component {
- 
+  getcolumns(){
+    let self = this;
+    return [
+    {
+      title: '子订单编号',
+      dataIndex: 'subOrderID',
+      key: 'subOrderID',
+    },
+    {
+      title: '供应商编号',
+      dataIndex: 'supplierID',
+      key: 'supplierID',
+    },
+    {
+      title: '物料编号',
+      dataIndex: 'materialID',
+      key: 'materialID',
+    },
+    {
+      title: '数量',
+      dataIndex: 'amount',
+      key: 'amount',
+    },
+    {
+      title: '金额',
+      dataIndex: 'price',
+      key: 'pirce',
+    },
+    {
+      title: '操作',
+      key: 'action',
+      render: (text, record, index) => (
+        <Checkbox onChange={this.onChange.bind(this,record)}>选择</Checkbox>
+      ),
+    },
   
-  state = {   
-    data:[]
+  ];
+}
+  
+
+
+
+
+  formRef = React.createRef();
+  onFinish = (values) => {
+    console.log(values);
+  };
+  onReset = () => {
+    this.formRef.current.resetFields();
+  };
+  
+state = {   
+    data:[],
+    state:false,
+    subOrderID:''
+};
+
+onChange=(item,e) => {
+  console.log('Change:', e.target.checked);
+  console.log(item.subOrderID);
+  this.setState({
+    subOrderID:item.subOrderID
+  })
+};
+
+
+ showModal = () => {
+   this.setState({
+    state:true
+   })
+};
+
+ handleOk = () => {
+  this.setState({
+    state:false
+   })
+};
+
+ handleCancel = () => {
+  this.setState({
+    state:false
+   })
 };
 
 /** 输入订单id，查询出没有开过发票详情单的子订单情况 */
@@ -98,6 +156,19 @@ export default class FinancialManagement extends Component {
     this.onSearch();
 
 }
+
+/** 开发票 */
+submit(value){
+  console.log(value)
+  addinvoice(value).then(
+    (response)=>{
+      console.log(response.data.data)
+    },
+    (error)=>{
+      console.log('数据获取失败', error);
+    }
+  )
+ }
  
   render() {
     return (
@@ -119,13 +190,74 @@ export default class FinancialManagement extends Component {
       {/* 间距 */}
       <div style={{height:55}}> </div>
   
-      <Table style={{height:250}} columns={columns} dataSource={this.state.data} />
+      <Table style={{height:250}} columns={this.getcolumns()} dataSource={this.state.data} />
 
       <div style={{height:30}}> </div>
 
-      <Button type="primary">开发票</Button>
+      <Button type="primary" icon={<SnippetsOutlined />} onClick={this.showModal}>开发票</Button>
+      <Modal title="填写发票信息" visible={this.state.state} onOk={this.handleOk} onCancel={this.handleCancel}>
+      
+      <Form {...layout} ref={this.formRef} name="control-ref" onFinish={this.onFinish} disabled={this.state.formflag}
+      initialValues={{
+        subOrderID: this.state.subOrderID
+      }}>
+      <Form.Item
+          name="subOrderID"
+          label="子订单编号" 
+         
+        >
+          <Input defaultValue={this.state.subOrderID}   key={this.state.subOrderID} disabled/>
+        </Form.Item>
+        <Form.Item
+          name="storage_location"
+          label="库存地点"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="companyName"
+          label="公司名称"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+           <Input />
+        </Form.Item>
+        <Form.Item
+          name="description"
+          label="文本描述"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+           <Input />
+        </Form.Item>
+        
+        <Form.Item {...tailLayout}>
+          <Button type="primary" htmlType="submit" onClick={this.submit}>
+            Submit
+          </Button>
+          <Button htmlType="button" onClick={this.onReset}>
+            Reset
+          </Button>
+          
+        </Form.Item>
+      </Form>
+      </Modal>
+    
+
     
       </div>
+
       
       
     );
