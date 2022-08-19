@@ -111,16 +111,14 @@ export default class PersonalManagement extends Component {
               </Row>
               {/* 按钮 */}
               <Form.Item>
-                <div>
-                    <Space size={20}>
-                      <Button htmlType="reset">
-                          重置
-                      </Button>
-                      <Button type="primary" htmlType="submit">
-                          提交
-                      </Button>
-                    </Space>
-                </div>
+                <Space size={20}>
+                  <Button htmlType="reset">
+                      重置
+                  </Button>
+                  <Button type="primary" htmlType="submit">
+                      提交
+                  </Button>
+                </Space>
               </Form.Item>
           </div>
         </Col>

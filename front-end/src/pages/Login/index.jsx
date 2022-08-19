@@ -80,8 +80,9 @@ export default class Login extends Component {
 			<Layout className="bg">
 				<Content>
 					<div className="login-form">
-						<Form>
+						<Form labelCol={{span: 4}}>
 							<Form.Item
+							label='员工姓名'
 							name="name"
 							rules={[
 								{
@@ -96,6 +97,7 @@ export default class Login extends Component {
 								/>
 							</Form.Item>
 							<Form.Item
+							label='密码'
 							name="password"
 							rules={[
 								{
@@ -111,21 +113,33 @@ export default class Login extends Component {
 								/>
 							</Form.Item>
 							<Form.Item>
-							<Row gutter={16}>
-								<Col className="gutter-row" span={3} offset={2}>
-									<Button type="primary" htmlType="submit" onClick={this.trylogin}>
-									Submit
-									</Button>
+							<Row 
+								gutter={{
+									xs: 8,
+									sm: 16,
+									md: 24,
+									lg: 32,
+								}}>
+								<Col className="gutter-row" span={5} offset={5}>
+									
+										<Button type="primary" block htmlType="submit" onClick={this.trylogin}>
+										登录
+										</Button>
+									
 								</Col>
-								<Col className="gutter-row" span={3}>
-									<Button htmlType="reset">
-									Reset
-									</Button>
+								<Col className="gutter-row" span={5}>
+									
+										<Button htmlType="reset" block>
+										重置
+										</Button>
+									
 								</Col>
-								<Col className="gutter-row" span={3}>
-									<Button onClick={this.tryregister}>
-									Register
-									</Button>
+								<Col className="gutter-row" span={5}>
+									
+										<Button block onClick={this.tryregister}>
+										注册
+										</Button>	
+								
 								</Col>
 							</Row>
 							</Form.Item>
