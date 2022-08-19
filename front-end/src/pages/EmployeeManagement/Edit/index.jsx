@@ -17,9 +17,10 @@ export default class EditEmployee extends Component {
             visible: true
         });
         const { employee } = this.props;
+        const { isAdmin } = this.props;
         employee.phone = employee.phone === '未知' ? null : employee.phone;
         employee.email = employee.email === '未知' ? null : employee.email;
-        console.log(employee);
+        console.log(isAdmin);
     };
 
     onClose = () => {
@@ -35,9 +36,10 @@ export default class EditEmployee extends Component {
 
     render() {
         const { employee } = this.props;
+        const { isAdmin } = this.props;
         return (
             <div>
-                <Button type="link" onClick={this.showDrawer} size="small" icon={<EditOutlined />}>
+                <Button type="link" disabled = {isAdmin} onClick={this.showDrawer} size="small" icon={<EditOutlined />}>
                     编辑
                 </Button>
                 <Drawer
@@ -70,16 +72,16 @@ export default class EditEmployee extends Component {
                             <Col span={12}>
                                 <Form.Item name="gender" label="性别" initialValue={employee.gender}>
                                     <Select placeholder="可选项">
-                                        <Option value="1">女</Option>
-                                        <Option value="0">男</Option>
+                                        <Option value="0">女</Option>
+                                        <Option value="1">男</Option>
                                     </Select>
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
                                 <Form.Item name="status" label="身份" initialValue={employee.status}>
                                     <Select>
-                                        <Option value="1">管理员</Option>
-                                        <Option value="0">员工</Option>
+                                        <Option value="0">管理员</Option>
+                                        <Option value="1">员工</Option>
                                     </Select>
                                 </Form.Item>
                             </Col>

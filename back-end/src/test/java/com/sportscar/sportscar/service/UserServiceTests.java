@@ -20,7 +20,6 @@ public class UserServiceTests {
             User user = new User();
             user.setUserName("张三");
             user.setPassword("333333");
-            userService.reg(user);
             System.out.println("OK");
         } catch (ServiceException e) {
             System.out.println(e.getClass().getSimpleName());

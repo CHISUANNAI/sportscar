@@ -1,6 +1,6 @@
 import { Form, Button, Col, Row, Input, Select, message } from 'antd';
 import React, { Component } from 'react';
-//import { Supplieradd } from '../../../services/auth';
+import { Materialadd } from '../../../API/auth';
 const { Option } = Select;
 
 export default class CreateMaterial extends Component {
@@ -11,20 +11,20 @@ export default class CreateMaterial extends Component {
     }
     formRef = React.createRef();
     onFinish = (values) => {
-        // Supplieradd(values).then(
-        // 	(response) => {
-        // 		if (response.data.state === 200) {
-        // 			message.success('物料' + response.data.data.materialName + '已创建成功');
-        // 			this.formRef.current.resetFields();
-        // 			this.handleCreateClick();
-        // 		} else {
-        // 			message.info(response.data.message);
-        // 		}
-        // 	},
-        // 	(error) => {
-        // 		console.log('数据获取失败', error);
-        // 	}
-        // );
+        Materialadd(values).then(
+            (response) => {
+                if (response.data.state === 200) {
+                    message.success('物料' + response.data.data.materialName + '已创建成功');
+                    this.formRef.current.resetFields();
+                    this.handleCreateClick();
+                } else {
+                    message.info(response.data.message);
+                }
+            },
+            (error) => {
+                console.log('数据获取失败', error);
+            }
+        );
         console.log(values)
     };
 
@@ -45,7 +45,7 @@ export default class CreateMaterial extends Component {
                 </Row>
                 <Row gutter={24}>
                     <Col span={12}>
-                        <Form.Item name="weight" label="毛重（kg）" >
+                        <Form.Item name="weight" label="毛重（kg）" rules={[{ pattern: /^\d*\.\d*$/, message: '请输入正浮点数' }]}>
                             <Input placeholder="可选项" />
                         </Form.Item>
                     </Col>

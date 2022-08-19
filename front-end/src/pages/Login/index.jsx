@@ -16,7 +16,13 @@ export default class Login extends Component {
 			password: ''
 		};
 	}
-	
+
+	tryregister = () => {
+		this.props.history.push({   //链接跳转
+			pathname: '/Register',
+		});
+	}
+
 	trylogin = () => {
 		let loginInfo = {
 			name: this.state.name,
@@ -31,13 +37,17 @@ export default class Login extends Component {
 					console.log(response.data.data); //控制台输出response内容
 					console.log(loginInfo.name);
 					console.log(loginInfo.password);
-					//state:100表示返回成功；500表示失败
-					if (response.data.state === 100) {
+					//state:200表示返回成功；其他值表示失败
+					if (response.data.state === 200) {
 						message.success('登录成功');
-						//setToken(JSON.stringify(response.data.user));
+						setToken(JSON.stringify(response.data.data));
 						this.props.history.push({   //链接跳转
 							pathname: '/Home',
 						});
+					} else if(response.data.state === 4001){
+						message.info('用户名不存在');
+					} else if(response.data.state === 4002){
+						message.info('用户密码错误');
 					} else {
 						message.info('登录失败，请重试');
 					}
@@ -70,13 +80,14 @@ export default class Login extends Component {
 			<Layout className="bg">
 				<Content>
 					<div className="login-form">
-						<Form>
+						<Form labelCol={{span: 4}}>
 							<Form.Item
+							label='员工姓名'
 							name="name"
 							rules={[
 								{
 								required: true,
-								message: '请输入员工名称!'
+								message: '请输入用户名称!'
 								},
 							]}
 							>
@@ -86,6 +97,7 @@ export default class Login extends Component {
 								/>
 							</Form.Item>
 							<Form.Item
+							label='密码'
 							name="password"
 							rules={[
 								{
@@ -94,32 +106,47 @@ export default class Login extends Component {
 								}
 							]}
 							>
-							<Input.Password
-								prefix={<LockOutlined/>}
-								iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-								onChange={(e) => this.onInputChangepw(e)}
-							/>
+								<Input.Password
+									prefix={<LockOutlined/>}
+									iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+									onChange={(e) => this.onInputChangepw(e)}
+								/>
 							</Form.Item>
 							<Form.Item>
-							<Row gutter={5}>
-								<Col className="gutter-row" span={6} offset={6}>
-									<Button type="primary" htmlType="submit" onClick={this.trylogin}>
-									Submit
-									</Button>
+							<Row 
+								gutter={{
+									xs: 8,
+									sm: 16,
+									md: 24,
+									lg: 32,
+								}}>
+								<Col className="gutter-row" span={5} offset={5}>
+									
+										<Button type="primary" block htmlType="submit" onClick={this.trylogin}>
+										登录
+										</Button>
+									
 								</Col>
-								<Col className="gutter-row" span={6}>
-									<Button htmlType="reset">
-									Reset
-									</Button>
+								<Col className="gutter-row" span={5}>
+									
+										<Button htmlType="reset" block>
+										重置
+										</Button>
+									
 								</Col>
-		
+								<Col className="gutter-row" span={5}>
+									
+										<Button block onClick={this.tryregister}>
+										注册
+										</Button>	
+								
+								</Col>
 							</Row>
 							</Form.Item>
 						</Form>
-					
 					</div>
 				</Content>
-						<Footer className="footer">2019级 系统分析与设计课程设计 Copyright © 2022 MIS Group 3</Footer>
+				<Footer className="footer">2019级 系统分析与设计课程设计 Copyright © 2022 MIS Group 3</Footer>
 			</Layout>
 		);
 	}

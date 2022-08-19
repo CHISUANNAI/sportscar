@@ -1,21 +1,46 @@
 import { Drawer, Form, Button, Col, Row, Input, Select } from 'antd';
 import React, { Component } from 'react';
 import { EditOutlined } from '@ant-design/icons';
+import { Employeelist } from '../../../API/auth';
 
 const { Option } = Select;
+const renderOption = (arr, code, name) => arr ? arr.map((item, index) => {
+    return (<Option key={index + item[code]} value={typeof (item[code]) === 'number' ? item[code].toString() : item[code]}>{item[name]}</Option>)
+}) : null
 
 export default class EditSupplier extends Component {
     constructor(props) {
         super(props);
         const { handleEditClick } = this.props;
         this.handleEditClick = handleEditClick;
-        this.state = { visible: false };
+        this.state = { visible: false, dataSource: [] };
     }
+
+    componentDidMount() {
+        Employeelist().then(
+            (response) => {
+                //拿到我们想要渲染的数据(res)
+                this.setState({
+                    dataSource: response.data.data
+                });
+                console.log(response.data.data);
+            },
+            (error) => {
+                console.log('失败了', error);
+            }
+        );
+    }
+
 
     showDrawer = () => {
         this.setState({
             visible: true
         });
+        const { supplier } = this.props;
+        supplier.region = supplier.region === '未知' ? null : supplier.region;
+        supplier.language = supplier.language === '未知' ? null : supplier.language;
+        supplier.clerkVendor = supplier.clerkVendor === '未知' ? null : supplier.clerkVendor;
+        console.log(supplier);
     };
 
     onClose = () => {
@@ -63,15 +88,13 @@ export default class EditSupplier extends Component {
                                     <Input />
                                 </Form.Item>
                             </Col>
-
                             <Col span={12}>
                                 <Form.Item
-                                    name="clerk_vendor"
+                                    name="clerkVendor"
                                     label="本公司对应员工编号"
-                                    initialValue={supplier.clerk_vendor}
-                                    rules={[{ pattern: /^\d{5}$/, message: '请输入正确的供应商标识码' }]}
-                                >
-                                    <Input />
+                                    initialValue={supplier.clerkVendor}
+                                    rules={[{ pattern: /^\d{4}$/, message: '请输入正确的员工编号' }]}>
+                                    <Select placeholder="可选项">{renderOption(this.state.dataSource, 'userID', 'userID')}</Select>
                                 </Form.Item>
                             </Col>
                         </Row>

@@ -19,6 +19,11 @@
         UPDATE user SET password = #{password} WHERE userName = #{userName}
     </update>
 
+    <update id="updateUsers">
+        UPDATE user SET userName = #{userName}, phone = #{phone},email = #{email},
+                        gender = #{gender}, status = #{status} WHERE userID = #{userID}
+    </update>
+
     <update id="updateUser">
         UPDATE user SET userName = #{userName}, phone = #{phone},email = #{email},
                         gender = #{gender}, avatar = #{avatar} WHERE userID = #{userID}

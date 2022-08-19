@@ -147,14 +147,14 @@ public class quatationRequestController {
     }
     @ResponseBody
     @GetMapping("/SelectQuatationRequestByState")
-    public JSONObject SelectQuatationRequestByState(){
+    public JSONObject SelectQuatationRequestByState(HttpServletRequest request){
         //session
         JSONObject result=new JSONObject();
         List<Quotation_request> quotationRequestList=new LinkedList<>();
         //session
-        Integer userID=1;
+        Object sessionuserID=request.getSession().getAttribute("userID");
         try{
-            quotationRequestList=QuotationRequestService.SelectQuatationRequestByState(userID);
+            quotationRequestList=QuotationRequestService.SelectQuatationRequestByState(Integer.parseInt(sessionuserID.toString()));
         }catch (Exception e){
             result.put("status",500);
             result.put("desc","查询失败");

@@ -1,6 +1,6 @@
 import { Form, Button, Col, Row, Input, Select, message } from 'antd';
 import React, { Component } from 'react';
-//import { Employeeadd } from '../../../services/auth';
+import { Employeeadd } from '../../../API/auth';
 const { Option } = Select;
 
 export default class CreateEmployee extends Component {
@@ -10,22 +10,28 @@ export default class CreateEmployee extends Component {
         this.handleCreateClick = handleCreateClick;
     }
     formRef = React.createRef();
-    onFinish = (values) => {
-        console.log(values)
-        // Employeeadd(values).then(
-        // 	(response) => {
-        // 		if (response.data.state === 200) {
-        // 			message.success('账号' + response.data.data.userName + '已创建成功');
-        // 			this.formRef.current.resetFields();
-        // 			this.handleCreateClick();
-        // 		} else {
-        // 			message.info(response.data.message);
-        // 		}
-        // 	},
-        // 	(error) => {
-        // 		console.log('数据获取失败', error);
-        // 	}
-        // );
+    onFinish = (value) => {
+        value.gender = (value.gender === '0' || value.gender === '女')  ? 0 : (value.gender === '1' || value.gender === '男') ? 1 : null;
+        console.log(value)
+        Employeeadd(value).then(
+        	(response) => {
+                console.log(response.data)
+        		if (response.data.state === 200) {
+        			message.success('账号' + response.data.data.userID + '已创建成功');
+        			this.formRef.current.resetFields();
+        			this.handleCreateClick();
+        		} else if (response.data.state === 4000){
+                    message.info('用户名已被占用')
+                } else if (response.data.state === 5000){
+                    message.info('创建产生未知异常')
+                } else {
+        			message.info(response.data.message);
+        		}
+        	},
+        	(error) => {
+        		console.log('数据获取失败', error);
+        	}
+        );
     };
 
     render() {
@@ -40,8 +46,8 @@ export default class CreateEmployee extends Component {
                     <Col span={12}>
 						<Form.Item name="gender" label="性别">
 							<Select placeholder="可选项">
-								<Option value="1">女</Option>
-								<Option value="0">男</Option>
+								<Option value="0">女</Option>
+								<Option value="1">男</Option>
 							</Select>
 						</Form.Item>
 					</Col>
@@ -60,12 +66,9 @@ export default class CreateEmployee extends Component {
                 </Row>
 
                 <Row gutter={24}>
-                    <text style={{color:'#f56a00'}}>&nbsp;&nbsp; 初始登录密码：000000</text>
+                    <label style={{color:'#f56a00'}}>&nbsp;&nbsp; 初始登录密码：000000</label>
                 </Row>
                 <Row gutter={24} />
-
-
-
 
 
                 <Form.Item>

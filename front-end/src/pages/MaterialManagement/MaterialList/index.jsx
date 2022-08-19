@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Table, Input, Button, Space, Divider, Popconfirm, message, Badge } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined, DeleteOutlined } from '@ant-design/icons';
-//import { Materiallist, Materialdelete, Materialedit } from '../../../services/auth';
+import { Materiallist, Materialdelete, Materialedit } from '../../../API/auth';
 //import { getToken } from '../../../utils/auth';
 import EditMaterial from '../Edit';
 import MaterialInventory from '../Inventory';
@@ -47,18 +47,18 @@ export default class MaterialList extends Component {
 	};
 
 	componentDidMount() {
-		// 	Materiallist().then(
-		// 		(response) => {
-		// 			//拿到我们想要渲染的数据(res)
-		// 			this.setState({
-		// 				dataSource: response.data.data
-		// 			});
-		// 			console.log(response.data.data)
-		// 		},
-		// 		(error) => {
-		// 			console.log('失败了', error);
-		// 		}
-		// 	);
+		Materiallist().then(
+			(response) => {
+				//拿到我们想要渲染的数据(res)
+				this.setState({
+					dataSource: response.data.data
+				});
+				console.log(response.data.data)
+			},
+			(error) => {
+				console.log('失败了', error);
+			}
+		);
 	}
 	搜索框函数
 	getColumnSearchProps = (dataIndex) => ({
@@ -139,47 +139,53 @@ export default class MaterialList extends Component {
 
 	// 传给抽屉用于编辑的函数
 	handleEditClick = (value) => {
-	// 	// 先传值
-	// 	Materialedit(value).then(
-	// 		(response) => {
-	// 			if (response.data.state === 200) {
-	// 				message.success('修改成功');
-	// 				Materiallist().then(
-	// 					(response) => {
-	// 						this.setState({
-	// 							dataSource: response.data.data
-	// 						});
-	// 					},
-	// 					(error) => {
-	// 						console.log('失败了', error);
-	// 					}
-	// 				);
-	// 			} else {
-	// 				message.info(response.data.message);
-	// 			}
-	// 		},
-	// 		(error) => {
-	// 			console.log('数据获取失败', error);
-	// 		}
-	// 	);
+		// 先传值
+		value.description = (value.description === '' || value.description === null) ? null : value.description;
+        value.weight = (value.weight === '' || value.weight === null) ? null : value.weight;
+		value.factory = (value.factory === '' || value.factory === null) ? null : value.factory;
+		console.log(value)
+		Materialedit(value).then(
+			(response) => {
+				if (response.data.state === 200) { //成功状态码200
+					message.success('修改成功');
+					//重新获取物料列表
+					Materiallist().then(
+						(response) => {
+							this.setState({
+								dataSource: response.data.data
+							});
+						},
+						(error) => {
+							console.log('失败了', error);
+						}
+					);
+				} else {
+					message.info(response.data.message);
+				}
+			},
+			(error) => {
+				console.log('数据获取失败', error);
+			}
+		);
 	};
 	// 用于删除供应商的函数
 	handleDelete = (materialID) => {
-	// 	Materialdelete(materialID).then(
-	// 		(response) => {
-	// 			if (response.data.state === 200) {
-	// 				message.success('删除成功');
-	// 				// 删除成功后改变页面内容
-	// 				const dataSource = [ ...this.state.dataSource ];
-	// 				this.setState({
-	// 					dataSource: dataSource.filter((item) => item.materialID !== materialID)
-	// 				});
-	// 			} else message.info(response.data.message);
-	// 		},
-	// 		(error) => {
-	// 			console.log('数据获取失败', error);
-	// 		}
-	// 	);
+		console.log(materialID)
+		Materialdelete(materialID).then(
+			(response) => {
+				if (response.data.state === 200) {
+					message.success('删除成功');
+					// 删除成功后改变页面内容
+					const dataSource = [...this.state.dataSource];
+					this.setState({
+						dataSource: dataSource.filter((item) => item.materialID !== materialID)
+					});
+				} else message.info(response.data.message);
+			},
+			(error) => {
+				console.log('数据获取失败', error);
+			}
+		);
 	};
 
 	render() {
@@ -226,7 +232,7 @@ export default class MaterialList extends Component {
 						<Divider type="vertical" />
 						<EditMaterial material={record} handleEditClick={this.handleEditClick} />
 						<Divider type="vertical" />
-						<Popconfirm title="确定要删除吗？" onConfirm={() => this.handleDelete(record.id)}>
+						<Popconfirm title="确定要删除吗？" onConfirm={() => this.handleDelete(record.materialID)}>
 							<Button danger type="text" size="small" icon={<DeleteOutlined />}>
 								删除
 							</Button>
@@ -242,7 +248,7 @@ export default class MaterialList extends Component {
 					columns={columns}
 					// dataSource={this.state.dataSource}
 					dataSource={dataSource}
-					rowKey={(record) => record.materialID}
+					rowKey={(record) => record.id}
 					pagination={{ pageSize: 7 }}
 					size="small"
 				/>

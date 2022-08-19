@@ -1,8 +1,8 @@
 .logo {
     float: left;
-    width: 120px;
-    height: 31px;
-    margin: 16px 24px 16px 0;
+    width: 150px;
+    height: 55px;
+    margin: 5px 20px 5px -30px;
     background: #FCA311;
 }
 
@@ -17,7 +17,7 @@
 .ant-menu,
 .ant-menu-sub,
 .ant-menu-inline {
-    color: #fff;
+    color: #000000;
     background-color: #FCA311 !important;
 }
 
@@ -27,12 +27,12 @@
   width: 50px;
 }
 .ant-menu-submenu-title{
-  color: #fff !important;
+  color: #000000 !important;
 }
 
 .ant-menu-item-selected {
-  background-color: #3c6e71 !important;
-  color: #E5E5E5 !important;
+  background-color: #fdd086!important;
+  color: #ff6700 !important;
 }
 
 .ant-menu-item-active {

@@ -16,6 +16,11 @@ export default class EditMaterial extends Component {
         this.setState({
             visible: true
         });
+        const { material } = this.props;
+        material.description = material.description === '未知' ? null : material.description;
+        material.weight = material.weight === '未知' ? null : material.weight;
+        material.factory = material.factory === '未知' ? null : material.factory;
+        console.log(material);
     };
 
     onClose = () => {
@@ -74,7 +79,7 @@ export default class EditMaterial extends Component {
                         </Row>
                         <Row gutter={24}>
                             <Col span={12}>
-                                <Form.Item name="weight" label="毛重" initialValue={material.weight}>
+                                <Form.Item name="weight" label="毛重" initialValue={material.weight} rules={[{ pattern: /^\d*\.\d*$/, message: '请输入正浮点数' }]}>
                                     <Input />
                                 </Form.Item>
                             </Col>

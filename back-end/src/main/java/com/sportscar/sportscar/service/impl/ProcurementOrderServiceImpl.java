@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProcurementOrderServiceImpl implements IProcurementOrderService {
@@ -121,11 +122,14 @@ public class ProcurementOrderServiceImpl implements IProcurementOrderService {
         }
         Integer userID=Integer.parseInt(sessionuserID.toString());
         List<Procurement_order> resultProcurement_orderList=new LinkedList<>();
+        List<Procurement_order> resultProcurement_orderLisSorted=new LinkedList<>();
         resultProcurement_orderList=procurementOrderMapper.selectAllPO(userID);
         if(resultProcurement_orderList.size()==0){
             throw new NotFoundException("未找到相关数据");
         }
-        return resultProcurement_orderList;
+        resultProcurement_orderLisSorted = resultProcurement_orderList.stream().sorted(Comparator.comparing(Procurement_order::getDate).reversed())
+                .collect(Collectors.toList());
+        return resultProcurement_orderLisSorted;
     }
     public List<Procurement_order> selectPOByOrderID(String[] OrderID,HttpServletRequest request){
         Object sessionuserID=request.getSession().getAttribute("userID");

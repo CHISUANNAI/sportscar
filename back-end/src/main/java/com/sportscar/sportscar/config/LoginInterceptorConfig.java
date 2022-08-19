@@ -20,23 +20,37 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         HandlerInterceptor interceptor = new LoginInterceptor();
 
         List<String> patterns = new ArrayList<>();  //白名单集合
-        patterns.add("/templates/demo.html");
-        patterns.add("/templates/rfqTest.html");
         patterns.add("/users/reg");
         patterns.add("/users/login");
         patterns.add("/users/load");
+        patterns.add("/users/create");
         patterns.add("/users/delete");
         patterns.add("/users/update");
         patterns.add("/users/changePw");
         patterns.add("/users/changeIn");
-        patterns.add("/suppliers/cre");
-        patterns.add("/materials/cre");
+        patterns.add("/suppliers/load");
+        patterns.add("/suppliers/create");
+        patterns.add("/suppliers/delete");
+        patterns.add("/suppliers/update");
+        patterns.add("/materials/load");
+        patterns.add("/materials/create");
+        patterns.add("/materials/delete");
+        patterns.add("/materials/update");
         patterns.add("/receiveProduct");
         patterns.add("/checkReceive");
         patterns.add("/getMaterialStock");
         patterns.add("/getHistoryStock");
         patterns.add("/getOrderStatus");
         patterns.add("/checkAllReceive");
+        patterns.add("/ShowAllQuatationRequest");
+        patterns.add("/DeleteQuatationRequest");
+        patterns.add("/AddQuatationRequest");
+        patterns.add("/ProcurementOrder/selectAllPO");
+        patterns.add("/ProcurementOrder/deleteProcurementOrderSeriesByOrderID");
+        patterns.add("/ProcurementOrder/deleteProcurementOrderSeriesBySub_orderID");
+        patterns.add("/ProcurementOrder/selectPOBySubOrderID");
+        patterns.add("/ProcurementOrder/CreateProcurementOrder");
+        patterns.add("/ProcurementOrder/SelectPO");
         registry.addInterceptor(interceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(patterns);
