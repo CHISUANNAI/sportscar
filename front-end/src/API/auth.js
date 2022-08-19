@@ -190,6 +190,19 @@ export function showsubid(value){
     withCredentials : true
   });
 }
+//生成发票（发票管理）
+export function addinvoice(value){
+  return axios.get(`${baseURL}/invoice/addinvoice`,{
+    params:{
+    sub_orderID:value.subOrderID,
+    description:value.description,
+    companyName:value.companyName,
+    storage_location:value.storage_location,
+    },
+    withCredentials : true
+   
+  });
+}
 
 //输入大订单id，加载所有订单的金额之和（账单管理）
 export function count(value){
