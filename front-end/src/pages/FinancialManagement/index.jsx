@@ -83,9 +83,7 @@ export default class FinancialManagement extends Component {
 
 
   formRef = React.createRef();
-  onFinish = (values) => {
-    console.log(values);
-  };
+  
   onReset = () => {
     this.formRef.current.resetFields();
   };
@@ -158,17 +156,26 @@ onChange=(item,e) => {
 }
 
 /** 开发票 */
-submit(value){
-  console.log(value)
-  addinvoice(value).then(
+onFinish = (values) => {
+  console.log(values);
+  addinvoice(values).then(
     (response)=>{
-      console.log(response.data.data)
-    },
-    (error)=>{
-      console.log('数据获取失败', error);
+      message.success("已生成发票！")
     }
   )
- }
+};
+// submit(value){
+//   console.log(value)
+//   console.log(value.subOrderID)
+//   // addinvoice(value).then(
+//   //   (response)=>{
+//   //     console.log(response.data.data)
+//   //   },
+//   //   (error)=>{
+//   //     console.log('数据获取失败', error);
+//   //   }
+//   // )
+//  }
  
   render() {
     return (
@@ -243,7 +250,7 @@ submit(value){
         </Form.Item>
         
         <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit" onClick={this.submit}>
+          <Button type="primary" htmlType="submit" >
             Submit
           </Button>
           <Button htmlType="button" onClick={this.onReset}>
