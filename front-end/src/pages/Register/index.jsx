@@ -107,7 +107,7 @@ export default class Register extends Component {
 				</video>
                 <Content>
                     <Form className="register-form" 
-                    labelCol={{span: 4}}>
+                    labelCol={{span: 5}}>
 
                         {/* userName */}
                         <Form.Item
