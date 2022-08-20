@@ -7,38 +7,6 @@ import { Materiallist, Materialdelete, Materialedit } from '../../../API/auth';
 import EditMaterial from '../Edit';
 import MaterialInventory from '../Inventory';
 
-//静态测试供应商列表
-const dataSource = [
-	{
-		materialID: '10001',
-		materialName: '保时捷红色喷漆',
-		description: '保时捷品质喷漆',
-		weight: 3.7,
-		factory: '一号工厂'
-	},
-	{
-		materialID: '10002',
-		materialName: '极光色运动喷漆',
-		description: '灵感来源于极光',
-		weight: 2.1,
-		factory: '安徽工厂'
-	},
-	{
-		materialID: '10003',
-		materialName: '镭射喷漆',
-		description: '镭射五彩',
-		weight: 20.5,
-		factory: '上海工厂'
-	},
-	{
-		materialID: '10004',
-		materialName: '灰绿色喷漆',
-		description: '高级灰绿色',
-		weight: 19,
-		factory: '北京工厂'
-	}
-];
-
 export default class MaterialList extends Component {
 	state = {
 		searchText: '',
@@ -246,9 +214,8 @@ export default class MaterialList extends Component {
 				<Table
 					className="table"
 					columns={columns}
-					// dataSource={this.state.dataSource}
-					dataSource={dataSource}
-					rowKey={(record) => record.id}
+					dataSource={this.state.dataSource}
+					rowKey={(record) => record.materialID}
 					pagination={{ pageSize: 7 }}
 					size="small"
 				/>
