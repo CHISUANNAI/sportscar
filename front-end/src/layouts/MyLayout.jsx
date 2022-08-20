@@ -233,6 +233,10 @@ class MyLayout extends Component {
                                 path="/Home/passwordEdit"
                                 component={PasswordEdit}
                             />
+                            <Route
+                                path="/Home/documentflowmanagement"
+                                component={documentflowmanagement}
+                            />
                             <Route path="/Home" component={Home} />
                         </Switch>
                     </div>
