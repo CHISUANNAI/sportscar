@@ -1,4 +1,4 @@
-import { Divider, Steps , Space ,Input ,Tabs,Badge, Descriptions, Layout, message} from 'antd';
+import { Divider, Steps , Input ,Tabs,Badge, Descriptions, message} from 'antd';
 import React, { Component } from 'react';
 import { AccountBookOutlined,CarryOutOutlined,AudioOutlined,BankOutlined} from '@ant-design/icons';
 import axios from 'axios';
@@ -26,27 +26,29 @@ export default class Documentflowmanagement extends Component {
     })
     console.log(this.state.current)
   };
-  //查找
+  //查找,页面渲染
   onSearch = (value) => {
     this.setState({
-      order:value
+      order:value,
+      isfirst: true,
     })
     DocumentFlow(value).then(
       (response) => {
-        if(response.status===200){
+        if(response.status === 200 && response.data.status === 200  ){
             this.setState({
                 resp: response.data.data,
-                isfirst:false,
-            });
-            console.log(this.state.resp,this.state.isfirst,!this.state.isfirst?this.state.resp[0][0].amount:'haha')
+                isfirst: false,
+            })
+            console.log(response)
         }
         else{
           console.log('没有获得数据');
+          message.warning("此订单不存在")
         }
       },
       (error) => {
         console.log('失败了', this.state.order,error);
-      }
+      },
     ); 
   }
  //数据
@@ -59,7 +61,7 @@ export default class Documentflowmanagement extends Component {
                   style={{width: 330,margin:"auto", display: 'flex', justifyContent: 'center'}} 
                   onSearch={this.onSearch} enterButton />
           <div style={{ height:20 }}></div>
-          <Steps current={this.state.order==''?0:3} onChange={this.onChange} width={500}>
+          <Steps current={this.state.isfirst?0:3} onChange={this.onChange} width={500}>
             <Step title='物料' description="Material of the Order." icon={<BankOutlined />} />
             <Step title='订单' description="PO of the Order." icon= {<CarryOutOutlined />} />
             <Step title= '发票' description="Invoice of the Order." icon={<AccountBookOutlined />} />
