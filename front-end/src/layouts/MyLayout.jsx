@@ -140,7 +140,10 @@ class MyLayout extends Component {
                                 getItem('单据流管理', '/Home/documentflowmanagement'),
                             ]),
                             getItem('收货管理', '/Home/receiveGoods', <CarryOutOutlined />),
-                            getItem('财务管理', '/Home/financialManagement', <DollarOutlined />),
+                            getItem('财务管理', 'sub3', <DollarOutlined />, [
+                                getItem('发票管理', '/Home/financialManagement'),
+                                getItem('账单管理', '/Home/paymentManagement')
+                            ]),
                         ]}
                     />
                     <span style={{
@@ -232,6 +235,10 @@ class MyLayout extends Component {
                             <Route
                                 path="/Home/passwordEdit"
                                 component={PasswordEdit}
+                            />
+                            <Route
+                                path="/Home/documentflowmanagement"
+                                component={documentflowmanagement}
                             />
                             <Route path="/Home" component={Home} />
                         </Switch>
