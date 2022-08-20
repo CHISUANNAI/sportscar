@@ -8,12 +8,7 @@ import { Materialdelete,GetRfq,CreatPO} from '../../API/auth';
 
 //静态测试供应商列表
 export default class QuoationsManagement extends Component {
-    // constructor(props){
-    //     super(props);
-    //     this.state = {
-    //     }
-    //   }
-
+   
 	state = {
         searchText: '',
         searchedColumn: '',
@@ -21,7 +16,7 @@ export default class QuoationsManagement extends Component {
         rfqID:[],
         supplierID:[],
         materialID:[],
-        prepo:[]
+        prepo:[] //下面小表单显示的预存列
 	};
     //拿到报价单
 	componentDidMount() {
@@ -31,23 +26,22 @@ export default class QuoationsManagement extends Component {
 				this.setState({
 				dataSource: response.data.data
 				});
-				console.log(response.data.data)
                 this.state.prepo=[]
-			},
+				this.state.dataSource.sort(function (a, b) {return a.rfqID - b.rfqID;})
+			},	
 			(error) => {
 				console.log('失败了', error);
 			}
 		);
+		
 	}
     //生成订单
     creatPO(){
         CreatPO(this.state.rfqID,this.state.supplierID,this.state.materialID).then(
             (response) => {
-				//拿到我们想要渲染的数据(res)
                 if (response.status === 200) { 
 					message.success('生成订单成功');
                     window.location.reload() 
-                    
                 }
 			},
 			(error) => {
@@ -149,8 +143,9 @@ export default class QuoationsManagement extends Component {
 			{
 				title: '报价请求编号',
 				dataIndex: 'rfqID',
+				defaultSortOrder : "descend",
 				align: 'center',
-				...this.getColumnSearchProps('rfqID')
+				...this.getColumnSearchProps('rfqID'),
 			},
 			{
 				title: '供应商编号',
@@ -211,7 +206,7 @@ export default class QuoationsManagement extends Component {
                         dataSource.factory = (dataSource.factory === null) ? '未知' : dataSource.factory;
                         return dataSource
                     })}
-                    rowKey={(record) => record.materialID}
+                    rowKey={(record) => record.price}
 					pagination={{ pageSize: 7 }}
 					size="small"
                     
