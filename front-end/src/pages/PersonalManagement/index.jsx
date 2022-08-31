@@ -159,4 +159,3 @@ export default class PersonalManagement extends Component {
     );
   }
 }
-

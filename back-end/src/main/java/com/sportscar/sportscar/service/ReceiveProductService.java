@@ -183,22 +183,35 @@ public class ReceiveProductService {
             ReceiveProduct receiveProduct = receiveProductMapper.selectReceiveByOrderID(orderID);
             object.put("receive", receiveProduct);
             //2.根据收货单号查询所有小收货单
-            List<ReceiveProductDetail> receiveProductDetails = receiveProductDetailMapper.selectAllReceiveByID(receiveProduct.getReceiveid());
-            JSONArray jsonObject = JSONArray.fromObject(receiveProductDetails);
-
+            if(receiveProductDetailMapper.selectAllReceiveByID(receiveProduct.getReceiveid())!=null){
+                List<ReceiveProductDetail> receiveProductDetails = receiveProductDetailMapper.selectAllReceiveByID(receiveProduct.getReceiveid());
+                JSONArray jsonObject = JSONArray.fromObject(receiveProductDetails);
+                System.out.println(jsonObject);
             for(int i=0;i<receiveProductDetails.size();i++){
+
                 SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String dateString = df.format(receiveProductDetails.get(i).getReceiveDate());
-                jsonObject.getJSONObject(i).put("date",dateString);
+                if(receiveProductDetails.get(i).getReceiveDate()!=null) {
+                    String dateString = df.format(receiveProductDetails.get(i).getReceiveDate());
+
+                    jsonObject.getJSONObject(i).put("date", dateString);
+                }
+                else{
+                    System.out.println("13233");
+                    jsonObject.getJSONObject(i).put("receiveDate", null);
+                    jsonObject.getJSONObject(i).put("date", null);
+                }
+
             }
 
             object.put("detail", jsonObject);
             object.put("status", 200);
             object.put("desc", "查询成功！");
             return object;
+            }
         } catch (Exception e) {
             object.put("status", 300);
             object.put("desc", "订单不存在！");
+            System.out.println(e);
         }
 
         return object;
