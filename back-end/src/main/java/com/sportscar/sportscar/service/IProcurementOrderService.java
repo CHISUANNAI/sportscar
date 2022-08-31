@@ -25,8 +25,8 @@ public interface IProcurementOrderService {
                                                    String date,
                                                    HttpServletRequest request) throws ParseException;
     /**yss*/
-    public List<Integer> SelectPO(Integer orderID);
+    public List<String> SelectPO(String orderID);
     public Material SelectMaterialBysub(Integer materialID);
-    public Invoice_detail SelectInvoiceDetailBysub(Integer sub_orderID);
-    public Procurement_order SelectPOBysubpo(Integer sub_orderID);
+    public Invoice_detail SelectInvoiceDetailBysub(String sub_orderID);
+    public Procurement_order SelectPOBysubpo(String sub_orderID);
 }
