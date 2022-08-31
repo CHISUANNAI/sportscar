@@ -32,15 +32,17 @@ public class ProcurementOrderController {
     /**yss*/
     @ResponseBody
     @GetMapping("SelectPO")
-    public JSONObject SelectPO(@RequestParam("orderID") Integer orderID
+    public JSONObject SelectPO(@RequestParam("orderID") String orderID
     ) throws ParseException {
         JSONObject result=new JSONObject();
-        List<Integer> subli=new LinkedList<>();
+        List<String> subli=new LinkedList<>();
         List<Procurement_order> POli=new ArrayList<>();
         List<Invoice_detail> IVli=new ArrayList<>();
         List<Material> MAli=new ArrayList<>();
         List<JSONArray> alldata=new ArrayList<>(); //单据流汇总数组
         subli=iprocurementOrderService.SelectPO(orderID);
+        System.out.println(subli);
+        System.out.println("995");
         //搜索的订单有可能是大订单或小订单，分情况进行订单查询
         if(subli.size()==0)//输入的不是大订单
             try{
@@ -50,7 +52,6 @@ public class ProcurementOrderController {
                 PO=iprocurementOrderService.SelectPOBysubpo(orderID);
                 MA=iprocurementOrderService.SelectMaterialBysub(PO.getMaterialID());
                 IV=iprocurementOrderService.SelectInvoiceDetailBysub(orderID);
-                System.out.println(IV+"快了快了"+PO);
                 POli.add(PO);
                 MAli.add(MA);
                 IVli.add(IV);
@@ -65,13 +66,15 @@ public class ProcurementOrderController {
                 Procurement_order PO=new Procurement_order();
                 Material MA=new Material();
                 Invoice_detail IV=new Invoice_detail();
-                PO=iprocurementOrderService.SelectPOBysubpo(orderID);
-                MA=iprocurementOrderService.SelectMaterialBysub(PO.getMaterialID());
-                IV=iprocurementOrderService.SelectInvoiceDetailBysub(orderID);
-                System.out.println(IV+"快了快了"+PO);
-                POli.add(PO);
-                MAli.add(MA);
-                IVli.add(IV);
+                for (int i=0;i<subli.size();i++){
+                    PO=iprocurementOrderService.SelectPOBysubpo(subli.get(i));
+                    System.out.println(IV+"快了快了"+PO);
+                    MA=iprocurementOrderService.SelectMaterialBysub(PO.getMaterialID());
+                    IV=iprocurementOrderService.SelectInvoiceDetailBysub(subli.get(i));
+                    POli.add(PO);
+                    MAli.add(MA);
+                    IVli.add(IV);
+                }
             }catch (Exception e){
                 result.put("status",500);
                 result.put("desc","查询失败");

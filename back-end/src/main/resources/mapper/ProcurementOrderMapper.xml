@@ -7,7 +7,7 @@
         select * from procurement_order where sub_orderID=#{sub_orderID}
     </select>
 
-    <select id="SelectPO" resultType="java.lang.Integer">
+    <select id="SelectPO" resultType="java.lang.String">
         select sub_orderID from procurement_order where orderID=#{orderID}
     </select>
 

@@ -12,10 +12,10 @@ public interface ProcurementOrderMapper {
 //    @Select("SELECT * FROM sportscar.procurement_order where(orderID=#{orderID});")
 //    public Procurement_order getProcurement(int orderID);
     /**yss*/
-    Procurement_order SelectPOBysubpo(Integer sub_orderID);
-    List<Integer> SelectPO(Integer orderID);
+    Procurement_order SelectPOBysubpo(String sub_orderID);
+    List<String> SelectPO(String orderID);
     Material SelectMaterialBysub(Integer materialID);
-    Invoice_detail SelectInvoiceDetailBysub(Integer sub_orderID);
+    Invoice_detail SelectInvoiceDetailBysub(String sub_orderID);
     //    public Procurement_order getProcurement(int orderID);
     /**dkn*/
     public int insertProcurementOrderSeries(List<Procurement_order> procurement_orderList);

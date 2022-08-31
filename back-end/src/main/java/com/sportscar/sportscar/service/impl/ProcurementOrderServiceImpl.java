@@ -212,15 +212,15 @@ public class ProcurementOrderServiceImpl implements IProcurementOrderService {
         return procurement_orderList;
     };
     /**yss*/
-    public Procurement_order SelectPOBysubpo(Integer sub_orderID){
+    public Procurement_order SelectPOBysubpo(String sub_orderID){
         return procurementOrderMapper.SelectPOBysubpo(sub_orderID);
     };
-    public List<Integer> SelectPO(Integer orderID){return  procurementOrderMapper.SelectPO(orderID);}
+    public List<String> SelectPO(String orderID){return  procurementOrderMapper.SelectPO(orderID);}
     public Material SelectMaterialBysub(Integer materialID) {
         return procurementOrderMapper.SelectMaterialBysub(materialID);
     }
 
-    public Invoice_detail SelectInvoiceDetailBysub(Integer sub_orderID) {
+    public Invoice_detail SelectInvoiceDetailBysub(String sub_orderID) {
         return procurementOrderMapper.SelectInvoiceDetailBysub(sub_orderID);
     }
 }
